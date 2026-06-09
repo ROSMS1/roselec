@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fff;--bg2:#f5f6f8;--bg3:#eef0f3;
+  --text:#1a1a1a;--text2:#555;--text3:#999;
+  --border:#d8dde3;--border2:#b8c0ca;
+  --blue:#185FA5;--blue2:#0C447C;--blue-bg:#E6F1FB;
+  --green:#27500A;--green-bg:#EAF3DE;
+  --amber:#633806;--amber-bg:#FAEEDA;
+  --red:#791F1F;--red-bg:#FCEBEB;
+  --orange:#7a3a00;--orange-bg:#fff3e0;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg2);color:var(--text);font-size:13px;height:100vh;overflow:hidden}
+
+.app{display:flex;flex-direction:column;height:100vh}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;gap:6px;padding:6px 10px;
+  background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;flex-shrink:0;min-height:44px}
+.logo{font-size:15px;font-weight:700;color:var(--blue);white-space:nowrap;letter-spacing:-.3px}
+.logo span{color:#E24B4A}
+.sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;
+  border-radius:5px;border:1px solid var(--border);background:var(--bg);
+  color:var(--text);font-size:12px;cursor:pointer;white-space:nowrap;transition:all .1s}
+.btn:hover{background:var(--bg3)}
+.btn.on,.btn-p{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-p:hover,.btn.on:hover{background:var(--blue2)}
+.btn-g{background:#3B6D11;color:#fff;border-color:#3B6D11}
+.btn-g:hover{background:var(--green)}
+.btn-r{background:#A32D2D;color:#fff;border-color:#A32D2D}
+.badge{padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500}
+.b-blue{background:var(--blue-bg);color:var(--blue2)}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-orange{background:var(--orange-bg);color:var(--orange)}
+
+/* MODE TABS */
+.mode-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.mtab{padding:4px 12px;font-size:11px;font-weight:500;cursor:pointer;
+  background:var(--bg2);color:var(--text2);border:none;transition:all .12s}
+.mtab.sel{background:var(--blue);color:#fff}
+
+/* BODY */
+.body{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:200px;background:var(--bg);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+.ss{padding:8px 10px;border-bottom:1px solid var(--border)}
+.st{font-size:10px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.ci{display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:6px 3px;border:1px solid var(--border);border-radius:5px;
+  cursor:pointer;background:var(--bg2);font-size:10px;color:var(--text2);
+  transition:all .1s;user-select:none}
+.ci:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
+.ci.sel{border-color:var(--blue);background:var(--blue-bg);color:var(--blue);font-weight:600}
+
+.wr{display:flex;gap:4px;flex-wrap:wrap}
+.wc{width:24px;height:24px;border-radius:50%;border:2px solid transparent;
+  cursor:pointer;transition:transform .1s}
+.wc:hover,.wc.sel{transform:scale(1.25);border-color:#222}
+
+.pr{margin-bottom:6px}
+.pr label{display:block;font-size:10px;color:var(--text3);margin-bottom:2px;
+  text-transform:uppercase;letter-spacing:.04em}
+.pr input,.pr select{width:100%;padding:3px 6px;border:1px solid var(--border);
+  border-radius:4px;background:var(--bg2);color:var(--text);font-size:12px}
+
+/* CANVAS */
+.cw{flex:1;position:relative;overflow:hidden;background:#f0f2f5;
+  background-image:radial-gradient(#c0c8d0 0.7px,transparent 0.7px);
+  background-size:20px 20px}
+#cvs{width:100%;height:100%}
+
+/* STATUSBAR */
+.sb{padding:3px 10px;background:var(--bg);border-top:1px solid var(--border);
+  display:flex;gap:12px;align-items:center;flex-shrink:0;font-size:11px;flex-wrap:wrap}
+.sd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
+.ok{background:#639922}.idle{background:#aaa}
+.busy{background:#EF9F27;animation:pulse .7s infinite alternate}
+@keyframes pulse{to{opacity:.3}}
+
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);
+  display:flex;align-items:center;justify-content:center;z-index:200}
+.md{background:var(--bg);border-radius:10px;padding:20px;
+  width:360px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.md h3{font-size:14px;font-weight:600;margin-bottom:12px}
+.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+
+/* AI chips */
+.ac{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;
+  border-radius:10px;font-size:11px;background:var(--blue-bg);
+  color:var(--blue2);border:1px solid #B5D4F4;cursor:pointer;
+  margin:2px;transition:background .1s}
+.ac:hover{background:#B5D4F4}
+.ac.dc-chip{background:var(--orange-bg);color:var(--orange);border-color:#ffcc80}
+.ac.dc-chip:hover{background:#ffe0b2}
+.ac.placed{background:var(--green-bg);color:var(--green);border-color:#C0DD97}
+.chips-wrap{display:flex;flex-wrap:wrap;max-height:130px;overflow-y:auto;margin-top:4px}
+.sys-info{background:var(--bg3);border:1px solid var(--border);border-radius:5px;
+  padding:7px;font-size:11px;color:var(--text2);line-height:1.5;margin-top:5px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span class="logo">ROS<span>ELEC</span></span>
+  <div class="sep"></div>
+  <div class="mode-tabs">
+    <button class="mtab sel" id="tab-ac" onclick="switchSchemaMode('ac')">⚡ AC</button>
+    <button class="mtab" id="tab-dc" onclick="switchSchemaMode('dc')">🔋 DC / Rectifier</button>
+  </div>
+  <div class="sep"></div>
+  <button class="btn" id="btn-sel" onclick="setMode('select')">✦ Sélect.</button>
+  <button class="btn on" id="btn-add" onclick="setMode('add')">＋ Composant</button>
+  <button class="btn" id="btn-wire" onclick="setMode('wire')">〜 Fil</button>
+  <button class="btn" id="btn-label" onclick="setMode('label')">T Texte</button>
+  <div class="sep"></div>
+  <button class="btn" onclick="undo()">↩</button>
+  <button class="btn" onclick="clearAll()">🗑</button>
+  <div class="sep"></div>
+  <button class="btn btn-g" onclick="saveToSupabase()">💾 Sauvegarder</button>
+  <button class="btn btn-p" onclick="showExport()">⬇ Exporter</button>
+  <button class="btn" style="background:#25D366;color:#fff;border-color:#1ebe5d" onclick="showRapport()">📲 Rapport WhatsApp</button>
+  <span class="badge b-blue" id="mode-badge" style="margin-left:2px">Ajout composant</span>
+</div>
+
+<div class="body">
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <div class="ss" id="comps-section">
+    <div class="st" id="comps-title">Composants AC</div>
+    <div class="cg" id="comp-palette"></div>
+  </div>
+
+  <div class="ss">
+    <div class="st">Couleur du fil</div>
+    <div class="wr" id="wire-pal"></div>
+    <div style="font-size:10px;color:var(--text3);margin-top:4px" id="wire-lbl">Phase L1</div>
+  </div>
+
+  <div class="ss" id="ai-section">
+    <div class="st">Composants détectés</div>
+    <div id="ai-empty" style="font-size:11px;color:var(--text3)">Analyser des photos depuis le panneau principal.</div>
+    <div class="chips-wrap" id="ai-chips" style="display:none"></div>
+    <div id="sys-info-box" style="display:none"></div>
+  </div>
+
+  <div class="ss" id="props-sec" style="display:none">
+    <div class="st">Propriétés</div>
+    <div id="props-body"></div>
+    <button class="btn btn-r" style="width:100%;margin-top:6px;font-size:11px" onclick="deleteSelected()">🗑 Supprimer</button>
+  </div>
+
+</div>
+
+<!-- CANVAS -->
+<div class="cw" id="cw">
+  <svg id="cvs" xmlns="http://www.w3.org/2000/svg">
+    <g id="wl"></g>
+    <g id="cl"></g>
+    <g id="ll"></g>
+    <line id="wp" x1="0" y1="0" x2="0" y2="0"
+      stroke="#aaa" stroke-width="1.5" stroke-dasharray="5,3" opacity="0" pointer-events="none"/>
+  </svg>
+</div>
+</div>
+
+<!-- STATUSBAR -->
+<div class="sb">
+  <span><span class="sd idle" id="sdot"></span><span id="stxt">Prêt</span></span>
+  <span class="badge b-blue" id="cnt-c">0 composant</span>
+  <span class="badge b-amber" id="cnt-w">0 fil</span>
+  <span style="margin-left:auto;color:var(--text3)">S=sélect · A=ajout · W=fil · T=texte · Suppr=effacer · Ctrl+Z=annuler · Clic droit=annuler fil</span>
+</div>
+</div>
+
+<!-- MODAL EXPORT -->
+<div class="mo" id="mo-export" style="display:none">
+<div class="md">
+  <h3>Exporter le schéma</h3>
+  <div class="pr"><label>Titre</label>
+    <input id="ex-title" value="Schéma coffret" placeholder="Ex: Tableau RDC - Bâtiment A"></div>
+  <div class="pr"><label>Site</label>
+    <input id="ex-site" placeholder="Ex: DOLISIE4"></div>
+  <div class="pr"><label>Technicien</label>
+    <input id="ex-tech" placeholder="Nom"></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+    <button class="btn btn-p" onclick="exportSVG()">📄 SVG</button>
+    <button class="btn btn-g" onclick="exportPNG()">🖼 PNG</button>
+    <button class="btn" onclick="exportJSON()">{ } JSON</button>
+  </div>
+  <div class="mf">
+    <button class="btn" onclick="document.getElementById('mo-export').style.display='none'">Fermer</button>
+  </div>
+</div>
+</div>
+
+<!-- MODAL SAVE -->
+<div class="mo" id="mo-save" style="display:none">
+<div class="md">
+  <h3>Sauvegarder le schéma</h3>
+  <div class="pr"><label>Titre</label><input id="sv-title" placeholder="Ex: Armoire DC DOLISIE4"></div>
+  <div class="pr"><label>Site</label><input id="sv-site" placeholder="Ex: DOLISIE4"></div>
+  <div class="pr"><label>Type</label>
+    <select id="sv-type">
+      <option value="ac">AC — Coffret BT / Tableau distribution</option>
+      <option value="dc">DC — Armoire rectifier / 48V télécom</option>
+    </select></div>
+  <div class="mf">
+    <button class="btn" onclick="document.getElementById('mo-save').style.display='none'">Annuler</button>
+    <button class="btn btn-p" onclick="confirmSave()">Sauvegarder</button>
+  </div>
+</div>
+</div>
+
+<!-- MODAL RAPPORT WHATSAPP -->
+<div class="mo" id="mo-rapport" style="display:none">
+<div class="md" style="max-width:460px">
+  <h3>📲 Rapport site — partager sur WhatsApp</h3>
+  <div class="pr"><label>Technicien</label>
+    <input id="rp-tech" placeholder="Votre nom" oninput="previewMsg()"></div>
+  <div class="pr"><label>Site / Localité</label>
+    <input id="rp-site" placeholder="Ex: DOLISIE4" oninput="previewMsg()"></div>
+  <div class="pr"><label>Type de travail</label>
+    <select id="rp-travail" onchange="previewMsg()">
+      <option value="Schématisation coffret électrique">Schématisation coffret électrique</option>
+      <option value="Schématisation armoire DC 48V">Schématisation armoire DC 48V</option>
+      <option value="Audit électrique">Audit électrique</option>
+      <option value="Maintenance préventive">Maintenance préventive</option>
+      <option value="Intervention corrective">Intervention corrective</option>
+    </select></div>
+  <div class="pr"><label>Observations / Remarques</label>
+    <textarea id="rp-obs" rows="2" placeholder="Ex: Disjoncteur principal à remplacer, câblage à reprendre…"
+      style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:4px;
+        font-size:12px;background:var(--bg2);color:var(--text);resize:vertical"
+      oninput="previewMsg()"></textarea></div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+    padding:10px;margin-bottom:12px;font-size:12px;line-height:1.6;color:var(--text2)">
+    <div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;
+      letter-spacing:.05em;margin-bottom:5px">Aperçu du message WhatsApp</div>
+    <div id="msg-preview" style="white-space:pre-wrap;font-family:monospace;font-size:11px;
+      color:var(--text)"></div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+    <button class="btn" style="flex:1;background:#25D366;color:#fff;border-color:#1ebe5d;font-size:12px"
+      onclick="exportPNGandWhatsApp()">🖼 Exporter image + ouvrir WhatsApp</button>
+    <button class="btn btn-p" style="flex:1;font-size:12px"
+      onclick="openWhatsAppOnly()">📨 Envoyer message seul</button>
+  </div>
+  <div style="font-size:10px;color:var(--text3);margin-bottom:8px">
+    💡 Exporter l'image d'abord, puis joindre manuellement dans WhatsApp.
+  </div>
+  <div class="mf">
+    <button class="btn" onclick="document.getElementById('mo-rapport').style.display='none'">Fermer</button>
+  </div>
+</div>
+</div>
+
+<script>
+// ══ COMPOSANTS AC ══════════════════════════════════════════════════════════
+const AC_COMPS = [
+  {t:'disj1p', l:'Disj. 1P', w:22,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+    <line x1="${x+w/2}" y1="${y+h/2-4}" x2="${x+w/2}" y2="${y+h/2+4}" stroke="#fff" stroke-width="1.5"/>`}},
+  {t:'disj2p', l:'Disj. 2P', w:40,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+12}" y1="${y}" x2="${x+12}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y}" x2="${x+w-12}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+12}" y1="${y+h-10}" x2="${x+12}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+10},${y+h/2} Q${x+w/2},${y+h/2-10} ${x+w-10},${y+h/2}" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
+  {t:'disj3p', l:'Disj. 3P', w:56,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
+  {t:'diff2p', l:'Diff. 2P', w:44,h:50,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+12}" y1="${y}" x2="${x+12}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y}" x2="${x+w-12}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+12}" y1="${y+h-10}" x2="${x+12}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+6}" y="${y+8}" width="${w-12}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" font-family="sans-serif">Δ</text>`}},
+  {t:'fusible', l:'Fusible', w:14,h:38,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+5}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-5}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="${x+2}" y="${y+5}" width="${w-4}" height="${h-10}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".5"/>
+    <line x1="${x+4}" y1="${y+h/2}" x2="${x+w-4}" y2="${y+h/2-8}" stroke="#ffd700" stroke-width="1.2"/>
+    <line x1="${x+4}" y1="${y+h/2-8}" x2="${x+w-4}" y2="${y+h/2}" stroke="#ffd700" stroke-width="1.2"/>`}},
+  {t:'contacteur', l:'Contact.', w:40,h:56,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+12}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+12}" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+12}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+8}" y1="${y+h-12}" x2="${x+8}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-12}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+h-12}" x2="${x+w-8}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+5}" y="${y+14}" width="${w-10}" height="${h-28}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".5"/>
+    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#fff" stroke-width="1.2" opacity=".7"/>`}},
+  {t:'parafoudre', l:'Parafoudre', w:20,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+w/2},${y+12} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ffd700" opacity=".85"/>`}},
+  {t:'terre', l:'Terre PE', w:26,h:26,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <line x1="${x+w/2}" y1="${y+2}" x2="${x+w/2}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+3}" y1="${y+h-10}" x2="${x+w-3}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="${x+6}" y1="${y+h-6}" x2="${x+w-6}" y2="${y+h-6}" stroke="#1a7a1a" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="${x+9}" y1="${y+h-2}" x2="${x+w-9}" y2="${y+h-2}" stroke="#1a7a1a" stroke-width="1.2" stroke-linecap="round"/>`}},
+  {t:'voyant', l:'Voyant', w:20,h:20,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#ffe066" opacity=".9"/>
+    <circle cx="${x+w/2-2}" cy="${y+h/2-2}" r="2.5" fill="#fff" opacity=".6"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'bornier', l:'Bornier', w:14,h:20,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <rect x="${x+3}" y="${y+4}" width="${w-6}" height="${h-8}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".6"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>`}},
+];
+
+// ══ COMPOSANTS DC ══════════════════════════════════════════════════════════
+const DC_COMPS = [
+  {t:'rectifier', l:'Rectifier', w:56,h:36,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-12}" rx="2" fill="none" stroke="#ff9800" stroke-width="1" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff9800" font-family="sans-serif" font-weight="600">48V DC</text>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'battery_string', l:'Batterie', w:44,h:56,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#ffd700" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+8}" stroke="#1a1a8a" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="${x+6}" y="${y+10}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="${x+6}" y="${y+20}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".6"/>
+    <rect x="${x+6}" y="${y+30}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".5"/>
+    <text x="${x+w/2}" y="${y+h-6}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif">VRLA</text>`}},
+  {t:'controller', l:'Contrôleur', w:50,h:38,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-16}" rx="1" fill="none" stroke="#4fc3f7" stroke-width="1" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+h/2+2}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="sans-serif">SMU</text>
+    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#44ff44" opacity=".8"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'fuse_dc', l:'Fusible DC', w:16,h:40,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+6}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-6}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+3}" y="${y+6}" width="${w-6}" height="${h-12}" rx="1" fill="none" stroke="#ff9800" stroke-width=".8" opacity=".7"/>
+    <line x1="${x+5}" y1="${y+h/2-6}" x2="${x+w-5}" y2="${y+h/2+6}" stroke="#ff9800" stroke-width="1.2"/>`}},
+  {t:'mcb_dc', l:'MCB DC', w:24,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#ff9800" stroke-width="1.2" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="sans-serif">DC</text>`}},
+  {t:'barre_dc', l:'Barre DC', w:80,h:16,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round" opacity=".7"/>`}},
+  {t:'shunt', l:'Shunt', w:30,h:20,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+8},${y+h/2} L${x+12},${y+4} L${x+18},${y+h-4} L${x+22},${y+4} L${x+w-8},${y+h/2}" fill="none" stroke="#ff9800" stroke-width="1.5"/>
+    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'lvc', l:'LVC', w:32,h:32,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff4444" font-family="sans-serif" font-weight="700">LVC</text>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+6}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'pdu_dc', l:'PDU DC', w:44,h:48,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="sans-serif" font-weight="600">PDU</text>
+    <line x1="${x+8}" y1="${y+20}" x2="${x+8}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+20}" x2="${x+w/2}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+20}" x2="${x+w-8}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'surge_dc', l:'Paraf. DC', w:20,h:40,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+w/2},${y+10} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ff9800" opacity=".8"/>`}},
+];
+
+const AC_COLORS = {
+  disj1p:'#2563a8',disj2p:'#1a3f6b',disj3p:'#0d2c50',diff2p:'#5a2e8a',
+  fusible:'#8a3d10',contacteur:'#2a2a2a',parafoudre:'#8a6a00',
+  terre:'#1a4a1a',voyant:'#443355',bornier:'#5a4a3a',
+};
+const DC_COLORS = {
+  rectifier:'#1a2a1a',battery_string:'#1a1a3a',controller:'#0a2a3a',
+  fuse_dc:'#3a1a00',mcb_dc:'#2a1a00',barre_dc:'#3a2a00',
+  shunt:'#2a2a2a',lvc:'#3a0a0a',pdu_dc:'#1a2a3a',surge_dc:'#2a1a00',
+};
+
+// ══ FILS ════════════════════════════════════════════════════════════════════
+const AC_WIRES = [
+  {c:'#8B0000',l:'Phase L1'},{c:'#003580',l:'Phase L2'},
+  {c:'#222222',l:'Phase L3'},{c:'#1a7a1a',l:'Terre PE'},
+  {c:'#1a1a8a',l:'Neutre N'},{c:'#888888',l:'Commun'},
+];
+const DC_WIRES = [
+  {c:'#ff0000',l:'+ Positif DC'},{c:'#0000cc',l:'- Négatif DC (−48V)'},
+  {c:'#1a7a1a',l:'Terre / GND'},{c:'#ff8800',l:'Signal alarme'},
+  {c:'#888888',l:'Commun signal'},{c:'#aa00aa',l:'Bus données'},
+];
+
+// ══ STATE ═══════════════════════════════════════════════════════════════════
+let schemaMode = 'ac';
+let COMPS = AC_COMPS;
+let COLORS = AC_COLORS;
+let WIRES = AC_WIRES;
+
+let mode = 'add', selType = 'disj1p';
+let wireColor = '#8B0000', wireColorLabel = 'Phase L1';
+let wireStart = null;
+let components = [], wires = [], textLabels = [];
+let selectedId = null, dragComp = null, dragOff = {x:0,y:0};
+let history = [];
+let currentSchemaId = null;
+
+const cvs = document.getElementById('cvs');
+const wl = document.getElementById('wl');
+const cl = document.getElementById('cl');
+const ll = document.getElementById('ll');
+const wp = document.getElementById('wp');
+const cw = document.getElementById('cw');
+
+const snap = v => Math.round(v/20)*20;
+const uid  = () => 'e'+Date.now()+Math.floor(Math.random()*9999);
+const getPos = e => {
+  const r = cw.getBoundingClientRect();
+  const t = e.touches?.[0]||e;
+  return {x:t.clientX-r.left, y:t.clientY-r.top};
+};
+const clone = o => JSON.parse(JSON.stringify(o));
+const saveHist = () => { history.push(clone({components,wires,textLabels})); if(history.length>40)history.shift(); };
+
+// ══ SCHEMA MODE (AC / DC) ════════════════════════════════════════════════
+function switchSchemaMode(m) {
+  schemaMode = m;
+  COMPS  = m==='ac' ? AC_COMPS  : DC_COMPS;
+  COLORS = m==='ac' ? AC_COLORS : DC_COLORS;
+  WIRES  = m==='ac' ? AC_WIRES  : DC_WIRES;
+  selType = COMPS[0].t;
+  document.getElementById('tab-ac').classList.toggle('sel', m==='ac');
+  document.getElementById('tab-dc').classList.toggle('sel', m==='dc');
+  document.getElementById('comps-title').textContent = m==='ac' ? 'Composants AC' : 'Composants DC / 48V';
+  buildPalette(); buildWirePal();
+  wireColor = WIRES[0].c; wireColorLabel = WIRES[0].l;
+  document.getElementById('wire-lbl').textContent = wireColorLabel;
+  setMode('add');
+}
+
+// ══ PALETTE ══════════════════════════════════════════════════════════════
+function buildPalette() {
+  const g = document.getElementById('comp-palette');
+  g.innerHTML = '';
+  COMPS.forEach(c=>{
+    const div = document.createElement('div');
+    div.className = 'ci'+(c.t===selType?' sel':'');
+    div.id = 'ci-'+c.t;
+    const sw = Math.max(c.w,36), sh = Math.max(c.h,36);
+    const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('width',sw); s.setAttribute('height',sh);
+    const gg = document.createElementNS('http://www.w3.org/2000/svg','g');
+    c.d(gg,(sw-c.w)/2,(sh-c.h)/2,c.w,c.h,COLORS[c.t]||'#444');
+    s.appendChild(gg); div.appendChild(s);
+    div.appendChild(document.createTextNode(c.l));
+    div.onclick = ()=>{ selType=c.t; setMode('add'); };
+    g.appendChild(div);
+  });
+}
+
+function buildWirePal() {
+  const p = document.getElementById('wire-pal');
+  p.innerHTML = '';
+  WIRES.forEach((w,i)=>{
+    const d = document.createElement('div');
+    d.className = 'wc'+(i===0?' sel':'');
+    d.style.background = w.c; d.title = w.l;
+    d.onclick = ()=>{
+      wireColor=w.c; wireColorLabel=w.l;
+      document.querySelectorAll('.wc').forEach(x=>x.classList.remove('sel'));
+      d.classList.add('sel');
+      document.getElementById('wire-lbl').textContent = w.l;
+    };
+    p.appendChild(d);
+  });
+}
+
+// ══ MODE ══════════════════════════════════════════════════════════════════
+function setMode(m) {
+  mode=m; wireStart=null; wp.setAttribute('opacity','0');
+  ['sel','add','wire','label'].forEach(x=>document.getElementById('btn-'+x)?.classList.remove('on'));
+  document.getElementById('btn-'+m)?.classList.add('on');
+  const lbl={select:'Sélection',add:'Ajout composant',wire:'Tracer fil',label:'Ajouter texte'};
+  document.getElementById('mode-badge').textContent = lbl[m]||m;
+  cvs.style.cursor = m==='wire'?'crosshair':m==='add'?'copy':m==='label'?'text':'default';
+  document.querySelectorAll('.ci').forEach(b=>b.classList.toggle('sel',b.id==='ci-'+selType&&m==='add'));
+}
+
+// ══ RENDER ═══════════════════════════════════════════════════════════════
+function renderComp(comp) {
+  let g = document.getElementById(comp.id);
+  if(!g){g=document.createElementNS('http://www.w3.org/2000/svg','g');g.id=comp.id;cl.appendChild(g);}
+  const def = [...AC_COMPS,...DC_COMPS].find(c=>c.t===comp.type);
+  if(!def) return;
+  g.innerHTML='';
+  if(selectedId===comp.id){
+    const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',-4);r.setAttribute('y',-4);
+    r.setAttribute('width',def.w+8);r.setAttribute('height',def.h+8);
+    r.setAttribute('rx',5);r.setAttribute('fill','none');
+    r.setAttribute('stroke','#185FA5');r.setAttribute('stroke-width','1.5');
+    r.setAttribute('stroke-dasharray','5,2');
+    g.appendChild(r);
+  }
+  const inner=document.createElementNS('http://www.w3.org/2000/svg','g');
+  const col = (DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444');
+  def.d(inner,0,0,def.w,def.h,col);
+  g.appendChild(inner);
+  if(comp.label){
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',def.w/2);t.setAttribute('y',def.h+11);
+    t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
+    t.setAttribute('fill','#444');t.setAttribute('font-family','sans-serif');
+    t.textContent=comp.label;g.appendChild(t);
+  }
+  if(comp.valeur||comp.amperage){
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',def.w/2);t.setAttribute('y',def.h+21);
+    t.setAttribute('text-anchor','middle');t.setAttribute('font-size','8');
+    t.setAttribute('fill','#999');t.setAttribute('font-family','sans-serif');
+    t.textContent=comp.valeur||comp.amperage;g.appendChild(t);
+  }
+  g.setAttribute('transform',`translate(${comp.x},${comp.y})`);
+  g.style.cursor=mode==='select'?'move':'default';
+  g.onmousedown=e=>{
+    if(mode!=='select')return;
+    e.stopPropagation(); saveHist();
+    selectedId=comp.id;
+    const p=getPos(e); dragComp=comp.id;
+    dragOff={x:p.x-comp.x,y:p.y-comp.y};
+    updateUI(); e.preventDefault();
+  };
+  g.ondblclick=e=>{e.stopPropagation();selectedId=comp.id;showProps(comp.id);};
+}
+
+function renderWire(wire) {
+  let el=document.getElementById(wire.id);
+  if(!el){el=document.createElementNS('http://www.w3.org/2000/svg','line');wl.appendChild(el);}
+  el.id=wire.id;
+  ['x1','y1','x2','y2'].forEach(a=>el.setAttribute(a,wire[a]));
+  el.setAttribute('stroke',wire.color);
+  el.setAttribute('stroke-width',selectedId===wire.id?'3.5':'2.2');
+  el.setAttribute('stroke-linecap','round');
+  if(selectedId===wire.id)el.setAttribute('stroke-dasharray','8,3');
+  else el.removeAttribute('stroke-dasharray');
+  el.style.cursor='pointer';
+  el.onclick=()=>{if(mode==='select'){selectedId=wire.id;updateUI();}};
+}
+
+function renderLabel(lb) {
+  let el=document.getElementById(lb.id);
+  if(!el){el=document.createElementNS('http://www.w3.org/2000/svg','text');ll.appendChild(el);}
+  el.id=lb.id;
+  el.setAttribute('x',lb.x);el.setAttribute('y',lb.y);
+  el.setAttribute('font-size',lb.size||12);el.setAttribute('fill',lb.color||'#333');
+  el.setAttribute('font-family','sans-serif');el.setAttribute('font-weight',lb.bold?'600':'400');
+  el.setAttribute('cursor','pointer');
+  el.textContent=lb.text;
+  el.onclick=()=>{if(mode==='select'){selectedId=lb.id;updateUI();}};
+}
+
+function renderAll(){
+  cl.innerHTML='';wl.innerHTML='';ll.innerHTML='';
+  wires.forEach(renderWire); components.forEach(renderComp); textLabels.forEach(renderLabel);
+  updateCounts();
+}
+
+// ══ EVENTS ════════════════════════════════════════════════════════════════
+cvs.addEventListener('click', e=>{
+  if(dragComp){dragComp=null;return;}
+  const p=getPos(e); const sx=snap(p.x),sy=snap(p.y);
+  if(mode==='add'){
+    const def=COMPS.find(c=>c.t===selType); if(!def)return;
+    saveHist();
+    const n=components.filter(c=>c.type===selType).length+1;
+    const comp={id:uid(),type:selType,x:sx-Math.round(def.w/2/20)*20,
+      y:sy-Math.round(def.h/2/20)*20,label:def.l+' '+n,amperage:'',valeur:'',ref:'',etat:'ok'};
+    components.push(comp); renderComp(comp); updateCounts();
+  } else if(mode==='wire'){
+    if(!wireStart){
+      wireStart={x:sx,y:sy};
+      wp.setAttribute('x1',sx);wp.setAttribute('y1',sy);
+      wp.setAttribute('x2',sx);wp.setAttribute('y2',sy);
+      wp.setAttribute('stroke',wireColor);wp.setAttribute('opacity','0.8');
+    } else {
+      if(sx===wireStart.x&&sy===wireStart.y){wireStart=null;wp.setAttribute('opacity','0');return;}
+      saveHist();
+      const wire={id:uid(),x1:wireStart.x,y1:wireStart.y,x2:sx,y2:sy,color:wireColor,colorLabel:wireColorLabel};
+      wires.push(wire); renderWire(wire);
+      wireStart={x:sx,y:sy};
+      wp.setAttribute('x1',sx);wp.setAttribute('y1',sy);
+      updateCounts();
+    }
+  } else if(mode==='label'){
+    const txt=prompt('Texte à ajouter :','');
+    if(!txt)return; saveHist();
+    const lb={id:uid(),x:sx,y:sy,text:txt,size:12,color:'#333',bold:false};
+    textLabels.push(lb); renderLabel(lb);
+  } else if(mode==='select'){selectedId=null;updateUI();}
+});
+
+cvs.addEventListener('mousemove',e=>{
+  if(mode==='wire'&&wireStart){const p=getPos(e);wp.setAttribute('x2',snap(p.x));wp.setAttribute('y2',snap(p.y));}
+  if(dragComp){
+    const p=getPos(e); const c=components.find(x=>x.id===dragComp);
+    if(c){c.x=snap(p.x-dragOff.x);c.y=snap(p.y-dragOff.y);renderComp(c);}
+  }
+});
+cvs.addEventListener('mouseup',()=>{dragComp=null;});
+cvs.addEventListener('contextmenu',e=>{e.preventDefault();wireStart=null;wp.setAttribute('opacity','0');});
+
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='s'||e.key==='S')setMode('select');
+  if(e.key==='a'||e.key==='A')setMode('add');
+  if(e.key==='w'||e.key==='W')setMode('wire');
+  if(e.key==='t'||e.key==='T')setMode('label');
+  if(e.key==='Delete'||e.key==='Backspace')deleteSelected();
+  if(e.ctrlKey&&e.key==='z'){e.preventDefault();undo();}
+  if(e.key==='Escape'){wireStart=null;wp.setAttribute('opacity','0');selectedId=null;updateUI();}
+});
+
+// ══ UI / PROPS ════════════════════════════════════════════════════════════
+function updateUI(){
+  components.forEach(renderComp); wires.forEach(renderWire);
+  const sec=document.getElementById('props-sec');
+  const comp=components.find(c=>c.id===selectedId);
+  const wire=wires.find(w=>w.id===selectedId);
+  const lb=textLabels.find(l=>l.id===selectedId);
+  if(comp){
+    sec.style.display='';
+    const isDC = DC_COLORS[comp.type]!==undefined;
+    document.getElementById('props-body').innerHTML=`
+      <div class="pr"><label>Label</label>
+        <input value="${comp.label||''}" oninput="upP('${comp.id}','label',this.value)"></div>
+      ${isDC?`<div class="pr"><label>Valeur nominale</label>
+        <input value="${comp.valeur||''}" oninput="upP('${comp.id}','valeur',this.value)" placeholder="48V / 50A"></div>`
+      :`<div class="pr"><label>Ampérage</label>
+        <input value="${comp.amperage||''}" oninput="upP('${comp.id}','amperage',this.value)" placeholder="16A"></div>`}
+      <div class="pr"><label>Marque</label>
+        <input value="${comp.marque||''}" oninput="upP('${comp.id}','marque',this.value)" placeholder="Huawei / Schneider"></div>
+      <div class="pr"><label>Référence</label>
+        <input value="${comp.ref||''}" oninput="upP('${comp.id}','ref',this.value)"></div>
+      <div class="pr"><label>État</label>
+        <select onchange="upP('${comp.id}','etat',this.value)">
+          <option value="ok" ${comp.etat==='ok'?'selected':''}>✅ OK</option>
+          <option value="alarme" ${comp.etat==='alarme'?'selected':''}>⚠️ Alarme</option>
+          <option value="defaut" ${comp.etat==='defaut'?'selected':''}>🔴 Défaut</option>
+          <option value="hs" ${comp.etat==='hs'?'selected':''}>❌ Hors service</option>
+        </select></div>
+      <div class="pr"><label>Notes</label>
+        <input value="${comp.notes||''}" oninput="upP('${comp.id}','notes',this.value)" placeholder="Remarques…"></div>`;
+  } else if(wire){
+    sec.style.display='';
+    document.getElementById('props-body').innerHTML=`
+      <div class="pr"><label>Type</label>
+        <input value="${wire.colorLabel||''}" readonly style="opacity:.7"></div>`;
+  } else if(lb){
+    sec.style.display='';
+    document.getElementById('props-body').innerHTML=`
+      <div class="pr"><label>Texte</label>
+        <input value="${lb.text}" oninput="upL('${lb.id}','text',this.value)"></div>
+      <div class="pr"><label>Taille</label>
+        <input type="number" value="${lb.size||12}" min="8" max="28"
+          oninput="upL('${lb.id}','size',+this.value)"></div>`;
+  } else sec.style.display='none';
+}
+
+function upP(id,k,v){const c=components.find(x=>x.id===id);if(c){c[k]=v;renderComp(c);}}
+function upL(id,k,v){const l=textLabels.find(x=>x.id===id);if(l){l[k]=v;renderLabel(l);}}
+function showProps(id){setMode('select');selectedId=id;updateUI();}
+
+function deleteSelected(){
+  if(!selectedId)return; saveHist();
+  components=components.filter(c=>c.id!==selectedId);
+  wires=wires.filter(w=>w.id!==selectedId);
+  textLabels=textLabels.filter(l=>l.id!==selectedId);
+  document.getElementById(selectedId)?.remove();
+  selectedId=null;updateUI();updateCounts();
+}
+
+function clearAll(){
+  if(!confirm('Effacer tout le schéma ?'))return; saveHist();
+  components=[];wires=[];textLabels=[];
+  cl.innerHTML='';wl.innerHTML='';ll.innerHTML='';
+  selectedId=null;updateUI();updateCounts();
+}
+
+function undo(){
+  if(!history.length){setStatus('Rien à annuler');return;}
+  const p=history.pop();
+  components=p.components;wires=p.wires;textLabels=p.textLabels;
+  selectedId=null;renderAll();updateUI();setStatus('Annulé','ok');
+}
+
+function updateCounts(){
+  document.getElementById('cnt-c').textContent=components.length+' composant'+(components.length>1?'s':'');
+  document.getElementById('cnt-w').textContent=wires.length+' fil'+(wires.length>1?'s':'');
+}
+
+function setStatus(msg,t='idle'){
+  document.getElementById('stxt').textContent=msg;
+  document.getElementById('sdot').className='sd '+(t==='ok'?'ok':t==='busy'?'busy':'idle');
+}
+
+// ══ AI INJECT ════════════════════════════════════════════════════════════
+window.addEventListener('message',e=>{
+  if(e.data?.type==='ai_result') loadAI(e.data.payload);
+  if(e.data?.type==='load_schema') loadSchemaData(e.data.payload);
+});
+
+function loadAI(payload){
+  if(!payload||payload.error){setStatus('Erreur IA : '+(payload?.error||'inconnue'));return;}
+
+  const detected = payload.composants||[];
+  const isdc = payload.mode==='dc';
+
+  if(isdc && schemaMode==='ac') switchSchemaMode('dc');
+  else if(!isdc && schemaMode==='dc') switchSchemaMode('ac');
+
+  const chips = document.getElementById('ai-chips');
+  const empty = document.getElementById('ai-empty');
+  chips.innerHTML='';
+
+  detected.forEach((c,i)=>{
+    const chip=document.createElement('div');
+    chip.className='ac'+(isdc?' dc-chip':'');
+    chip.id='chip-'+i;
+    chip.innerHTML=`<b>${c.label||c.type}</b> <span style="opacity:.6">${c.valeur||c.amperage||''}</span>`;
+    chip.title='Cliquer pour placer';
+    chip.onclick=()=>placeAI(c,i,isdc);
+    chips.appendChild(chip);
+  });
+
+  const sysInfo = payload.coffret||payload.systeme;
+  if(sysInfo){
+    const box=document.getElementById('sys-info-box');
+    box.style.display='';
+    box.innerHTML=`<div class="sys-info"><b>${(sysInfo.type||'').replace(/_/g,' ')}</b>
+      · ${sysInfo.tension_nominale||sysInfo.tension||''}<br>
+      ${sysInfo.capacite_totale?'Capacité : '+sysInfo.capacite_totale+'<br>':''}
+      <span style="color:#666">${sysInfo.observations||''}</span></div>`;
+  }
+
+  chips.style.display='flex';empty.style.display='none';
+  setStatus(detected.length+' composant(s) détecté(s) — cliquer pour placer','ok');
+}
+
+function placeAI(c,idx,isdc){
+  const allComps=[...AC_COMPS,...DC_COMPS];
+  const def=allComps.find(x=>x.t===c.type)||(isdc?DC_COMPS[0]:AC_COMPS[0]);
+  saveHist();
+  const bx=60+(idx%5)*80, by=60+Math.floor(idx/5)*100;
+  const comp={id:uid(),type:def.t,x:snap(bx),y:snap(by),
+    label:c.label||def.l, amperage:c.amperage||'',
+    valeur:c.valeur||'', ref:c.ref||'', marque:c.marque||'', etat:c.etat||'ok'};
+  components.push(comp); renderComp(comp); updateCounts();
+  document.getElementById('chip-'+idx)?.classList.add('placed');
+  setStatus('Placé : '+comp.label,'ok');
+}
+
+function loadSchemaData(data){
+  if(!data)return;
+  if(data.content){
+    components=data.content.components||[];
+    wires=data.content.wires||[];
+    textLabels=data.content.textLabels||[];
+  }
+  currentSchemaId=data.id||null;
+  if(data.type) switchSchemaMode(data.type==='dc'?'dc':'ac');
+  renderAll(); updateUI();
+  setStatus('Schéma chargé : '+(data.title||''),'ok');
+}
+
+// ══ SAVE ═════════════════════════════════════════════════════════════════
+function saveToSupabase(){
+  document.getElementById('sv-type').value=schemaMode;
+  document.getElementById('mo-save').style.display='flex';
+}
+
+function confirmSave(){
+  const payload={
+    type:'save_schema',
+    payload:{
+      id: currentSchemaId,
+      title: document.getElementById('sv-title').value||'Schéma sans titre',
+      site:  document.getElementById('sv-site').value||'',
+      type:  document.getElementById('sv-type').value,
+      content:{components,wires,textLabels},
+    }
+  };
+  window.parent.postMessage(payload,'*');
+  document.getElementById('mo-save').style.display='none';
+  setStatus('Sauvegarde en cours…','busy');
+}
+
+// ══ EXPORT ═══════════════════════════════════════════════════════════════
+function showExport(){document.getElementById('mo-export').style.display='flex';}
+
+function buildSVG(){
+  const title=document.getElementById('ex-title')?.value||'Schéma';
+  const site=document.getElementById('ex-site')?.value||'';
+  const tech=document.getElementById('ex-tech')?.value||'';
+  const now=new Date().toLocaleDateString('fr');
+  let minX=9999,minY=9999,maxX=0,maxY=0;
+  const allDefs=[...AC_COMPS,...DC_COMPS];
+  components.forEach(c=>{
+    const d=allDefs.find(x=>x.t===c.type);if(!d)return;
+    minX=Math.min(minX,c.x);minY=Math.min(minY,c.y);
+    maxX=Math.max(maxX,c.x+d.w);maxY=Math.max(maxY,c.y+d.h+26);
+  });
+  wires.forEach(w=>{
+    minX=Math.min(minX,w.x1,w.x2);minY=Math.min(minY,w.y1,w.y2);
+    maxX=Math.max(maxX,w.x1,w.x2);maxY=Math.max(maxY,w.y1,w.y2);
+  });
+  if(minX===9999){minX=0;minY=0;maxX=400;maxY=300;}
+  const pad=40,W=maxX-minX+pad*2,H=maxY-minY+pad*2+60;
+  const dx=pad-minX,dy=pad-minY+56;
+  const modeLabel=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';
+  const hdr=`<rect width="${W}" height="52" fill="#185FA5"/>
+  <text x="16" y="20" font-size="14" fill="#fff" font-family="sans-serif" font-weight="700">ROSELEC — ${title}</text>
+  <text x="16" y="40" font-size="10" fill="rgba(255,255,255,.75)" font-family="sans-serif">${site} · Technicien : ${tech} · ${now} · Mode : ${modeLabel}</text>`;
+  const content=cvs.innerHTML
+    .replace(/id="wp"[^>]*opacity="[^"]*"/,'id="wp" opacity="0"')
+    .replace(/<pattern[^>]*>[\s\S]*?<\/pattern>/g,'');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <rect width="${W}" height="${H}" fill="#f8f9fa"/>
+  ${hdr}
+  <g transform="translate(${dx},${dy})">${content}</g>
+</svg>`;
+}
+
+function exportSVG(){
+  const svg=buildSVG();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+  a.download='roselec_schema_'+Date.now()+'.svg'; a.click();
+  setStatus('SVG exporté','ok');
+  document.getElementById('mo-export').style.display='none';
+  window.parent.postMessage({type:'export_done',format:'svg',data:svg},'*');
+}
+
+function exportPNG(){
+  const svg=buildSVG();
+  const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas');
+    c.width=img.width*2;c.height=img.height*2;
+    const ctx=c.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
+    const a=document.createElement('a');
+    a.href=c.toDataURL('image/png');
+    a.download='roselec_schema_'+Date.now()+'.png'; a.click();
+    setStatus('PNG exporté','ok');
+  };
+  img.src=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+  document.getElementById('mo-export').style.display='none';
+}
+
+function exportJSON(){
+  const d={meta:{tool:'ROSELEC v1.0',mode:schemaMode,date:new Date().toISOString()},
+    coffret:{composants:components,fils:wires,annotations:textLabels}};
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
+  a.download='roselec_'+Date.now()+'.json'; a.click();
+  setStatus('JSON exporté','ok');
+  document.getElementById('mo-export').style.display='none';
+}
+
+// ══ RAPPORT WHATSAPP ══════════════════════════════════════════════════════
+
+function showRapport(){
+  // Pré-remplir avec les infos du schéma en cours
+  const svSite = document.getElementById('sv-site')?.value||'';
+  const svTech = document.getElementById('ex-tech')?.value||'';
+  if(svSite) document.getElementById('rp-site').value = svSite;
+  if(svTech) document.getElementById('rp-tech').value = svTech;
+  // Détecter mode DC/AC
+  document.getElementById('rp-travail').value =
+    schemaMode==='dc' ? 'Schématisation armoire DC 48V' : 'Schématisation coffret électrique';
+  previewMsg();
+  document.getElementById('mo-rapport').style.display='flex';
+}
+
+function buildRapportMsg(){
+  const tech    = document.getElementById('rp-tech').value  || 'Technicien';
+  const site    = document.getElementById('rp-site').value  || 'Site';
+  const travail = document.getElementById('rp-travail').value;
+  const obs     = document.getElementById('rp-obs').value;
+  const now     = new Date();
+  const date    = now.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const heure   = now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const mode    = schemaMode==='dc' ? 'DC / Rectifier 48V' : 'AC / BT';
+  const nComps  = components.length;
+  const nFils   = wires.length;
+
+  // Liste des composants uniques
+  const allDefs = [...AC_COMPS,...DC_COMPS];
+  const counts  = {};
+  components.forEach(c=>{
+    const def = allDefs.find(d=>d.t===c.type);
+    const key = def ? def.l : c.type;
+    counts[key] = (counts[key]||0)+1;
+  });
+  const listComps = Object.entries(counts)
+    .map(([k,v])=>`  • ${k}${v>1?' (×'+v+')':''}`)
+    .join('\n');
+
+  let msg =
+`⚡ *ROSELEC — Rapport de site*
+━━━━━━━━━━━━━━━━━━━━
+👷 Technicien : *${tech}*
+📍 Site : *${site}*
+📅 Date : ${date} à ${heure}
+🔧 Travail : ${travail}
+⚙️ Mode schéma : ${mode}
+━━━━━━━━━━━━━━━━━━━━
+📊 *Composants schématisés : ${nComps}*
+${listComps||'  (aucun composant)'}
+
+🔌 Fils câblés : ${nFils}
+━━━━━━━━━━━━━━━━━━━━`;
+
+  if(obs.trim()){
+    msg += `\n📝 *Observations :*\n${obs.trim()}\n━━━━━━━━━━━━━━━━━━━━`;
+  }
+  msg += `\n_Schéma généré avec ROSELEC · MTN Congo Zone Sud_`;
+  return msg;
+}
+
+function previewMsg(){
+  document.getElementById('msg-preview').textContent = buildRapportMsg();
+}
+
+function openWhatsAppOnly(){
+  const msg = buildRapportMsg();
+  // Numéro groupe WhatsApp vide = ouvre sélecteur de contact
+  const url = 'https://wa.me/?text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+}
+
+function exportPNGandWhatsApp(){
+  // 1. Exporter le PNG du schéma
+  const svg = buildSVG();
+  const img = new Image();
+  img.onload = ()=>{
+    const c = document.createElement('canvas');
+    c.width  = img.width*2; c.height = img.height*2;
+    const ctx = c.getContext('2d');
+    ctx.scale(2,2); ctx.drawImage(img,0,0);
+    // Télécharger l'image
+    const tech = document.getElementById('rp-tech').value||'tech';
+    const site = document.getElementById('rp-site').value||'site';
+    const a = document.createElement('a');
+    a.href     = c.toDataURL('image/png');
+    a.download = `ROSELEC_${site}_${tech}_${Date.now()}.png`;
+    a.click();
+    setStatus('Image exportée — joindre dans WhatsApp','ok');
+    // 2. Ouvrir WhatsApp 1 seconde après
+    setTimeout(()=>{
+      const msg = buildRapportMsg();
+      window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+    }, 1200);
+  };
+  img.src = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+  document.getElementById('mo-rapport').style.display='none';
+}
+
+// ══ INIT ══════════════════════════════════════════════════════════════════
+buildPalette(); buildWirePal(); setMode('add'); setStatus('Prêt');
+</script>
+</body>
+</html>

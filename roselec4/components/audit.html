@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fff;--bg2:#f5f6f8;--bg3:#eef0f3;
+  --text:#1a1a1a;--text2:#555;--text3:#999;
+  --border:#d8dde3;--border2:#b8c0ca;
+  --blue:#1565C0;--blue2:#0D47A1;--blue-bg:#E3F2FD;
+  --red:#B71C1C;--red2:#7f0000;--red-bg:#FFEBEE;
+  --green:#1B5E20;--green-bg:#E8F5E9;
+  --amber:#E65100;--amber-bg:#FFF3E0;
+  --exist:#C62828;--correct:#1565C0;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg2);color:var(--text);font-size:13px;height:100vh;
+  overflow:hidden;display:flex;flex-direction:column}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;gap:6px;padding:6px 10px;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  flex-wrap:wrap;flex-shrink:0;min-height:44px}
+.logo{font-size:14px;font-weight:700;color:var(--blue);white-space:nowrap}
+.logo span{color:#FFC107}
+.sep{width:1px;height:18px;background:var(--border);flex-shrink:0;margin:0 2px}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;
+  border-radius:5px;border:1px solid var(--border);background:var(--bg);
+  color:var(--text);font-size:12px;cursor:pointer;white-space:nowrap;transition:all .1s}
+.btn:hover{background:var(--bg3)}
+.btn-exist{background:var(--exist);color:#fff;border-color:var(--exist)}
+.btn-exist:hover{background:var(--red2)}
+.btn-correct{background:var(--correct);color:#fff;border-color:var(--correct)}
+.btn-correct:hover{background:var(--blue2)}
+.btn-g{background:#2E7D32;color:#fff;border-color:#2E7D32}
+.btn-g:hover{background:var(--green)}
+.btn-wa{background:#25D366;color:#fff;border-color:#1ebe5d}
+.badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
+.b-exist{background:var(--red-bg);color:var(--exist)}
+.b-correct{background:var(--blue-bg);color:var(--correct)}
+
+/* ── CORPS PRINCIPAL ── */
+.body{display:flex;flex:1;overflow:hidden;gap:0}
+
+/* ── SIDEBAR ── */
+.sidebar{width:190px;background:var(--bg);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+.ss{padding:8px 10px;border-bottom:1px solid var(--border)}
+.st{font-size:10px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+
+/* Palette composants */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.ci{display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:5px 3px;border:1px solid var(--border);border-radius:5px;
+  cursor:pointer;background:var(--bg2);font-size:10px;color:var(--text2);
+  transition:all .1s;user-select:none}
+.ci:hover,.ci.sel{border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
+
+/* Palette fils */
+.wr{display:flex;gap:4px;flex-wrap:wrap}
+.wc{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .1s}
+.wc:hover,.wc.sel{transform:scale(1.2);border-color:#222}
+
+/* Props */
+.pr{margin-bottom:6px}
+.pr label{display:block;font-size:10px;color:var(--text3);
+  margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em}
+.pr input,.pr select,.pr textarea{width:100%;padding:3px 6px;
+  border:1px solid var(--border);border-radius:4px;
+  background:var(--bg2);color:var(--text);font-size:12px}
+.pr textarea{resize:vertical;min-height:52px;line-height:1.4}
+
+/* ── ZONE DOUBLE CANVAS ── */
+.dual{display:flex;flex:1;gap:0;overflow:hidden}
+
+.panel{display:flex;flex-direction:column;flex:1;min-width:0;overflow:hidden}
+.panel-header{display:flex;align-items:center;gap:6px;padding:5px 10px;
+  flex-shrink:0;border-bottom:1px solid var(--border)}
+.panel-header.exist-h{background:#FFEBEE;border-left:3px solid var(--exist)}
+.panel-header.correct-h{background:#E3F2FD;border-left:3px solid var(--correct)}
+.panel-label{font-size:12px;font-weight:600}
+.panel-label.exist-l{color:var(--exist)}
+.panel-label.correct-l{color:var(--correct)}
+.panel-hint{font-size:10px;color:var(--text3);margin-left:auto}
+
+.canvas-wrap{flex:1;position:relative;overflow:hidden;background:#f0f2f5;
+  background-image:radial-gradient(#c0c8d0 0.6px,transparent 0.6px);
+  background-size:20px 20px}
+.canvas-wrap.active-panel{outline:2px solid var(--blue);outline-offset:-2px}
+.canvas-wrap.exist-active{outline-color:var(--exist)}
+.canvas-wrap.correct-active{outline-color:var(--correct)}
+
+/* Séparateur vertical */
+.v-sep{width:1px;background:var(--border2);flex-shrink:0;cursor:col-resize;
+  transition:background .1s}
+.v-sep:hover{background:var(--blue);width:3px}
+
+/* ── ZONE OBSERVATIONS ── */
+.obs-zone{flex-shrink:0;background:var(--bg);border-top:1px solid var(--border);
+  display:flex;gap:0;max-height:180px}
+.obs-panel{flex:1;display:flex;flex-direction:column;min-width:0}
+.obs-panel:first-child{border-right:1px solid var(--border)}
+.obs-header{padding:5px 10px;font-size:11px;font-weight:600;
+  border-bottom:1px solid var(--border);flex-shrink:0}
+.obs-header.oh-exist{background:#FFEBEE;color:var(--exist)}
+.obs-header.oh-correct{background:#E3F2FD;color:var(--correct)}
+.obs-body{flex:1;overflow-y:auto}
+.obs-ta{width:100%;height:100%;border:none;padding:8px 10px;
+  font-size:12px;background:var(--bg);color:var(--text);
+  resize:none;line-height:1.5;font-family:inherit}
+.obs-ta:focus{outline:none}
+.obs-ta.exist-ta{border-left:3px solid var(--exist)}
+.obs-ta.correct-ta{border-left:3px solid var(--correct)}
+
+/* ── STATUSBAR ── */
+.sb{padding:3px 10px;background:var(--bg);border-top:1px solid var(--border);
+  display:flex;gap:12px;align-items:center;flex-shrink:0;font-size:11px;flex-wrap:wrap}
+.sd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
+.ok{background:#2E7D32}.idle{background:#aaa}
+.busy{background:#EF9F27;animation:pulse .7s infinite alternate}
+@keyframes pulse{to{opacity:.3}}
+
+/* ── MODALS ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);
+  display:flex;align-items:center;justify-content:center;z-index:200}
+.md{background:var(--bg);border-radius:10px;padding:20px;
+  width:420px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.md h3{font-size:14px;font-weight:600;margin-bottom:12px}
+.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.btn-r{background:#B71C1C;color:#fff;border-color:#B71C1C}
+</style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <span class="logo">ROS<span>ELEC</span> · Audit</span>
+  <div class="sep"></div>
+
+  <!-- Sélection du canvas actif -->
+  <button class="btn btn-exist" id="tb-exist" onclick="setActiveCanvas('exist')">✎ Existant</button>
+  <button class="btn" id="tb-correct" style="border-color:var(--correct);color:var(--correct)"
+    onclick="setActiveCanvas('correct')">✎ Correctif</button>
+
+  <div class="sep"></div>
+
+  <!-- Modes d'édition -->
+  <button class="btn" id="btn-sel"   onclick="setMode('select')">✦ Sélect.</button>
+  <button class="btn on" id="btn-add" onclick="setMode('add')"  style="background:var(--blue);color:#fff">＋ Composant</button>
+  <button class="btn" id="btn-wire" onclick="setMode('wire')">〜 Fil</button>
+  <button class="btn" id="btn-label" onclick="setMode('label')">T Texte</button>
+
+  <div class="sep"></div>
+  <button class="btn" onclick="undoActive()">↩</button>
+  <button class="btn" onclick="clearActive()">🗑 Canvas</button>
+  <button class="btn" onclick="copyExistToCorrect()" title="Copier le schéma existant dans le correctif comme base">⊕ Copier → Correctif</button>
+
+  <div class="sep"></div>
+  <button class="btn btn-g" onclick="saveAudit()">💾 Sauvegarder audit</button>
+  <button class="btn btn-wa" onclick="showRapportAudit()">📲 Rapport WhatsApp</button>
+  <button class="btn btn-g" onclick="exportAuditPNG()">🖼 Exporter PDF/PNG</button>
+
+  <span class="badge" id="active-badge"
+    style="background:#FFEBEE;color:var(--exist);margin-left:4px">
+    Schéma existant actif
+  </span>
+</div>
+
+<div class="body">
+
+<!-- ── SIDEBAR ── -->
+<div class="sidebar">
+
+  <!-- Composants -->
+  <div class="ss">
+    <div class="st" id="comps-title">Composants AC</div>
+    <div style="display:flex;gap:3px;margin-bottom:6px">
+      <button class="btn" style="flex:1;font-size:10px;padding:3px 4px"
+        onclick="switchMode('ac')">⚡ AC</button>
+      <button class="btn" style="flex:1;font-size:10px;padding:3px 4px"
+        onclick="switchMode('dc')">🔋 DC</button>
+    </div>
+    <div class="cg" id="comp-palette"></div>
+  </div>
+
+  <!-- Fils -->
+  <div class="ss">
+    <div class="st">Couleur du fil</div>
+    <div class="wr" id="wire-pal"></div>
+    <div style="font-size:10px;color:var(--text3);margin-top:3px" id="wire-lbl">Phase L1</div>
+  </div>
+
+  <!-- Propriétés -->
+  <div class="ss" id="props-sec" style="display:none">
+    <div class="st">Propriétés</div>
+    <div id="props-body"></div>
+    <button class="btn btn-r" style="width:100%;margin-top:5px;font-size:11px"
+      onclick="deleteSelected()">🗑 Supprimer</button>
+  </div>
+
+  <!-- Légende état -->
+  <div class="ss">
+    <div class="st">Légende état</div>
+    <div style="font-size:11px;line-height:1.8;color:var(--text2)">
+      <div>✅ OK — conforme</div>
+      <div>⚠️ Suspect — à vérifier</div>
+      <div>🔴 Défaut — non conforme</div>
+      <div>❌ HS — hors service</div>
+      <div>🆕 Nouveau — à ajouter</div>
+      <div>🗑 Supprimer — à retirer</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── DOUBLE CANVAS ── -->
+<div class="dual">
+
+  <!-- EXISTANT -->
+  <div class="panel" id="panel-exist">
+    <div class="panel-header exist-h">
+      <span class="panel-label exist-l">📋 Schéma EXISTANT</span>
+      <span class="panel-hint">État actuel du coffret tel qu'il est</span>
+    </div>
+    <div class="canvas-wrap exist-active" id="cw-exist">
+      <svg id="cvs-exist" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <g id="wl-exist"></g>
+        <g id="cl-exist"></g>
+        <g id="ll-exist"></g>
+        <line id="wp-exist" x1="0" y1="0" x2="0" y2="0"
+          stroke="#C62828" stroke-width="1.5" stroke-dasharray="5,3"
+          opacity="0" pointer-events="none"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Séparateur redimensionnable -->
+  <div class="v-sep" id="vsep" onmousedown="startResize(event)"></div>
+
+  <!-- CORRECTIF -->
+  <div class="panel" id="panel-correct">
+    <div class="panel-header correct-h">
+      <span class="panel-label correct-l">✅ Schéma CORRECTIF</span>
+      <span class="panel-hint">Proposition d'amélioration / mise en conformité</span>
+    </div>
+    <div class="canvas-wrap" id="cw-correct">
+      <svg id="cvs-correct" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <g id="wl-correct"></g>
+        <g id="cl-correct"></g>
+        <g id="ll-correct"></g>
+        <line id="wp-correct" x1="0" y1="0" x2="0" y2="0"
+          stroke="#1565C0" stroke-width="1.5" stroke-dasharray="5,3"
+          opacity="0" pointer-events="none"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<!-- ── OBSERVATIONS ── -->
+<div class="obs-zone">
+  <div class="obs-panel">
+    <div class="obs-header oh-exist">
+      ⚠️ Observations — Anomalies constatées sur le schéma existant
+    </div>
+    <div class="obs-body">
+      <textarea class="obs-ta exist-ta" id="obs-exist"
+        placeholder="Décrire les anomalies, non-conformités, risques observés...
+Ex:
+• Disjoncteur général sous-dimensionné (32A au lieu de 63A requis)
+• Absence de protection différentielle sur circuit prise
+• Câblage phase/neutre inversé sur bornier B3
+• Terre non raccordée sur armoire métallique
+• Fusible HS non remplacé sur départ éclairage"></textarea>
+    </div>
+  </div>
+  <div class="obs-panel">
+    <div class="obs-header oh-correct">
+      ✅ Commentaires correctifs — Actions à réaliser
+    </div>
+    <div class="obs-body">
+      <textarea class="obs-ta correct-ta" id="obs-correct"
+        placeholder="Décrire les actions correctives proposées...
+Ex:
+• Remplacer disjoncteur général par iC60N 63A 2P (Schneider)
+• Installer DDR 30mA 2P sur circuit prise de la salle serveurs
+• Reprendre câblage bornier B3 — respecter code couleur NF C 15-100
+• Raccorder mise à la terre de l'armoire sur barrette PE
+• Remplacer fusible 16A sur départ éclairage (ref. gG 16A)"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATUSBAR ── -->
+<div class="sb">
+  <span><span class="sd idle" id="sdot"></span><span id="stxt">Prêt — cliquer Existant ou Correctif pour éditer</span></span>
+  <span id="cnt-exist" style="color:var(--exist);font-weight:500">Existant : 0 comp.</span>
+  <span id="cnt-correct" style="color:var(--correct);font-weight:500">Correctif : 0 comp.</span>
+  <span style="margin-left:auto;color:var(--text3)">
+    S=sélect · A=ajout · W=fil · T=texte · Suppr=effacer · Ctrl+Z=annuler · ⊕=copier existant→correctif
+  </span>
+</div>
+
+<!-- ── MODAL RAPPORT ── -->
+<div class="mo" id="mo-rapport" style="display:none">
+<div class="md" style="max-width:480px">
+  <h3>📲 Rapport d'audit — WhatsApp</h3>
+  <div class="pr"><label>Technicien</label>
+    <input id="rp-tech" placeholder="Votre nom" oninput="previewAudit()"></div>
+  <div class="pr"><label>Site</label>
+    <input id="rp-site" placeholder="Ex: DOLISIE4" oninput="previewAudit()"></div>
+  <div class="pr"><label>Niveau de priorité</label>
+    <select id="rp-prio" onchange="previewAudit()">
+      <option value="🟢 Faible — maintenance préventive">🟢 Faible — maintenance préventive</option>
+      <option value="🟡 Moyen — intervention planifiée">🟡 Moyen — intervention planifiée</option>
+      <option value="🔴 Urgent — risque d'incident">🔴 Urgent — risque d'incident</option>
+      <option value="⛔ Critique — arrêt requis">⛔ Critique — arrêt requis</option>
+    </select></div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+    padding:9px;margin-bottom:10px;max-height:200px;overflow-y:auto">
+    <div style="font-size:10px;font-weight:600;color:var(--text3);
+      text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Aperçu</div>
+    <div id="audit-preview" style="white-space:pre-wrap;font-family:monospace;font-size:11px"></div>
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+    <button class="btn btn-wa" style="flex:1;font-size:12px"
+      onclick="exportAuditAndWhatsApp()">🖼 Image + WhatsApp</button>
+    <button class="btn btn-correct" style="flex:1;font-size:12px"
+      onclick="openAuditWhatsApp()">📨 Message seul</button>
+  </div>
+  <div style="font-size:10px;color:var(--text3);margin-bottom:6px">
+    💡 L'image combinée (existant + correctif) se télécharge, puis WhatsApp s'ouvre.
+  </div>
+  <div class="mf">
+    <button class="btn" onclick="document.getElementById('mo-rapport').style.display='none'">Fermer</button>
+  </div>
+</div>
+</div>
+
+<script>
+// ══ COMPOSANTS ═════════════════════════════════════════════════════════════
+const AC_COMPS=[
+  {t:'disj1p',l:'Disj. 1P',w:22,h:44,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+    <line x1="${x+w/2}" y1="${y+h/2-4}" x2="${x+w/2}" y2="${y+h/2+4}" stroke="#fff" stroke-width="1.5"/>`}},
+  {t:'disj2p',l:'Disj. 2P',w:40,h:44,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+12}" y1="${y}" x2="${x+12}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y}" x2="${x+w-12}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+12}" y1="${y+h-10}" x2="${x+12}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+10},${y+h/2} Q${x+w/2},${y+h/2-10} ${x+w-10},${y+h/2}" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
+  {t:'disj3p',l:'Disj. 3P',w:56,h:44,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
+  {t:'diff2p',l:'Diff. 2P',w:44,h:50,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+12}" y1="${y}" x2="${x+12}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y}" x2="${x+w-12}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+12}" y1="${y+h-10}" x2="${x+12}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+6}" y="${y+8}" width="${w-12}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" font-family="sans-serif">Δ</text>`}},
+  {t:'fusible',l:'Fusible',w:14,h:38,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+5}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-5}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="${x+2}" y="${y+5}" width="${w-4}" height="${h-10}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".5"/>
+    <line x1="${x+4}" y1="${y+h/2}" x2="${x+w-4}" y2="${y+h/2-8}" stroke="#ffd700" stroke-width="1.2"/>
+    <line x1="${x+4}" y1="${y+h/2-8}" x2="${x+w-4}" y2="${y+h/2}" stroke="#ffd700" stroke-width="1.2"/>`}},
+  {t:'contacteur',l:'Contact.',w:40,h:56,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+12}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+12}" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+12}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+8}" y1="${y+h-12}" x2="${x+8}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-12}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+h-12}" x2="${x+w-8}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+5}" y="${y+14}" width="${w-10}" height="${h-28}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".5"/>
+    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#fff" stroke-width="1.2" opacity=".7"/>`}},
+  {t:'parafoudre',l:'Parafoudre',w:20,h:44,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+w/2},${y+12} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ffd700" opacity=".85"/>`}},
+  {t:'terre',l:'Terre PE',w:26,h:26,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <line x1="${x+w/2}" y1="${y+2}" x2="${x+w/2}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+3}" y1="${y+h-10}" x2="${x+w-3}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="${x+6}" y1="${y+h-6}" x2="${x+w-6}" y2="${y+h-6}" stroke="#1a7a1a" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="${x+9}" y1="${y+h-2}" x2="${x+w-9}" y2="${y+h-2}" stroke="#1a7a1a" stroke-width="1.2" stroke-linecap="round"/>`}},
+  {t:'voyant',l:'Voyant',w:20,h:20,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#ffe066" opacity=".9"/>
+    <circle cx="${x+w/2-2}" cy="${y+h/2-2}" r="2.5" fill="#fff" opacity=".6"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'bornier',l:'Bornier',w:14,h:20,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <rect x="${x+3}" y="${y+4}" width="${w-6}" height="${h-8}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".6"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>`}},
+];
+const DC_COMPS=[
+  {t:'rectifier',l:'Rectifier',w:56,h:36,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-12}" rx="2" fill="none" stroke="#ff9800" stroke-width="1" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff9800" font-family="sans-serif" font-weight="600">48V DC</text>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'battery_string',l:'Batterie',w:44,h:56,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#ffd700" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+8}" stroke="#1a1a8a" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="${x+6}" y="${y+10}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="${x+6}" y="${y+20}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".6"/>
+    <rect x="${x+6}" y="${y+30}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".5"/>
+    <text x="${x+w/2}" y="${y+h-6}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif">VRLA</text>`}},
+  {t:'controller',l:'Contrôleur',w:50,h:38,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-16}" rx="1" fill="none" stroke="#4fc3f7" stroke-width="1" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+h/2+2}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="sans-serif">SMU</text>
+    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#44ff44" opacity=".8"/>`}},
+  {t:'fuse_dc',l:'Fusible DC',w:16,h:40,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+6}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-6}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+3}" y="${y+6}" width="${w-6}" height="${h-12}" rx="1" fill="none" stroke="#ff9800" stroke-width=".8" opacity=".7"/>
+    <line x1="${x+5}" y1="${y+h/2-6}" x2="${x+w-5}" y2="${y+h/2+6}" stroke="#ff9800" stroke-width="1.2"/>`}},
+  {t:'barre_dc',l:'Barre DC',w:80,h:16,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round" opacity=".7"/>`}},
+  {t:'shunt',l:'Shunt',w:30,h:20,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+8},${y+h/2} L${x+12},${y+4} L${x+18},${y+h-4} L${x+22},${y+4} L${x+w-8},${y+h/2}" fill="none" stroke="#ff9800" stroke-width="1.5"/>
+    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'lvc',l:'LVC',w:32,h:32,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff4444" font-family="sans-serif" font-weight="700">LVC</text>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+6}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'pdu_dc',l:'PDU DC',w:44,h:48,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="sans-serif" font-weight="600">PDU</text>
+    <line x1="${x+8}" y1="${y+20}" x2="${x+8}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+20}" x2="${x+w/2}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+20}" x2="${x+w-8}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'mcb_dc',l:'MCB DC',w:24,h:44,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#ff9800" stroke-width="1.2" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="sans-serif">DC</text>`}},
+  {t:'surge_dc',l:'Paraf. DC',w:20,h:40,d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+w/2},${y+10} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ff9800" opacity=".8"/>`}},
+];
+
+const AC_COLORS={disj1p:'#2563a8',disj2p:'#1a3f6b',disj3p:'#0d2c50',diff2p:'#5a2e8a',
+  fusible:'#8a3d10',contacteur:'#2a2a2a',parafoudre:'#8a6a00',terre:'#1a4a1a',
+  voyant:'#443355',bornier:'#5a4a3a'};
+const DC_COLORS={rectifier:'#1a2a1a',battery_string:'#1a1a3a',controller:'#0a2a3a',
+  fuse_dc:'#3a1a00',barre_dc:'#3a2a00',shunt:'#2a2a2a',lvc:'#3a0a0a',
+  pdu_dc:'#1a2a3a',mcb_dc:'#2a1a00',surge_dc:'#2a1a00'};
+
+const AC_WIRES=[
+  {c:'#8B0000',l:'Phase L1'},{c:'#003580',l:'Phase L2'},
+  {c:'#222',l:'Phase L3'},{c:'#1a7a1a',l:'Terre PE'},
+  {c:'#1a1a8a',l:'Neutre N'},{c:'#888',l:'Commun'},
+];
+const DC_WIRES=[
+  {c:'#ff0000',l:'+ Positif'},{c:'#0000cc',l:'- Négatif −48V'},
+  {c:'#1a7a1a',l:'Terre GND'},{c:'#ff8800',l:'Signal alarme'},
+  {c:'#888',l:'Commun signal'},{c:'#aa00aa',l:'Bus données'},
+];
+
+// ══ STATE ════════════════════════════════════════════════════════════════
+let schMode='ac';
+let COMPS=AC_COMPS, COLORS=AC_COLORS, WIRES=AC_WIRES;
+let activeCanvas='exist';
+let mode='add', selType='disj1p';
+let wireColor='#8B0000', wireLbl='Phase L1';
+let wireStart=null;
+let selectedId=null, dragComp=null, dragOff={x:0,y:0};
+
+const state={
+  exist:{components:[],wires:[],textLabels:[],history:[]},
+  correct:{components:[],wires:[],textLabels:[],history:[]}
+};
+
+const uid=()=>'e'+Date.now()+Math.floor(Math.random()*9999);
+const snap=v=>Math.round(v/20)*20;
+const clone=o=>JSON.parse(JSON.stringify(o));
+
+function getCanvas(side){ return document.getElementById('cvs-'+side); }
+function getWL(side){ return document.getElementById('wl-'+side); }
+function getCL(side){ return document.getElementById('cl-'+side); }
+function getLL(side){ return document.getElementById('ll-'+side); }
+function getWP(side){ return document.getElementById('wp-'+side); }
+function getWrap(side){ return document.getElementById('cw-'+side); }
+
+function getPos(e,side){
+  const r=getWrap(side).getBoundingClientRect();
+  const t=e.touches?.[0]||e;
+  return{x:t.clientX-r.left,y:t.clientY-r.top};
+}
+
+// ══ SWITCH MODE AC/DC ════════════════════════════════════════════════════
+function switchMode(m){
+  schMode=m;
+  COMPS=m==='ac'?AC_COMPS:DC_COMPS;
+  COLORS=m==='ac'?AC_COLORS:DC_COLORS;
+  WIRES=m==='ac'?AC_WIRES:DC_WIRES;
+  selType=COMPS[0].t;
+  document.getElementById('comps-title').textContent=
+    m==='ac'?'Composants AC':'Composants DC / 48V';
+  buildPalette(); buildWirePal();
+  wireColor=WIRES[0].c; wireLbl=WIRES[0].l;
+  document.getElementById('wire-lbl').textContent=wireLbl;
+}
+
+// ══ CANVAS ACTIF ════════════════════════════════════════════════════════
+function setActiveCanvas(side){
+  activeCanvas=side;
+  wireStart=null;
+  getWP('exist').setAttribute('opacity','0');
+  getWP('correct').setAttribute('opacity','0');
+  selectedId=null;
+
+  getWrap('exist').className='canvas-wrap'+(side==='exist'?' exist-active':'');
+  getWrap('correct').className='canvas-wrap'+(side==='correct'?' correct-active':'');
+
+  const badge=document.getElementById('active-badge');
+  if(side==='exist'){
+    badge.style.background='#FFEBEE'; badge.style.color='var(--exist)';
+    badge.textContent='Schéma existant actif';
+    document.getElementById('tb-exist').className='btn btn-exist';
+    document.getElementById('tb-correct').className='btn';
+    document.getElementById('tb-correct').style.cssText='border-color:var(--correct);color:var(--correct)';
+  } else {
+    badge.style.background='#E3F2FD'; badge.style.color='var(--correct)';
+    badge.textContent='Schéma correctif actif';
+    document.getElementById('tb-correct').className='btn btn-correct';
+    document.getElementById('tb-exist').className='btn';
+    document.getElementById('tb-exist').style.cssText='border-color:var(--exist);color:var(--exist)';
+  }
+  updateUI();
+}
+
+// ══ MODE ÉDITION ════════════════════════════════════════════════════════
+function setMode(m){
+  mode=m; wireStart=null;
+  getWP('exist').setAttribute('opacity','0');
+  getWP('correct').setAttribute('opacity','0');
+  ['sel','add','wire','label'].forEach(x=>{
+    const b=document.getElementById('btn-'+x);
+    if(b){ b.style.background=''; b.style.color=''; }
+  });
+  const active=document.getElementById('btn-'+m);
+  if(active){ active.style.background='var(--blue)'; active.style.color='#fff'; }
+  getCanvas(activeCanvas).style.cursor=
+    m==='wire'?'crosshair':m==='add'?'copy':m==='label'?'text':'default';
+  document.querySelectorAll('.ci').forEach(b=>
+    b.classList.toggle('sel',b.id==='ci-'+selType&&m==='add'));
+}
+
+// ══ PALETTE ══════════════════════════════════════════════════════════════
+function buildPalette(){
+  const g=document.getElementById('comp-palette'); g.innerHTML='';
+  COMPS.forEach(c=>{
+    const div=document.createElement('div');
+    div.className='ci'+(c.t===selType?' sel':''); div.id='ci-'+c.t;
+    const sw=Math.max(c.w,34),sh=Math.max(c.h,34);
+    const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('width',sw); s.setAttribute('height',sh);
+    const gg=document.createElementNS('http://www.w3.org/2000/svg','g');
+    c.d(gg,(sw-c.w)/2,(sh-c.h)/2,c.w,c.h,COLORS[c.t]||'#444');
+    s.appendChild(gg); div.appendChild(s);
+    div.appendChild(document.createTextNode(c.l));
+    div.onclick=()=>{ selType=c.t; setMode('add'); };
+    g.appendChild(div);
+  });
+}
+
+function buildWirePal(){
+  const p=document.getElementById('wire-pal'); p.innerHTML='';
+  WIRES.forEach((w,i)=>{
+    const d=document.createElement('div');
+    d.className='wc'+(i===0?' sel':'');
+    d.style.background=w.c; d.title=w.l;
+    d.onclick=()=>{
+      wireColor=w.c; wireLbl=w.l;
+      document.querySelectorAll('.wc').forEach(x=>x.classList.remove('sel'));
+      d.classList.add('sel');
+      document.getElementById('wire-lbl').textContent=w.l;
+    };
+    p.appendChild(d);
+  });
+}
+
+// ══ RENDER ═══════════════════════════════════════════════════════════════
+function renderComp(comp,side){
+  const cl=getCL(side);
+  let g=document.getElementById(comp.id+'-'+side);
+  if(!g){g=document.createElementNS('http://www.w3.org/2000/svg','g');g.id=comp.id+'-'+side;cl.appendChild(g);}
+  const allDefs=[...AC_COMPS,...DC_COMPS];
+  const def=allDefs.find(c=>c.t===comp.type); if(!def)return;
+  g.innerHTML='';
+
+  // Overlay état non conforme (existant) ou nouveau (correctif)
+  const overlayColor = side==='exist'
+    ? {suspect:'#FFC107',defaut:'#F44336',hs:'#B71C1C'}[comp.etat]
+    : comp.etat==='nouveau'?'#1565C0':comp.etat==='supprimer'?'#F44336':null;
+
+  if(overlayColor){
+    const ov=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    ov.setAttribute('x',-3); ov.setAttribute('y',-3);
+    ov.setAttribute('width',def.w+6); ov.setAttribute('height',def.h+6);
+    ov.setAttribute('rx',5); ov.setAttribute('fill',overlayColor);
+    ov.setAttribute('opacity','0.18'); g.appendChild(ov);
+  }
+
+  if(selectedId===comp.id){
+    const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',-4); r.setAttribute('y',-4);
+    r.setAttribute('width',def.w+8); r.setAttribute('height',def.h+8);
+    r.setAttribute('rx',5); r.setAttribute('fill','none');
+    const sc=side==='exist'?'#C62828':'#1565C0';
+    r.setAttribute('stroke',sc); r.setAttribute('stroke-width','1.5');
+    r.setAttribute('stroke-dasharray','5,2'); g.appendChild(r);
+  }
+
+  const inner=document.createElementNS('http://www.w3.org/2000/svg','g');
+  const col=(DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444');
+  def.d(inner,0,0,def.w,def.h,col); g.appendChild(inner);
+
+  // État badge
+  const eIcon={ok:'',suspect:'⚠',defaut:'✗',hs:'✕',nouveau:'＋',supprimer:'－'}[comp.etat||'ok']||'';
+  if(eIcon){
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',def.w+1); t.setAttribute('y',4);
+    t.setAttribute('font-size','11'); t.setAttribute('fill',overlayColor||'#555');
+    t.setAttribute('font-family','sans-serif'); t.textContent=eIcon; g.appendChild(t);
+  }
+
+  if(comp.label){
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',def.w/2); t.setAttribute('y',def.h+11);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-size','9');
+    t.setAttribute('fill','#333'); t.setAttribute('font-family','sans-serif');
+    t.textContent=comp.label; g.appendChild(t);
+  }
+  if(comp.amperage||comp.valeur){
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',def.w/2); t.setAttribute('y',def.h+21);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-size','8');
+    t.setAttribute('fill','#999'); t.setAttribute('font-family','sans-serif');
+    t.textContent=comp.amperage||comp.valeur; g.appendChild(t);
+  }
+
+  g.setAttribute('transform',`translate(${comp.x},${comp.y})`);
+  g.style.cursor=mode==='select'?'move':'default';
+  g.onmousedown=e=>{
+    if(mode!=='select'||activeCanvas!==side)return;
+    e.stopPropagation(); saveHist(side); selectedId=comp.id;
+    const p=getPos(e,side); dragComp=comp.id;
+    dragOff={x:p.x-comp.x,y:p.y-comp.y};
+    updateUI(); e.preventDefault();
+  };
+  g.ondblclick=e=>{
+    if(activeCanvas!==side)return;
+    e.stopPropagation(); selectedId=comp.id; updateUI();
+  };
+}
+
+function renderWire(wire,side){
+  const wl=getWL(side);
+  let el=document.getElementById(wire.id+'-'+side);
+  if(!el){el=document.createElementNS('http://www.w3.org/2000/svg','line');wl.appendChild(el);}
+  el.id=wire.id+'-'+side;
+  ['x1','y1','x2','y2'].forEach(a=>el.setAttribute(a,wire[a]));
+  el.setAttribute('stroke',wire.color);
+  el.setAttribute('stroke-width',selectedId===wire.id?'3.5':'2.2');
+  el.setAttribute('stroke-linecap','round');
+  if(selectedId===wire.id) el.setAttribute('stroke-dasharray','8,3');
+  else el.removeAttribute('stroke-dasharray');
+  el.style.cursor='pointer';
+  el.onclick=()=>{if(mode==='select'&&activeCanvas===side){selectedId=wire.id;updateUI();}};
+}
+
+function renderLabel(lb,side){
+  const ll=getLL(side);
+  let el=document.getElementById(lb.id+'-'+side);
+  if(!el){el=document.createElementNS('http://www.w3.org/2000/svg','text');ll.appendChild(el);}
+  el.id=lb.id+'-'+side;
+  el.setAttribute('x',lb.x); el.setAttribute('y',lb.y);
+  el.setAttribute('font-size',lb.size||12);
+  el.setAttribute('fill',side==='exist'?'#B71C1C':'#0D47A1');
+  el.setAttribute('font-family','sans-serif');
+  el.setAttribute('font-weight',lb.bold?'700':'500');
+  el.setAttribute('cursor','pointer');
+  el.textContent=lb.text;
+  el.onclick=()=>{if(mode==='select'&&activeCanvas===side){selectedId=lb.id;updateUI();}};
+}
+
+function renderSide(side){
+  getCL(side).innerHTML=''; getWL(side).innerHTML=''; getLL(side).innerHTML='';
+  state[side].wires.forEach(w=>renderWire(w,side));
+  state[side].components.forEach(c=>renderComp(c,side));
+  state[side].textLabels.forEach(l=>renderLabel(l,side));
+  updateCounts();
+}
+
+function renderAll(){ renderSide('exist'); renderSide('correct'); }
+
+// ══ EVENTS ═══════════════════════════════════════════════════════════════
+['exist','correct'].forEach(side=>{
+  const cvs=getCanvas(side);
+  const cw=getWrap(side);
+
+  cw.addEventListener('click',e=>{
+    if(activeCanvas!==side) return;
+    if(dragComp){dragComp=null;return;}
+    const p=getPos(e,side); const sx=snap(p.x),sy=snap(p.y);
+
+    if(mode==='add'){
+      const allDefs=[...AC_COMPS,...DC_COMPS];
+      const def=allDefs.find(c=>c.t===selType); if(!def)return;
+      saveHist(side);
+      const n=state[side].components.filter(c=>c.type===selType).length+1;
+      const defaultEtat=side==='exist'?'ok':'nouveau';
+      const comp={id:uid(),type:selType,
+        x:sx-Math.round(def.w/2/20)*20,y:sy-Math.round(def.h/2/20)*20,
+        label:def.l+' '+n,amperage:'',valeur:'',ref:'',etat:defaultEtat};
+      state[side].components.push(comp);
+      renderComp(comp,side); updateCounts();
+
+    } else if(mode==='wire'){
+      const wp=getWP(side);
+      if(!wireStart){
+        wireStart={x:sx,y:sy,side};
+        wp.setAttribute('x1',sx);wp.setAttribute('y1',sy);
+        wp.setAttribute('x2',sx);wp.setAttribute('y2',sy);
+        wp.setAttribute('stroke',wireColor);wp.setAttribute('opacity','0.8');
+      } else {
+        if(sx===wireStart.x&&sy===wireStart.y){
+          wireStart=null; wp.setAttribute('opacity','0'); return;
+        }
+        saveHist(side);
+        const wire={id:uid(),x1:wireStart.x,y1:wireStart.y,x2:sx,y2:sy,
+          color:wireColor,colorLabel:wireLbl};
+        state[side].wires.push(wire); renderWire(wire,side);
+        wireStart={x:sx,y:sy,side};
+        wp.setAttribute('x1',sx);wp.setAttribute('y1',sy);
+        updateCounts();
+      }
+
+    } else if(mode==='label'){
+      const txt=prompt('Texte :',''); if(!txt)return;
+      saveHist(side);
+      const lb={id:uid(),x:sx,y:sy,text:txt,size:12,bold:false};
+      state[side].textLabels.push(lb); renderLabel(lb,side);
+
+    } else if(mode==='select'){
+      selectedId=null; updateUI();
+    }
+  });
+
+  cw.addEventListener('mousemove',e=>{
+    if(activeCanvas!==side)return;
+    if(mode==='wire'&&wireStart&&wireStart.side===side){
+      const p=getPos(e,side);
+      const wp=getWP(side);
+      wp.setAttribute('x2',snap(p.x));wp.setAttribute('y2',snap(p.y));
+    }
+    if(dragComp&&activeCanvas===side){
+      const p=getPos(e,side);
+      const c=state[side].components.find(x=>x.id===dragComp);
+      if(c){c.x=snap(p.x-dragOff.x);c.y=snap(p.y-dragOff.y);renderComp(c,side);}
+    }
+  });
+
+  cw.addEventListener('mouseup',()=>{dragComp=null;});
+  cw.addEventListener('contextmenu',e=>{
+    e.preventDefault();
+    wireStart=null;
+    getWP(side).setAttribute('opacity','0');
+  });
+
+  // Activer le canvas au clic
+  cw.addEventListener('mousedown',()=>{ if(activeCanvas!==side) setActiveCanvas(side); });
+});
+
+// ══ KEYBOARD ════════════════════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.key==='s'||e.key==='S') setMode('select');
+  if(e.key==='a'||e.key==='A') setMode('add');
+  if(e.key==='w'||e.key==='W') setMode('wire');
+  if(e.key==='t'||e.key==='T') setMode('label');
+  if(e.key==='Delete'||e.key==='Backspace') deleteSelected();
+  if(e.ctrlKey&&e.key==='z'){e.preventDefault();undoActive();}
+  if(e.key==='Escape'){
+    wireStart=null;
+    getWP('exist').setAttribute('opacity','0');
+    getWP('correct').setAttribute('opacity','0');
+    selectedId=null; updateUI();
+  }
+});
+
+// ══ HISTORY ══════════════════════════════════════════════════════════════
+function saveHist(side){
+  const h=state[side].history;
+  h.push(clone({components:state[side].components,
+    wires:state[side].wires,textLabels:state[side].textLabels}));
+  if(h.length>30) h.shift();
+}
+
+function undoActive(){
+  const s=state[activeCanvas];
+  if(!s.history.length){setStatus('Rien à annuler');return;}
+  const prev=s.history.pop();
+  s.components=prev.components; s.wires=prev.wires; s.textLabels=prev.textLabels;
+  selectedId=null; renderSide(activeCanvas); updateUI();
+  setStatus('Annulé','ok');
+}
+
+function clearActive(){
+  if(!confirm('Effacer le schéma '+(activeCanvas==='exist'?'EXISTANT':'CORRECTIF')+' ?')) return;
+  saveHist(activeCanvas);
+  state[activeCanvas].components=[];
+  state[activeCanvas].wires=[];
+  state[activeCanvas].textLabels=[];
+  getCL(activeCanvas).innerHTML='';
+  getWL(activeCanvas).innerHTML='';
+  getLL(activeCanvas).innerHTML='';
+  selectedId=null; updateUI(); updateCounts();
+}
+
+// ══ COPIER EXISTANT → CORRECTIF ════════════════════════════════════════
+function copyExistToCorrect(){
+  if(state.correct.components.length>0&&
+    !confirm('Écraser le schéma correctif avec une copie de l\'existant ?')) return;
+  saveHist('correct');
+  const copy=clone({
+    components:state.exist.components.map(c=>({...c,id:uid(),etat:'ok'})),
+    wires:state.exist.wires.map(w=>({...w,id:uid()})),
+    textLabels:state.exist.textLabels.map(l=>({...l,id:uid()}))
+  });
+  state.correct.components=copy.components;
+  state.correct.wires=copy.wires;
+  state.correct.textLabels=copy.textLabels;
+  renderSide('correct');
+  setActiveCanvas('correct');
+  setStatus('Existant copié dans le correctif — modifier pour proposer les corrections','ok');
+}
+
+// ══ UI / PROPS ════════════════════════════════════════════════════════════
+function updateUI(){
+  renderSide('exist'); renderSide('correct');
+  const sec=document.getElementById('props-sec');
+  const side=activeCanvas;
+  const comp=state[side].components.find(c=>c.id===selectedId);
+  const wire=state[side].wires.find(w=>w.id===selectedId);
+  const lb=state[side].textLabels.find(l=>l.id===selectedId);
+
+  if(comp){
+    sec.style.display='';
+    const isDC=DC_COLORS[comp.type]!==undefined;
+    const etatOpts=side==='exist'
+      ?['ok','suspect','defaut','hs']
+      :['ok','nouveau','supprimer'];
+    const etatIcons={ok:'✅ OK',suspect:'⚠️ Suspect',defaut:'🔴 Défaut',
+      hs:'❌ Hors service',nouveau:'🆕 Nouveau',supprimer:'🗑 À supprimer'};
+    const optsHtml=etatOpts.map(v=>
+      `<option value="${v}"${comp.etat===v?' selected':''}>${etatIcons[v]||v}</option>`
+    ).join('');
+    document.getElementById('props-body').innerHTML=`
+      <div class="pr"><label>Label</label>
+        <input value="${comp.label||''}" oninput="upP('${comp.id}','label',this.value,'${side}')"></div>
+      <div class="pr"><label>${isDC?'Valeur':'Ampérage'}</label>
+        <input value="${comp.amperage||comp.valeur||''}"
+          oninput="upP('${comp.id}','${isDC?'valeur':'amperage'}',this.value,'${side}')"
+          placeholder="${isDC?'48V/50A':'16A'}"></div>
+      <div class="pr"><label>Ref. / Marque</label>
+        <input value="${comp.ref||''}" oninput="upP('${comp.id}','ref',this.value,'${side}')"
+          placeholder="iC60N / Schneider"></div>
+      <div class="pr"><label>État</label>
+        <select onchange="upP('${comp.id}','etat',this.value,'${side}')">${optsHtml}</select></div>
+      <div class="pr"><label>Note</label>
+        <textarea oninput="upP('${comp.id}','note',this.value,'${side}')"
+          placeholder="Remarque sur ce composant…">${comp.note||''}</textarea></div>`;
+  } else if(wire){
+    sec.style.display='';
+    document.getElementById('props-body').innerHTML=`
+      <div class="pr"><label>Type fil</label>
+        <input value="${wire.colorLabel||''}" readonly style="opacity:.7"></div>`;
+  } else if(lb){
+    sec.style.display='';
+    document.getElementById('props-body').innerHTML=`
+      <div class="pr"><label>Texte</label>
+        <input value="${lb.text}" oninput="upL('${lb.id}','text',this.value,'${side}')"></div>
+      <div class="pr"><label>Taille</label>
+        <input type="number" value="${lb.size||12}" min="8" max="28"
+          oninput="upL('${lb.id}','size',+this.value,'${side}')"></div>`;
+  } else sec.style.display='none';
+}
+
+function upP(id,k,v,side){
+  const c=state[side].components.find(x=>x.id===id);
+  if(c){c[k]=v; renderComp(c,side);}
+}
+function upL(id,k,v,side){
+  const l=state[side].textLabels.find(x=>x.id===id);
+  if(l){l[k]=v; renderLabel(l,side);}
+}
+
+function deleteSelected(){
+  if(!selectedId) return;
+  const side=activeCanvas;
+  saveHist(side);
+  state[side].components=state[side].components.filter(c=>c.id!==selectedId);
+  state[side].wires=state[side].wires.filter(w=>w.id!==selectedId);
+  state[side].textLabels=state[side].textLabels.filter(l=>l.id!==selectedId);
+  document.getElementById(selectedId+'-'+side)?.remove();
+  selectedId=null; updateUI(); updateCounts();
+}
+
+function updateCounts(){
+  document.getElementById('cnt-exist').textContent=
+    'Existant : '+state.exist.components.length+' comp. / '+state.exist.wires.length+' fils';
+  document.getElementById('cnt-correct').textContent=
+    'Correctif : '+state.correct.components.length+' comp. / '+state.correct.wires.length+' fils';
+}
+
+function setStatus(msg,t='idle'){
+  document.getElementById('stxt').textContent=msg;
+  const d=document.getElementById('sdot');
+  d.className='sd '+(t==='ok'?'ok':t==='busy'?'busy':'idle');
+}
+
+// ══ SAVE / LOAD ═══════════════════════════════════════════════════════════
+function saveAudit(){
+  const data={
+    exist:state.exist, correct:state.correct,
+    obsExist:document.getElementById('obs-exist').value,
+    obsCorrect:document.getElementById('obs-correct').value,
+    savedAt:new Date().toISOString()
+  };
+  localStorage.setItem('roselec_audit_v1',JSON.stringify(data));
+  setStatus('Audit sauvegardé localement','ok');
+  setTimeout(()=>setStatus('Prêt'),2500);
+  window.parent?.postMessage({type:'save_audit',payload:data},'*');
+}
+
+window.addEventListener('message',e=>{
+  if(e.data?.type==='load_audit') loadAuditData(e.data.payload);
+});
+
+function loadAuditData(d){
+  if(!d) return;
+  if(d.exist){ state.exist=d.exist; }
+  if(d.correct){ state.correct=d.correct; }
+  if(d.obsExist) document.getElementById('obs-exist').value=d.obsExist;
+  if(d.obsCorrect) document.getElementById('obs-correct').value=d.obsCorrect;
+  renderAll(); updateUI();
+  setStatus('Audit chargé','ok');
+}
+
+// Auto-load
+try{
+  const saved=localStorage.getItem('roselec_audit_v1');
+  if(saved){
+    const d=JSON.parse(saved);
+    setTimeout(()=>loadAuditData(d),300);
+  }
+} catch(e){}
+
+// ══ EXPORT PNG ═══════════════════════════════════════════════════════════
+function buildSideSVG(side){
+  const s=state[side];
+  let minX=9999,minY=9999,maxX=0,maxY=0;
+  const allDefs=[...AC_COMPS,...DC_COMPS];
+  s.components.forEach(c=>{
+    const d=allDefs.find(x=>x.t===c.type);if(!d)return;
+    minX=Math.min(minX,c.x);minY=Math.min(minY,c.y);
+    maxX=Math.max(maxX,c.x+d.w);maxY=Math.max(maxY,c.y+d.h+26);
+  });
+  s.wires.forEach(w=>{
+    minX=Math.min(minX,w.x1,w.x2);minY=Math.min(minY,w.y1,w.y2);
+    maxX=Math.max(maxX,w.x1,w.x2);maxY=Math.max(maxY,w.y1,w.y2);
+  });
+  if(minX===9999){minX=0;minY=0;maxX=300;maxY=200;}
+  const pad=30,W=maxX-minX+pad*2,H=maxY-minY+pad*2;
+  const dx=pad-minX,dy=pad-minY;
+  const cvs=getCanvas(side);
+  const content=cvs.innerHTML
+    .replace(/id="wp-[^"]*"[^>]*opacity="[^"]*"/g,'opacity="0"');
+  return {svg:`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"
+    viewBox="0 0 ${W} ${H}">
+    <rect width="${W}" height="${H}" fill="#f8f9fa"/>
+    <g transform="translate(${dx},${dy})">${content}</g>
+  </svg>`,W,H};
+}
+
+function exportAuditPNG(){
+  const title=prompt('Titre du rapport :','Audit coffret électrique')|| 'Audit';
+  const site=prompt('Site :','')||'';
+  const tech=prompt('Technicien :','')||'';
+  const now=new Date().toLocaleDateString('fr-FR');
+  const obsE=document.getElementById('obs-exist').value;
+  const obsC=document.getElementById('obs-correct').value;
+
+  const {svg:svgE,W:wE,H:hE}=buildSideSVG('exist');
+  const {svg:svgC,W:wC,H:hC}=buildSideSVG('correct');
+
+  const obsLineH=16;
+  const obsELines=(obsE||'(aucune observation)').split('\n');
+  const obsCLines=(obsC||'(aucun commentaire correctif)').split('\n');
+  const obsBlockH=Math.max(obsELines.length,obsCLines.length)*obsLineH+24;
+
+  const totalW=wE+wC+20;
+  const headerH=56;
+  const totalH=headerH+Math.max(hE,hC)+obsBlockH+20;
+  const colW=Math.floor(totalW/2)-10;
+
+  const obsEtxt=obsELines.map((l,i)=>
+    `<text x="10" y="${22+i*obsLineH}" font-size="11" fill="#B71C1C" font-family="sans-serif">${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</text>`
+  ).join('');
+  const obsCTxt=obsCLines.map((l,i)=>
+    `<text x="${colW+20}" y="${22+i*obsLineH}" font-size="11" fill="#1565C0" font-family="sans-serif">${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</text>`
+  ).join('');
+
+  const finalSVG=`<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="${totalH}" viewBox="0 0 ${totalW} ${totalH}">
+  <rect width="${totalW}" height="${totalH}" fill="#fff"/>
+  <!-- Header -->
+  <rect width="${totalW}" height="${headerH}" fill="#1565C0"/>
+  <text x="16" y="22" font-size="16" fill="#fff" font-family="sans-serif" font-weight="800">ROSELEC — Rapport d'audit</text>
+  <text x="16" y="42" font-size="11" fill="rgba(255,255,255,.8)" font-family="sans-serif">${title} · Site : ${site} · Technicien : ${tech} · ${now}</text>
+  <!-- Labels schémas -->
+  <rect x="0" y="${headerH}" width="${colW}" height="22" fill="#FFEBEE"/>
+  <text x="10" y="${headerH+15}" font-size="12" fill="#C62828" font-weight="700" font-family="sans-serif">📋 SCHÉMA EXISTANT</text>
+  <rect x="${colW+10}" y="${headerH}" width="${colW}" height="22" fill="#E3F2FD"/>
+  <text x="${colW+20}" y="${headerH+15}" font-size="12" fill="#1565C0" font-weight="700" font-family="sans-serif">✅ SCHÉMA CORRECTIF</text>
+  <!-- Schéma existant -->
+  <g transform="translate(0,${headerH+22})">${svgE}</g>
+  <!-- Schéma correctif -->
+  <g transform="translate(${colW+10},${headerH+22})">${svgC}</g>
+  <!-- Ligne séparatrice observations -->
+  <line x1="0" y1="${headerH+22+Math.max(hE,hC)+8}" x2="${totalW}" y2="${headerH+22+Math.max(hE,hC)+8}" stroke="#ddd" stroke-width="1"/>
+  <!-- Observations existant -->
+  <rect x="0" y="${headerH+22+Math.max(hE,hC)+10}" width="${colW}" height="${obsBlockH}" fill="#FFF8F8"/>
+  <text x="10" y="${headerH+22+Math.max(hE,hC)+24}" font-size="11" fill="#C62828" font-weight="700" font-family="sans-serif">⚠ Anomalies constatées</text>
+  <g transform="translate(0,${headerH+22+Math.max(hE,hC)+10})">${obsEtxt}</g>
+  <!-- Observations correctif -->
+  <rect x="${colW+10}" y="${headerH+22+Math.max(hE,hC)+10}" width="${colW}" height="${obsBlockH}" fill="#F8FCFF"/>
+  <text x="${colW+20}" y="${headerH+22+Math.max(hE,hC)+24}" font-size="11" fill="#1565C0" font-weight="700" font-family="sans-serif">✅ Actions correctives</text>
+  <g transform="translate(0,${headerH+22+Math.max(hE,hC)+10})">${obsCTxt}</g>
+</svg>`;
+
+  const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas');
+    c.width=img.width*2; c.height=img.height*2;
+    const ctx=c.getContext('2d'); ctx.scale(2,2); ctx.drawImage(img,0,0);
+    const a=document.createElement('a');
+    a.href=c.toDataURL('image/png');
+    a.download=`ROSELEC_Audit_${site||'site'}_${Date.now()}.png`;
+    a.click();
+    setStatus('Rapport PNG exporté','ok');
+    window.parent?.postMessage({type:'audit_export',data:finalSVG},'*');
+  };
+  img.src=URL.createObjectURL(new Blob([finalSVG],{type:'image/svg+xml'}));
+}
+
+// ══ RAPPORT WHATSAPP AUDIT ════════════════════════════════════════════════
+function showRapportAudit(){
+  previewAudit();
+  document.getElementById('mo-rapport').style.display='flex';
+}
+
+function buildAuditMsg(){
+  const tech=document.getElementById('rp-tech').value||'Technicien';
+  const site=document.getElementById('rp-site').value||'Site';
+  const prio=document.getElementById('rp-prio').value;
+  const obsE=document.getElementById('obs-exist').value.trim();
+  const obsC=document.getElementById('obs-correct').value.trim();
+  const now=new Date();
+  const date=now.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const heure=now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+
+  const nExist=state.exist.components.length;
+  const nCorrect=state.correct.components.length;
+
+  let msg=
+`🔍 *ROSELEC — Rapport d'audit électrique*
+━━━━━━━━━━━━━━━━━━━━
+👷 Technicien : *${tech}*
+📍 Site : *${site}*
+📅 Date : ${date} à ${heure}
+⚡ Priorité : ${prio}
+━━━━━━━━━━━━━━━━━━━━
+📋 *Schéma existant :* ${nExist} composant(s)
+✅ *Schéma correctif :* ${nCorrect} composant(s)
+━━━━━━━━━━━━━━━━━━━━`;
+
+  if(obsE){
+    msg+=`\n⚠️ *Anomalies constatées :*\n${obsE}`;
+    msg+='\n━━━━━━━━━━━━━━━━━━━━';
+  }
+  if(obsC){
+    msg+=`\n🔧 *Actions correctives proposées :*\n${obsC}`;
+    msg+='\n━━━━━━━━━━━━━━━━━━━━';
+  }
+  msg+=`\n_Rapport généré avec ROSELEC · MTN Congo Zone Sud_`;
+  return msg;
+}
+
+function previewAudit(){
+  document.getElementById('audit-preview').textContent=buildAuditMsg();
+}
+
+function openAuditWhatsApp(){
+  window.open('https://wa.me/?text='+encodeURIComponent(buildAuditMsg()),'_blank');
+}
+
+function exportAuditAndWhatsApp(){
+  exportAuditPNG();
+  setTimeout(()=>openAuditWhatsApp(),1400);
+  document.getElementById('mo-rapport').style.display='none';
+}
+
+// ══ RESIZE SÉPARATEUR ════════════════════════════════════════════════════
+let resizing=false, resizeStartX=0;
+let leftW=50;
+
+function startResize(e){
+  resizing=true; resizeStartX=e.clientX;
+  document.addEventListener('mousemove',doResize);
+  document.addEventListener('mouseup',stopResize);
+}
+function doResize(e){
+  if(!resizing)return;
+  const dual=document.querySelector('.dual');
+  const tw=dual.offsetWidth;
+  const dx=e.clientX-resizeStartX;
+  leftW=Math.min(80,Math.max(20,leftW+dx/tw*100));
+  resizeStartX=e.clientX;
+  document.getElementById('panel-exist').style.flex='none';
+  document.getElementById('panel-exist').style.width=leftW+'%';
+  document.getElementById('panel-correct').style.flex='1';
+}
+function stopResize(){
+  resizing=false;
+  document.removeEventListener('mousemove',doResize);
+  document.removeEventListener('mouseup',stopResize);
+}
+
+// ══ INIT ═════════════════════════════════════════════════════════════════
+buildPalette(); buildWirePal(); setMode('add'); setActiveCanvas('exist');
+setStatus('Prêt — cliquer dans un canvas pour commencer');
+</script>
+</body>
+</html>

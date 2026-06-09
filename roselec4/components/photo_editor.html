@@ -727,13 +727,31 @@ function renderLib(){
     <div id="clab" style="font-size:9px;color:var(--text3);margin-bottom:6px">${activeCable.l}</div>`;
 
   const comps=LIBRARY[activeTab]||[];
-  body.innerHTML+=`<div class="ls-title">Composants</div>`;
+  const secTitle=document.createElement('div');
+  secTitle.className='ls-title';secTitle.textContent='Composants';body.appendChild(secTitle);
+
   comps.forEach(comp=>{
-    body.innerHTML+=`<div class="comp-card" onclick="addItem('${comp.id}','${activeTab}')" draggable="true"
-      ondragstart="event.dataTransfer.setData('cid','${comp.id}');event.dataTransfer.setData('ctab','${activeTab}')">
-      <div class="comp-thumb">${comp.svg}</div>
-      <div class="comp-meta"><div class="comp-name">${comp.name}</div><div class="comp-ref">${comp.ref}</div></div>
-    </div>`;
+    const card=document.createElement('div');
+    card.className='comp-card';card.draggable=true;
+    card.addEventListener('click',()=>addItem(comp.id,activeTab));
+    card.addEventListener('dragstart',e=>{
+      e.dataTransfer.setData('cid',comp.id);
+      e.dataTransfer.setData('ctab',activeTab);
+    });
+    const thumb=document.createElement('div');
+    thumb.className='comp-thumb';
+    if(comp.isPhoto&&comp.imgSrc){
+      const img=document.createElement('img');img.src=comp.imgSrc;img.alt=comp.name;
+      thumb.appendChild(img);
+    } else {
+      thumb.innerHTML=comp.svg||'';
+    }
+    const meta=document.createElement('div');meta.className='comp-meta';
+    const nm=document.createElement('div');nm.className='comp-name';nm.textContent=comp.name;
+    const rf=document.createElement('div');rf.className='comp-ref';rf.textContent=comp.ref;
+    meta.appendChild(nm);meta.appendChild(rf);
+    card.appendChild(thumb);card.appendChild(meta);
+    body.appendChild(card);
   });
 
   // Palette câbles
@@ -1242,15 +1260,14 @@ function exportJSON(){
 function shareWA(){
   const site=document.getElementById('ex-s').value||'Site';
   const tech=document.getElementById('ex-tech').value||'Tech';
-  const states=items.map(i=>({ok:'✅',warn:'⚠️',crit:'❌'}[i.state||'ok']+' '+i.label+(i.ampere?' ('+i.ampere+')':'')).join('\n  ');
+  const states=items.map(i=>({ok:'✅',warn:'⚠️',crit:'❌'}[i.state||'ok']+' '+i.label+(i.ampere?' ('+i.ampere+')':''))).join('\n  ');
   const winfo=wires.map(w=>w.colorLabel+(w.section?' '+w.section:'')+(w.distance?' '+w.distance:'')).join(', ');
   const msg=`⚡ *ROSELEC — Schéma photo-réaliste*\n━━━━━━━━━━━━━━━━━━━━\n👷 *${tech}* · 📍 *${site}*\n📅 ${new Date().toLocaleString('fr-FR')}\n━━━━━━━━━━━━━━━━━━━━\n📦 *${items.length} composant(s) :*\n  ${states||'aucun'}\n🔌 *${wires.length} câble(s) :* ${winfo||'aucun'}\n━━━━━━━━━━━━━━━━━━━━\n_ROSELEC · MTN Congo Zone Sud_`;
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
 // INIT
-window.addEventListener('load', function() {
-  renderLib();
-  setMode('select');
-  setStatus('Prêt — glisser les composants ou cliquer pour placer');
-});
+renderLib();setMode('select');setStatus('Prêt — glisser les composants ou cliquer pour placer');
+</script>
+</body>
+</html>

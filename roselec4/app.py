@@ -1,5 +1,7 @@
 """
-ROSELEC v1.1 — app.py corrigé
+ROSELEC v1.1
+Schémas de coffrets électriques AC + DC/Rectifier — Claude Vision
+Accès libre — saisie du nom uniquement — Stockage Supabase
 """
 
 import streamlit as st
@@ -25,7 +27,9 @@ st.markdown("""
 #MainMenu,header,footer{visibility:hidden}
 .block-container{padding:0 !important;max-width:100% !important}
 .stApp{background:#f4f6f9}
-.re-header{background:#1565C0;padding:12px 24px;display:flex;align-items:center;gap:14px}
+.re-header{
+  background:#1565C0;
+  padding:12px 24px;display:flex;align-items:center;gap:14px}
 .re-logo{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1}
 .re-logo span{color:#FFC107}
 .re-tagline{font-size:12px;color:rgba(255,255,255,.7);line-height:1.3}
@@ -42,6 +46,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  ÉCRAN D'ACCUEIL — saisie du nom
+# ══════════════════════════════════════════════════════════════════════════════
 def show_welcome():
     st.markdown("""
     <div class="welcome-wrap">
@@ -49,9 +56,14 @@ def show_welcome():
       <div class="wsub">Schémas de coffrets électriques · MTN Congo Zone Sud</div>
     </div>
     """, unsafe_allow_html=True)
+
     _, col, _ = st.columns([1, 2, 1])
     with col:
-        name = st.text_input("Votre nom", placeholder="Ex : Hilario, Christ, Elvis…", max_chars=40)
+        name = st.text_input(
+            "Votre nom",
+            placeholder="Ex : Hilario, Christ, Elvis…",
+            max_chars=40,
+        )
         if st.button("Accéder à l'application →", type="primary", use_container_width=True):
             if not name.strip():
                 st.error("Saisir votre nom pour continuer.")
@@ -69,9 +81,12 @@ if "tech_name" not in st.session_state:
     show_welcome()
     st.stop()
 
+
+# ── UTILISATEUR IDENTIFIÉ ────────────────────────────────────────────────────
 tech_name = st.session_state["tech_name"]
 is_super  = tech_name.strip().lower() == SUPERVISOR_NAME.lower()
 
+# ── HEADER ───────────────────────────────────────────────────────────────────
 st.markdown(f"""
 <div class="re-header">
   <div>
@@ -82,27 +97,39 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  LAYOUT
+# ══════════════════════════════════════════════════════════════════════════════
 col_ctrl, col_editor = st.columns([1, 3], gap="small")
 
 with col_ctrl:
 
+    # Changer de nom
     if st.button("🔄 Changer de nom", use_container_width=True):
-        for k in ["tech_name","ai_result","load_schema","send_ai","pending_inject"]:
+        for k in ["tech_name","ai_result","load_schema","send_ai"]:
             st.session_state.pop(k, None)
         st.rerun()
 
     st.markdown("---")
+
+    # ── ANALYSE PHOTOS ───────────────────────────────────────────────────────
     st.markdown("### 📷 Analyser un coffret")
 
-    mode_choice = st.radio("Type",
+    mode_choice = st.radio(
+        "Type",
         ["⚡ AC — Coffret BT", "🔋 DC — Rectifier 48V", "🔍 Auto"],
-        horizontal=True, label_visibility="collapsed")
+        horizontal=True,
+        label_visibility="collapsed",
+    )
     mode_key = "ac" if "AC" in mode_choice else "dc" if "DC" in mode_choice else "auto"
 
-    uploaded = st.file_uploader("Photos (1 à 4)",
+    uploaded = st.file_uploader(
+        "Photos (1 à 4)",
         type=["jpg","jpeg","png","webp"],
         accept_multiple_files=True,
-        label_visibility="collapsed")
+        label_visibility="collapsed",
+    )
 
     if uploaded:
         cols_img = st.columns(min(len(uploaded), 2))
@@ -129,6 +156,7 @@ with col_ctrl:
         except Exception as e:
             st.error(f"Erreur : {e}")
 
+    # Résultats IA
     if "ai_result" in st.session_state:
         res = st.session_state["ai_result"]
         if "error" not in res:
@@ -146,24 +174,30 @@ with col_ctrl:
                     f"<b>{'🔋' if is_dc else '⚡'} {t}</b> · {v}"
                     f"{'<br>'+cap if cap else ''}"
                     f"{'<br><span style=\"color:#555\">'+obs+'</span>' if obs else ''}"
-                    f"</div>", unsafe_allow_html=True)
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
             for c in res.get("composants", []):
-                e_icon = {"ok":"✅","alarme":"⚠️","defaut":"🔴","hs":"❌","suspect":"⚠️"}.get(c.get("etat","ok"),"✅")
+                e_icon = {"ok":"✅","alarme":"⚠️","defaut":"🔴",
+                          "hs":"❌","suspect":"⚠️"}.get(c.get("etat","ok"),"✅")
                 val   = c.get("valeur") or c.get("amperage","")
                 parts = [p for p in [val, c.get("marque",""), c.get("ref","")] if p]
                 st.markdown(
                     f"{e_icon} **{c.get('label', c.get('type','?'))}**  \n"
                     f"<small style='color:#777'>{' · '.join(parts)}</small>",
-                    unsafe_allow_html=True)
+                    unsafe_allow_html=True,
+                )
             with st.expander("JSON brut", expanded=False):
                 st.json(res)
             st.divider()
             if st.button("➡️ Envoyer vers l'éditeur", type="primary", use_container_width=True):
-                st.session_state["pending_inject"] = json.dumps(res, ensure_ascii=False)
+                st.session_state["send_ai"] = True
                 st.rerun()
 
     st.markdown("---")
-    st.markdown("### 🗂 Mes schémas")
+
+    # ── MES SCHÉMAS ──────────────────────────────────────────────────────────
+    st.markdown(f"### 🗂 Mes schémas")
 
     try:
         import db as database
@@ -173,9 +207,9 @@ with col_ctrl:
 
     if my_schemas:
         for s in my_schemas:
-            updated = s.get("updated_at","")[:10]
-            is_dc_s = s.get("type") == "dc"
-            c1, c2  = st.columns([5, 1])
+            updated  = s.get("updated_at","")[:10]
+            is_dc_s  = s.get("type") == "dc"
+            c1, c2   = st.columns([5, 1])
             with c1:
                 lbl = (f"{'🔋' if is_dc_s else '⚡'} **{s.get('title','—')}**  \n"
                        f"<small>{s.get('site','')} · {updated}</small>")
@@ -194,6 +228,7 @@ with col_ctrl:
     if st.button("🔄 Actualiser", use_container_width=True):
         st.rerun()
 
+    # ── VUE SUPERVISEUR ──────────────────────────────────────────────────────
     if is_super:
         st.markdown("---")
         st.markdown("### 👑 Tous les schémas — équipe")
@@ -202,6 +237,7 @@ with col_ctrl:
             all_s = database.list_all_schemas()
         except Exception:
             all_s = []
+
         if all_s:
             by_tech: dict = {}
             for s in all_s:
@@ -212,7 +248,8 @@ with col_ctrl:
                         is_dc_s = s.get("type") == "dc"
                         if st.button(
                             f"{'🔋' if is_dc_s else '⚡'} {s.get('title','—')} · {s.get('site','')}",
-                            key="sv_"+s["id"], use_container_width=True):
+                            key="sv_"+s["id"], use_container_width=True,
+                        ):
                             full = database.load_schema(s["id"])
                             if full:
                                 st.session_state["load_schema"] = full
@@ -224,40 +261,46 @@ with col_ctrl:
     with st.expander("📖 Guide rapide", expanded=False):
         st.markdown("""
 **Workflow :**
-1. Charger 1-4 photos → **Analyser**
-2. **Envoyer vers l'éditeur**
-3. Cliquer les chips pour placer
-4. Mode **Fil** `W` → tracer connexions
-5. **💾 Sauvegarder**
+1. Charger 1-4 photos du coffret
+2. Choisir AC ou DC → **Analyser**
+3. **Envoyer vers l'éditeur**
+4. Cliquer les chips pour placer les composants
+5. Mode **Fil** `W` → cliquer départ → arrivée
+6. **💾 Sauvegarder** dans la barre de l'éditeur
 
-**Superviseur :** taper `Rosly` → accès global
+**Raccourcis éditeur :**
+`S` sélect · `A` ajout · `W` fil · `T` texte
+`Suppr` effacer · `Ctrl+Z` annuler · Clic droit annuler fil
+
+**Superviseur :** taper `Rosly` comme nom → accès à tous les schémas
         """)
 
 
 # ── COLONNE DROITE — ONGLETS ──────────────────────────────────────────────────
+ROSCAN_HTML      = Path(__file__).parent / "components" / "roscan.html"
+PHOTO_EDITOR_HTML = Path(__file__).parent / "components" / "photo_editor.html"
+
 with col_editor:
-    tab_editor, tab_audit = st.tabs([
+    tab_editor, tab_audit, tab_roscan, tab_photo = st.tabs([
         "⚡ Éditeur de schéma",
         "🔍 Audit — Existant + Correctif",
+        "📸 ROSCAN — Rapport terrain",
+        "🖼 Éditeur photo-réaliste",
     ])
 
+    # ── ONGLET 1 : ÉDITEUR ───────────────────────────────────────────────────
     with tab_editor:
         editor_html = EDITOR_HTML.read_text("utf-8")
         inject = ""
 
-        if "pending_inject" in st.session_state:
-            payload = st.session_state.pop("pending_inject")
-            inject += f"""<script>
-            var _att = 0;
-            var _tmr = setInterval(function(){{
-              _att++;
-              var frames = document.querySelectorAll('iframe');
-              for(var i=0;i<frames.length;i++){{
-                try{{ frames[i].contentWindow.postMessage({{type:'ai_result',payload:{payload}}},'*'); }}catch(e){{}}
-              }}
-              if(_att>15) clearInterval(_tmr);
-            }}, 400);
-            </script>"""
+        if st.session_state.pop("send_ai", False) and "ai_result" in st.session_state:
+            payload = json.dumps(st.session_state["ai_result"], ensure_ascii=False)
+            inject += f"""<script>(function(){{
+              var p={payload};
+              function s(){{var f=document.querySelector('iframe');
+                if(f&&f.contentWindow)f.contentWindow.postMessage({{type:'ai_result',payload:p}},'*');}}
+              setTimeout(s,600);setTimeout(s,1500);
+            }})();</script>"""
 
         if "load_schema" in st.session_state:
             payload = json.dumps(st.session_state.pop("load_schema"), ensure_ascii=False)
@@ -272,25 +315,95 @@ with col_editor:
             st.markdown(inject, unsafe_allow_html=True)
 
         stc.html(editor_html, height=730, scrolling=False)
-        st.caption(f"💾 Sauvegarder dans la barre · schémas sous **{tech_name}**")
+        st.caption(
+            f"💾 Bouton **Sauvegarder** dans la barre · "
+            f"schémas enregistrés sous **{tech_name}**"
+        )
 
+    # ── ONGLET 2 : AUDIT EXISTANT + CORRECTIF ───────────────────────────────
     with tab_audit:
         st.markdown(
             "<div style='background:#E3F2FD;border-left:4px solid #1565C0;"
-            "border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;margin-bottom:10px'>"
-            "<b>🔍 Module Audit</b> — Schéma existant + Schéma correctif côte à côte.<br>"
-            "<small style='color:#555'>Utiliser <b>⊕ Copier → Correctif</b> comme point de départ.</small>"
-            "</div>", unsafe_allow_html=True)
+            "border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;"
+            "margin-bottom:10px'>"
+            "<b>🔍 Module Audit</b> — Dessiner le schéma existant (état actuel) "
+            "et le schéma correctif (proposition d'amélioration) côte à côte.<br>"
+            "<small style='color:#555'>Utiliser <b>⊕ Copier → Correctif</b> pour démarrer "
+            "le correctif depuis l'existant, puis modifier.</small>"
+            "</div>",
+            unsafe_allow_html=True
+        )
 
+        # Chargement d'un audit sauvegardé
         if "load_audit" in st.session_state:
             payload = json.dumps(st.session_state.pop("load_audit"), ensure_ascii=False)
             st.markdown(
-                f"""<script>(function(){{var p={payload};
+                f"""<script>(function(){{
+                  var p={payload};
                   function s(){{var f=document.querySelectorAll('iframe')[1];
                     if(f&&f.contentWindow)f.contentWindow.postMessage({{type:'load_audit',payload:p}},'*');}}
                   setTimeout(s,800);setTimeout(s,1800);
-                }})();</script>""", unsafe_allow_html=True)
+                }})();</script>""",
+                unsafe_allow_html=True
+            )
 
         audit_html = AUDIT_HTML.read_text("utf-8")
         stc.html(audit_html, height=760, scrolling=False)
-        st.caption("💾 Sauvegarder · 🖼 Exporter PNG · 📲 Rapport WhatsApp")
+
+        st.caption(
+            "💾 **Sauvegarder audit** dans la barre · "
+            "🖼 **Exporter PDF/PNG** génère un document complet · "
+            "📲 **Rapport WhatsApp** envoie le résumé dans le groupe"
+        )
+
+    # ── ONGLET 3 : ROSCAN RAPPORT TERRAIN ────────────────────────────────────
+    with tab_roscan:
+        st.markdown(
+            "<div style='background:#E8F5E9;border-left:4px solid #2E7D32;"
+            "border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;"
+            "margin-bottom:10px'>"
+            "<b>📸 ROSCAN — Rapport terrain pour le management</b><br>"
+            "Charger les photos prises sur le site → Claude IA analyse et génère un rapport "
+            "professionnel avec photos annotées, inventaire des équipements, score d'état "
+            "et recommandations. Exportable en PDF et partageable sur WhatsApp."
+            "</div>",
+            unsafe_allow_html=True
+        )
+
+        # Injecter le nom du technicien dans ROSCAN
+        inject_tech = f"""<script>(function(){{
+          function s(){{
+            var frames=document.querySelectorAll('iframe');
+            for(var i=0;i<frames.length;i++){{
+              try{{frames[i].contentWindow.postMessage(
+                {{type:'set_tech',name:'{tech_name}'}},'*');}}catch(e){{}}
+            }}
+          }}
+          setTimeout(s,600);setTimeout(s,1400);
+        }})();</script>"""
+        st.markdown(inject_tech, unsafe_allow_html=True)
+
+        roscan_html = ROSCAN_HTML.read_text("utf-8")
+        stc.html(roscan_html, height=800, scrolling=True)
+
+        st.caption(
+            "📄 **Exporter PDF** → Ctrl+P dans le navigateur · "
+            "📲 **WhatsApp** → envoie le résumé exécutif directement dans le groupe management"
+        )
+
+    # ── ONGLET 4 : ÉDITEUR PHOTO-RÉALISTE ────────────────────────────────────
+    with tab_photo:
+        st.markdown(
+            "<div style='background:#E8F5E9;border-left:4px solid #2E7D32;"
+            "border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;"
+            "margin-bottom:10px'>"
+            "<b>🖼 Éditeur photo-réaliste</b> — Schémas avec les vraies images des équipements terrain.<br>"
+            "<small style='color:#555'>"
+            "Bibliothèque : CHNT CB-125/CB-60, TENGEN TGB1Z, HUA JIA HGM45, ZTE ZXD3000, "
+            "batteries VRLA, parafoudres XW2, borniers, antennes, RRU Huawei, ODU MW.<br>"
+            "Onglet <b>+Photo</b> : ajouter vos propres photos de terrain comme composants."
+            "</small></div>",
+            unsafe_allow_html=True
+        )
+        photo_html = PHOTO_EDITOR_HTML.read_text("utf-8")
+        stc.html(photo_html, height=760, scrolling=False)

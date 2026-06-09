@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROSCAN — Rapport terrain</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1565C0;--blue2:#0D47A1;--blue-bg:#E3F2FD;
+  --green:#1B5E20;--green-bg:#E8F5E9;
+  --amber:#E65100;--amber-bg:#FFF3E0;
+  --red:#B71C1C;--red-bg:#FFEBEE;
+  --gray:#424242;--gray-bg:#F5F5F5;
+  --bg:#f4f6f9;--card:#fff;
+  --border:#e0e4e8;--text:#1a1a1a;--text2:#555;--text3:#888;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--text);font-size:13px;min-height:100vh}
+
+/* HEADER */
+.header{background:var(--blue);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.logo{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.logo span{color:#FFC107}
+.header-sub{font-size:11px;color:rgba(255,255,255,.7)}
+.header-user{margin-left:auto;background:rgba(255,255,255,.15);border-radius:16px;
+  padding:3px 10px;font-size:12px;color:#fff}
+
+/* LAYOUT */
+.main{display:flex;gap:0;min-height:calc(100vh - 44px)}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);
+  padding:12px;flex-shrink:0;overflow-y:auto}
+.content{flex:1;padding:14px;overflow-y:auto}
+
+/* SIDEBAR */
+.sb-section{margin-bottom:14px}
+.sb-title{font-size:10px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:5px;
+  padding:8px 12px;border-radius:7px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);font-size:12px;cursor:pointer;
+  width:100%;margin-bottom:6px;transition:all .12s;font-weight:500}
+.btn:hover{background:var(--bg)}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-primary:hover{background:var(--blue2)}
+.btn-green{background:#2E7D32;color:#fff;border-color:#2E7D32}
+.btn-green:hover{background:var(--green)}
+.btn-wa{background:#25D366;color:#fff;border-color:#1ebe5d}
+.btn-red{background:#C62828;color:#fff;border-color:#C62828}
+
+input[type=file]{display:none}
+.upload-zone{border:2px dashed var(--border);border-radius:8px;padding:16px;
+  text-align:center;cursor:pointer;color:var(--text3);font-size:12px;
+  transition:border-color .15s;margin-bottom:8px}
+.upload-zone:hover{border-color:var(--blue)}
+.upload-zone.drag{border-color:var(--blue);background:var(--blue-bg)}
+
+.meta-row{margin-bottom:8px}
+.meta-row label{display:block;font-size:10px;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.meta-row input,.meta-row select,.meta-row textarea{
+  width:100%;padding:5px 8px;border:1px solid var(--border);
+  border-radius:5px;background:#fafafa;color:var(--text);font-size:12px}
+.meta-row textarea{resize:vertical;min-height:52px;line-height:1.4}
+
+.status-bar{display:flex;align-items:center;gap:6px;font-size:11px;
+  color:var(--text2);padding:6px 8px;background:var(--bg);
+  border-radius:5px;margin-bottom:8px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-idle{background:#aaa}.dot-ok{background:#2E7D32}
+.dot-busy{background:#EF9F27;animation:pulse .7s infinite alternate}
+@keyframes pulse{to{opacity:.3}}
+
+/* PHOTO THUMBNAILS */
+.photos-grid{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.photo-thumb{position:relative;width:60px;height:60px;border-radius:5px;overflow:hidden;
+  border:1px solid var(--border);cursor:pointer}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-thumb .del{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);
+  color:#fff;border:none;border-radius:3px;cursor:pointer;
+  font-size:10px;padding:1px 4px;line-height:1.4}
+.photo-thumb .num{position:absolute;bottom:2px;left:3px;background:rgba(0,0,0,.6);
+  color:#fff;font-size:9px;padding:1px 4px;border-radius:2px}
+
+/* RAPPORT CARDS */
+.report-header{background:var(--blue);color:#fff;border-radius:10px 10px 0 0;
+  padding:16px 20px;margin-bottom:0}
+.report-header .rh-title{font-size:18px;font-weight:700;margin-bottom:2px}
+.report-header .rh-sub{font-size:12px;opacity:.8}
+.report-meta{background:var(--blue2);color:#fff;padding:10px 20px;
+  display:flex;gap:24px;flex-wrap:wrap;font-size:12px;margin-bottom:12px}
+.report-meta span{opacity:.9}
+.report-meta b{opacity:1}
+
+.score-banner{display:flex;align-items:center;gap:16px;padding:14px 20px;
+  border-radius:8px;margin-bottom:14px;border:2px solid}
+.score-ok{background:var(--green-bg);border-color:#4CAF50;color:var(--green)}
+.score-warn{background:var(--amber-bg);border-color:#FF9800;color:var(--amber)}
+.score-crit{background:var(--red-bg);border-color:#F44336;color:var(--red)}
+.score-num{font-size:36px;font-weight:800;line-height:1}
+.score-label{font-size:14px;font-weight:500}
+.score-detail{font-size:11px;opacity:.8;margin-top:2px}
+
+.section-card{background:var(--card);border-radius:8px;border:1px solid var(--border);
+  margin-bottom:12px;overflow:hidden}
+.section-title{padding:10px 14px;font-size:13px;font-weight:600;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:6px}
+
+/* PHOTOS ANNOTÉES */
+.photo-annotated{position:relative;display:inline-block;margin:8px;
+  border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.photo-annotated img{display:block;max-width:100%;max-height:280px;width:auto}
+.photo-annotations{position:absolute;inset:0;pointer-events:none}
+.annotation-marker{position:absolute;transform:translate(-50%,-50%);
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,.8);
+  pointer-events:all;cursor:pointer;transition:transform .1s}
+.annotation-marker:hover{transform:translate(-50%,-50%) scale(1.2)}
+.ann-ok{background:#2E7D32}.ann-warn{background:#EF6C00}.ann-crit{background:#C62828}
+.annotation-tooltip{position:absolute;background:#1a1a1a;color:#fff;
+  padding:5px 9px;border-radius:5px;font-size:11px;white-space:nowrap;
+  pointer-events:none;z-index:10;display:none;max-width:200px;white-space:normal;
+  line-height:1.4}
+.annotation-marker:hover + .annotation-tooltip{display:block}
+
+/* TABLEAU COMPOSANTS */
+.comp-table{width:100%;border-collapse:collapse;font-size:12px}
+.comp-table th{background:var(--bg);padding:7px 10px;text-align:left;
+  font-weight:500;font-size:11px;color:var(--text2);
+  border-bottom:1px solid var(--border)}
+.comp-table td{padding:7px 10px;border-bottom:1px solid var(--border)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:hover td{background:#fafafa}
+.badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:600}
+.b-ok{background:var(--green-bg);color:var(--green)}
+.b-warn{background:var(--amber-bg);color:var(--amber)}
+.b-crit{background:var(--red-bg);color:var(--red)}
+.b-gray{background:var(--gray-bg);color:var(--gray)}
+
+/* RECOMMANDATIONS */
+.reco-item{display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border)}
+.reco-item:last-child{border-bottom:none}
+.reco-prio{width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
+.reco-text{flex:1;font-size:12px;line-height:1.5}
+.reco-text b{font-size:13px;display:block;margin-bottom:2px}
+
+/* PHOTOS GRID RAPPORT */
+.photos-report{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px}
+.photo-report-item{flex:0 0 calc(50% - 4px);position:relative;
+  border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.photo-report-item img{width:100%;height:180px;object-fit:cover;display:block}
+.photo-report-caption{background:rgba(0,0,0,.65);color:#fff;
+  padding:5px 8px;font-size:11px;position:absolute;bottom:0;left:0;right:0}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3)}
+.empty-state .big{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:13px;line-height:1.6}
+
+/* ANALYSE AI EN COURS */
+.analyzing{text-align:center;padding:32px;background:var(--blue-bg);
+  border-radius:8px;color:var(--blue2)}
+.analyzing .spin{font-size:32px;animation:spin 1.2s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* IMPRESSION */
+@media print{
+  .sidebar,.header .header-user,.btn{display:none !important}
+  .main{display:block}.content{padding:0}
+  .section-card{break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">ROS<span>CAN</span></div>
+    <div class="header-sub">Rapport terrain — Remontée d'installation au management</div>
+  </div>
+  <div class="header-user" id="header-user">👷 Technicien</div>
+</div>
+
+<div class="main">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <div class="sb-section">
+    <div class="sb-title">Infos du rapport</div>
+    <div class="meta-row">
+      <label>Technicien</label>
+      <input id="m-tech" placeholder="Votre nom" oninput="updateHeader()">
+    </div>
+    <div class="meta-row">
+      <label>Site / Localité</label>
+      <input id="m-site" placeholder="Ex: DOLISIE4">
+    </div>
+    <div class="meta-row">
+      <label>Type d'équipement</label>
+      <select id="m-type">
+        <option value="ac">Coffret AC / Tableau BT</option>
+        <option value="dc">Armoire DC / Rectifier 48V</option>
+        <option value="hybrid">Installation hybride AC+DC</option>
+        <option value="genset">Groupe électrogène</option>
+        <option value="solar">Installation solaire</option>
+        <option value="autre">Autre</option>
+      </select>
+    </div>
+    <div class="meta-row">
+      <label>Observations générales</label>
+      <textarea id="m-obs" placeholder="État général, conditions, remarques..."></textarea>
+    </div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-title">Photos terrain</div>
+    <label class="upload-zone" id="upload-zone"
+      ondragover="this.classList.add('drag');event.preventDefault()"
+      ondragleave="this.classList.remove('drag')"
+      ondrop="handleDrop(event)">
+      <input type="file" id="file-input" accept="image/*" multiple onchange="handleFiles(this.files)">
+      <div style="font-size:20px;margin-bottom:4px">📷</div>
+      <div>Cliquer ou glisser-déposer<br>les photos du terrain</div>
+      <div style="font-size:10px;margin-top:4px;color:#aaa">JPG, PNG, WEBP · Max 4 photos</div>
+    </label>
+    <div class="photos-grid" id="photos-grid"></div>
+    <div class="status-bar">
+      <div class="dot dot-idle" id="status-dot"></div>
+      <span id="status-text">En attente de photos</span>
+    </div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-title">Actions</div>
+    <button class="btn btn-primary" onclick="analyzeWithClaude()" id="btn-analyze" disabled>
+      🤖 Analyser avec Claude IA
+    </button>
+    <button class="btn btn-green" onclick="exportPDF()" id="btn-pdf" disabled>
+      📄 Exporter rapport PDF
+    </button>
+    <button class="btn btn-wa" onclick="shareWhatsApp()" id="btn-wa" disabled>
+      📲 Partager WhatsApp
+    </button>
+    <button class="btn" onclick="resetAll()" style="color:#C62828;border-color:#C62828">
+      🗑 Nouveau rapport
+    </button>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-title">Clé API Claude</div>
+    <input type="password" id="api-key" placeholder="sk-ant-..." style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px;background:#fafafa">
+    <div style="font-size:10px;color:var(--text3);margin-top:3px">Stockée localement, jamais envoyée</div>
+  </div>
+
+</div>
+
+<!-- CONTENU PRINCIPAL -->
+<div class="content" id="content">
+
+  <!-- ÉTAT VIDE -->
+  <div class="empty-state" id="empty-state">
+    <div class="big">📸</div>
+    <p><strong>Bienvenue dans ROSCAN</strong><br>
+    Outil de remontée d'installations terrain MTN Congo Zone Sud<br><br>
+    1. Remplir les infos du rapport (gauche)<br>
+    2. Charger les photos prises sur le site<br>
+    3. Lancer l'analyse Claude IA<br>
+    4. Exporter le rapport PDF pour le management</p>
+  </div>
+
+  <!-- RAPPORT (généré après analyse) -->
+  <div id="report-area" style="display:none"></div>
+
+</div>
+</div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────────
+let photos = [];         // {file, dataUrl, name}
+let analysisResult = null;
+let annotations = [];    // par photo
+
+// ── UPLOAD ────────────────────────────────────────────────────────────────
+document.getElementById('upload-zone').onclick = () =>
+  document.getElementById('file-input').click();
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+}
+
+function handleFiles(files) {
+  const arr = Array.from(files).slice(0, 4 - photos.length);
+  let loaded = 0;
+  arr.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      photos.push({file: f, dataUrl: e.target.result, name: f.name});
+      loaded++;
+      if(loaded === arr.length) renderThumbs();
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderThumbs() {
+  const grid = document.getElementById('photos-grid');
+  grid.innerHTML = '';
+  photos.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'photo-thumb';
+    div.innerHTML = `<img src="${p.dataUrl}" alt="photo ${i+1}">
+      <button class="del" onclick="removePhoto(${i})">✕</button>
+      <span class="num">${i+1}</span>`;
+    grid.appendChild(div);
+  });
+  document.getElementById('btn-analyze').disabled = photos.length === 0;
+  setStatus(photos.length > 0 ? `${photos.length} photo(s) chargée(s)` : 'En attente de photos',
+    photos.length > 0 ? 'ok' : 'idle');
+}
+
+function removePhoto(i) {
+  photos.splice(i, 1);
+  renderThumbs();
+}
+
+function setStatus(msg, type='idle') {
+  document.getElementById('status-text').textContent = msg;
+  const d = document.getElementById('status-dot');
+  d.className = 'dot dot-' + type;
+}
+
+function updateHeader() {
+  const n = document.getElementById('m-tech').value || 'Technicien';
+  document.getElementById('header-user').textContent = '👷 ' + n;
+}
+
+// ── ANALYSE CLAUDE ────────────────────────────────────────────────────────
+async function analyzeWithClaude() {
+  if(photos.length === 0) return;
+
+  const apiKey = document.getElementById('api-key').value.trim()
+    || localStorage.getItem('roscan_apikey') || '';
+  if(!apiKey) {
+    alert('Renseigner la clé API Claude dans le panneau gauche.');
+    return;
+  }
+  localStorage.setItem('roscan_apikey', apiKey);
+
+  const site = document.getElementById('m-site').value || 'Site inconnu';
+  const type = document.getElementById('m-type').value;
+  const obs  = document.getElementById('m-obs').value;
+  const tech = document.getElementById('m-tech').value || 'Technicien';
+
+  // Afficher l'état d'analyse
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('report-area').style.display = 'block';
+  document.getElementById('report-area').innerHTML = `
+    <div class="analyzing">
+      <div class="spin">⚡</div>
+      <div style="margin-top:12px;font-size:14px;font-weight:500">Analyse en cours…</div>
+      <div style="font-size:12px;margin-top:4px;opacity:.7">Claude Vision analyse ${photos.length} photo(s) du site ${site}</div>
+    </div>`;
+
+  setStatus('Analyse IA en cours…', 'busy');
+  document.getElementById('btn-analyze').disabled = true;
+
+  const typeLabels = {
+    ac:'coffret AC/BT', dc:'armoire DC 48V rectifier télécom',
+    hybrid:'installation hybride AC+DC', genset:'groupe électrogène',
+    solar:'installation solaire', autre:'équipement électrique'
+  };
+
+  const prompt = `Tu es un expert en installations électriques pour sites de télécommunications MTN Congo.
+Analyse ces photos terrain d'un ${typeLabels[type] || 'équipement électrique'} du site "${site}".
+${obs ? 'Contexte technicien : ' + obs : ''}
+
+Pour chaque photo, identifie TOUS les équipements/composants visibles et leur position approximative (en % depuis le coin haut-gauche de l'image).
+
+Retourne UNIQUEMENT ce JSON valide (sans markdown) :
+{
+  "site": "${site}",
+  "type": "${type}",
+  "etat_global": "bon|degradé|critique",
+  "score": 85,
+  "resume_executif": "Résumé en 2-3 phrases pour le management",
+  "photos": [
+    {
+      "index": 0,
+      "description": "Vue d'ensemble du coffret principal",
+      "annotations": [
+        {
+          "x_pct": 45,
+          "y_pct": 30,
+          "label": "Disjoncteur général 63A",
+          "detail": "Schneider iC60N 63A 2P — État OK",
+          "etat": "ok"
+        },
+        {
+          "x_pct": 60,
+          "y_pct": 55,
+          "label": "Câblage dégradé",
+          "detail": "Isolation endommagée sur fil phase L1 — Risque court-circuit",
+          "etat": "critique"
+        }
+      ]
+    }
+  ],
+  "composants": [
+    {
+      "nom": "Disjoncteur général",
+      "ref": "Schneider iC60N 63A 2P",
+      "quantite": 1,
+      "etat": "ok",
+      "observation": "Fonctionnel, pas de trace de chauffe"
+    }
+  ],
+  "recommandations": [
+    {
+      "priorite": "haute",
+      "action": "Remplacer le câblage endommagé",
+      "detail": "Fil phase L1 avec isolation dégradée — intervention sous 48h",
+      "urgence": "48h"
+    }
+  ],
+  "points_conformite": [
+    {"point": "Protection différentielle", "status": "conforme"},
+    {"point": "Mise à la terre", "status": "non_conforme"}
+  ]
+}`;
+
+  // Construire le contenu avec images
+  const content = photos.map(p => ({
+    type: 'image',
+    source: {type: 'base64', media_type: 'image/jpeg',
+      data: p.dataUrl.split(',')[1]}
+  }));
+  content.push({type: 'text', text: prompt});
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 2000,
+        messages: [{role: 'user', content}]
+      })
+    });
+
+    const data = await resp.json();
+    if(data.error) throw new Error(data.error.message);
+
+    const raw = data.content[0].text.replace(/```json|```/g,'').trim();
+    analysisResult = JSON.parse(raw);
+    analysisResult._tech = tech;
+    analysisResult._date = new Date().toLocaleString('fr-FR');
+
+    renderReport(analysisResult);
+    setStatus('Analyse terminée — rapport généré', 'ok');
+    document.getElementById('btn-pdf').disabled = false;
+    document.getElementById('btn-wa').disabled = false;
+
+  } catch(e) {
+    document.getElementById('report-area').innerHTML = `
+      <div style="background:var(--red-bg);border:1px solid #f44336;border-radius:8px;
+        padding:16px;color:var(--red)">
+        <b>Erreur d'analyse</b><br>${e.message}
+      </div>`;
+    setStatus('Erreur : ' + e.message, 'idle');
+  }
+
+  document.getElementById('btn-analyze').disabled = false;
+}
+
+// ── RENDU DU RAPPORT ──────────────────────────────────────────────────────
+function renderReport(r) {
+  const scoreClass = r.score >= 75 ? 'score-ok' : r.score >= 50 ? 'score-warn' : 'score-crit';
+  const etatLabel  = r.etat_global === 'bon' ? 'BON ÉTAT' :
+                     r.etat_global === 'dégradé' ? 'ÉTAT DÉGRADÉ' : 'ÉTAT CRITIQUE';
+  const prioColors = {haute:'#C62828', moyenne:'#EF6C00', basse:'#1565C0'};
+  const conformIcons = {conforme:'✅', non_conforme:'❌', partiel:'⚠️'};
+
+  let html = `
+  <!-- EN-TÊTE RAPPORT -->
+  <div class="report-header">
+    <div class="rh-title">Rapport d'installation terrain — ${r.site}</div>
+    <div class="rh-sub">ROSCAN · MTN Congo Zone Sud · Généré le ${r._date}</div>
+  </div>
+  <div class="report-meta">
+    <span>👷 <b>${r._tech}</b></span>
+    <span>📍 <b>${r.site}</b></span>
+    <span>⚡ <b>${{ac:'Coffret AC',dc:'Armoire DC 48V',hybrid:'Hybride',genset:'Genset',solar:'Solaire'}[r.type]||r.type}</b></span>
+    <span>📅 <b>${r._date}</b></span>
+  </div>
+
+  <!-- SCORE GLOBAL -->
+  <div class="score-banner ${scoreClass}" style="margin:0 0 12px">
+    <div class="score-num">${r.score}<span style="font-size:18px">/100</span></div>
+    <div>
+      <div class="score-label">${etatLabel}</div>
+      <div class="score-detail">${r.resume_executif}</div>
+    </div>
+  </div>`;
+
+  // PHOTOS ANNOTÉES
+  html += `<div class="section-card">
+    <div class="section-title">📷 Photos terrain annotées</div>
+    <div style="padding:10px;display:flex;flex-wrap:wrap;gap:8px">`;
+
+  photos.forEach((p, idx) => {
+    const photoData = r.photos ? r.photos.find(x => x.index === idx) : null;
+    const annots = photoData ? (photoData.annotations || []) : [];
+    const desc   = photoData ? photoData.description : `Photo ${idx+1}`;
+
+    html += `<div style="flex:0 0 calc(50% - 4px);position:relative">
+      <div style="font-size:11px;font-weight:500;color:var(--text2);margin-bottom:4px">${desc}</div>
+      <div class="photo-annotated" style="display:block">
+        <img src="${p.dataUrl}" alt="${desc}" style="width:100%;border-radius:6px;display:block">
+        <div class="photo-annotations">`;
+
+    annots.forEach((a, ai) => {
+      const cls = a.etat === 'ok' ? 'ann-ok' : a.etat === 'critique' ? 'ann-crit' : 'ann-warn';
+      html += `<div class="annotation-marker ${cls}"
+          style="left:${a.x_pct}%;top:${a.y_pct}%"
+          title="${a.label}: ${a.detail}">${ai+1}</div>`;
+    });
+
+    html += `</div></div>`;
+
+    if(annots.length > 0) {
+      html += `<div style="margin-top:5px;font-size:11px">`;
+      annots.forEach((a, ai) => {
+        const col = a.etat === 'ok' ? 'var(--green)' :
+                    a.etat === 'critique' ? 'var(--red)' : 'var(--amber)';
+        html += `<div style="display:flex;gap:5px;margin-bottom:3px;align-items:flex-start">
+          <span style="width:16px;height:16px;border-radius:50%;background:${col};
+            color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;
+            justify-content:center;flex-shrink:0;margin-top:1px">${ai+1}</span>
+          <span><b>${a.label}</b> — ${a.detail}</span>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+    html += `</div>`;
+  });
+
+  html += `</div></div>`;
+
+  // TABLEAU COMPOSANTS
+  if(r.composants && r.composants.length > 0) {
+    html += `<div class="section-card">
+      <div class="section-title">🔧 Inventaire des équipements détectés</div>
+      <table class="comp-table">
+        <thead><tr>
+          <th>Équipement</th><th>Référence</th><th>Qté</th><th>État</th><th>Observation</th>
+        </tr></thead><tbody>`;
+
+    r.composants.forEach(c => {
+      const badgeCls = c.etat === 'ok' ? 'b-ok' :
+                       c.etat === 'critique' || c.etat === 'hs' ? 'b-crit' :
+                       c.etat === 'dégradé' || c.etat === 'suspect' ? 'b-warn' : 'b-gray';
+      const etatLabel = {ok:'✅ OK', critique:'❌ Critique', hs:'❌ Hors service',
+        dégradé:'⚠️ Dégradé', suspect:'⚠️ Suspect', alarme:'⚠️ Alarme'}[c.etat] || c.etat;
+      html += `<tr>
+        <td><b>${c.nom}</b></td>
+        <td style="color:var(--text2)">${c.ref||'—'}</td>
+        <td style="text-align:center">${c.quantite||1}</td>
+        <td><span class="badge ${badgeCls}">${etatLabel}</span></td>
+        <td style="color:var(--text2)">${c.observation||'—'}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  }
+
+  // RECOMMANDATIONS
+  if(r.recommandations && r.recommandations.length > 0) {
+    html += `<div class="section-card">
+      <div class="section-title">📋 Recommandations et actions correctives</div>`;
+
+    r.recommandations.forEach((rec, i) => {
+      const col = prioColors[rec.priorite] || '#1565C0';
+      const pLabel = {haute:'URGENT', moyenne:'MOYEN', basse:'FAIBLE'}[rec.priorite] || rec.priorite;
+      html += `<div class="reco-item">
+        <div class="reco-prio" style="background:${col}">${i+1}</div>
+        <div class="reco-text">
+          <b>${rec.action}</b>
+          ${rec.detail}
+          <div style="margin-top:4px;display:flex;gap:8px">
+            <span class="badge" style="background:${col}22;color:${col}">⚡ ${pLabel}</span>
+            ${rec.urgence ? `<span class="badge b-gray">⏱ ${rec.urgence}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // CONFORMITÉ
+  if(r.points_conformite && r.points_conformite.length > 0) {
+    html += `<div class="section-card">
+      <div class="section-title">✅ Points de conformité</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px">`;
+
+    r.points_conformite.forEach(p => {
+      const icon = conformIcons[p.status] || '⚪';
+      const bg = p.status === 'conforme' ? 'var(--green-bg)' :
+                 p.status === 'non_conforme' ? 'var(--red-bg)' : 'var(--amber-bg)';
+      const col = p.status === 'conforme' ? 'var(--green)' :
+                  p.status === 'non_conforme' ? 'var(--red)' : 'var(--amber)';
+      html += `<div style="background:${bg};color:${col};border-radius:6px;
+        padding:6px 10px;font-size:12px;border:1px solid ${col}22">
+        ${icon} ${p.point}
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // PIED DE PAGE
+  html += `<div style="background:var(--gray-bg);border-radius:8px;padding:10px 14px;
+    font-size:11px;color:var(--text3);text-align:center;margin-top:4px">
+    Rapport généré par ROSCAN · MTN Congo Zone Sud · ${r._tech} · ${r._date}
+  </div>`;
+
+  document.getElementById('report-area').innerHTML = html;
+}
+
+// ── EXPORT PDF ────────────────────────────────────────────────────────────
+function exportPDF() {
+  window.print();
+}
+
+// ── WHATSAPP ──────────────────────────────────────────────────────────────
+function shareWhatsApp() {
+  if(!analysisResult) return;
+  const r = analysisResult;
+  const etatEmoji = r.etat_global === 'bon' ? '🟢' :
+                    r.etat_global === 'dégradé' ? '🟡' : '🔴';
+  const recos = (r.recommandations || []).slice(0,3)
+    .map((rc,i) => `  ${i+1}. ${rc.action} (${rc.urgence||rc.priorite})`)
+    .join('\n');
+
+  const msg = `⚡ *ROSCAN — Rapport d'installation terrain*
+━━━━━━━━━━━━━━━━━━━━
+👷 Technicien : *${r._tech}*
+📍 Site : *${r.site}*
+📅 ${r._date}
+━━━━━━━━━━━━━━━━━━━━
+${etatEmoji} *Score état : ${r.score}/100 — ${r.etat_global.toUpperCase()}*
+
+${r.resume_executif}
+━━━━━━━━━━━━━━━━━━━━
+📦 *${(r.composants||[]).length} équipement(s) inventorié(s)*
+🔧 *Actions requises :*
+${recos||'  Aucune action urgente'}
+━━━━━━━━━━━━━━━━━━━━
+_Rapport ROSCAN · MTN Congo Zone Sud_`;
+
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────
+function resetAll() {
+  if(!confirm('Réinitialiser le rapport ?')) return;
+  photos = []; analysisResult = null;
+  document.getElementById('photos-grid').innerHTML = '';
+  document.getElementById('report-area').style.display = 'none';
+  document.getElementById('empty-state').style.display = 'block';
+  document.getElementById('btn-analyze').disabled = true;
+  document.getElementById('btn-pdf').disabled = true;
+  document.getElementById('btn-wa').disabled = true;
+  document.getElementById('m-site').value = '';
+  document.getElementById('m-obs').value = '';
+  setStatus('En attente de photos', 'idle');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+const savedKey = localStorage.getItem('roscan_apikey');
+if(savedKey) document.getElementById('api-key').value = savedKey;
+
+// Recevoir nom technicien depuis Streamlit
+window.addEventListener('message', e => {
+  if(e.data?.type === 'set_tech') {
+    document.getElementById('m-tech').value = e.data.name;
+    updateHeader();
+  }
+});
+</script>
+</body>
+</html>

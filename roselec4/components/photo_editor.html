@@ -12,189 +12,190 @@
   --green:#1B5E20;--greenbg:#E8F5E9;
   --red:#B71C1C;--redbg:#FFEBEE;
   --amber:#E65100;--amberbg:#FFF3E0;
+  --orange:#E65100;
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:var(--bg);color:var(--text);font-size:13px;
   height:100vh;overflow:hidden;display:flex;flex-direction:column}
 
-/* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;gap:6px;padding:6px 10px;
-  background:var(--blue);flex-wrap:wrap;flex-shrink:0;min-height:44px}
-.logo{font-size:14px;font-weight:800;color:#fff;white-space:nowrap}
+/* TOPBAR */
+.topbar{display:flex;align-items:center;gap:5px;padding:5px 8px;
+  background:var(--blue);flex-wrap:wrap;flex-shrink:0;min-height:42px}
+.logo{font-size:13px;font-weight:800;color:#fff;white-space:nowrap;margin-right:4px}
 .logo span{color:#FFC107}
-.sep{width:1px;height:18px;background:rgba(255,255,255,.3);margin:0 2px}
-.btn{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;
-  border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;
+.sep{width:1px;height:16px;background:rgba(255,255,255,.3);margin:0 2px}
+.btn{display:inline-flex;align-items:center;gap:3px;padding:4px 9px;
+  border-radius:5px;font-size:11px;cursor:pointer;white-space:nowrap;
   transition:all .1s;border:none;font-weight:500}
-.btn-ghost{background:rgba(255,255,255,.18);color:#fff}
-.btn-ghost:hover{background:rgba(255,255,255,.28)}
-.btn-ghost.on{background:rgba(255,255,255,.35);box-shadow:inset 0 0 0 1.5px #fff}
-.btn-yellow{background:#FFC107;color:#1a1a1a}
-.btn-yellow:hover{background:#FFB300}
-.btn-green{background:#25D366;color:#fff}
-.btn-green:hover{background:#1ebe5d}
-.btn-red{background:rgba(198,40,40,.7);color:#fff}
-.badge-mode{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;
-  background:rgba(255,255,255,.2);color:#fff;white-space:nowrap}
+.btn-g{background:rgba(255,255,255,.18);color:#fff}
+.btn-g:hover{background:rgba(255,255,255,.28)}
+.btn-g.on{background:rgba(255,255,255,.35);box-shadow:inset 0 0 0 1.5px #fff}
+.btn-y{background:#FFC107;color:#1a1a1a}.btn-y:hover{background:#FFB300}
+.btn-wa{background:#25D366;color:#fff}.btn-wa:hover{background:#1ebe5d}
+.badge{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600;
+  background:rgba(255,255,255,.2);color:#fff}
 
-/* ── BODY ── */
+/* BODY */
 .body{display:flex;flex:1;overflow:hidden}
 
-/* ── SIDEBAR BIBLIOTHÈQUE ── */
-.lib{width:190px;background:var(--card);border-right:1px solid var(--border);
+/* SIDEBAR */
+.lib{width:185px;background:var(--card);border-right:1px solid var(--border);
   display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
-.lib-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
-.ltab{flex:1;padding:7px 4px;font-size:10px;font-weight:600;text-align:center;
-  cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:all .1s}
+.lib-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto}
+.ltab{flex-shrink:0;padding:6px 8px;font-size:10px;font-weight:600;
+  cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:all .1s;white-space:nowrap}
 .ltab.sel{color:var(--blue);border-bottom-color:var(--blue);background:var(--bluebg)}
-.lib-body{flex:1;overflow-y:auto;padding:8px}
-.lib-section{margin-bottom:10px}
+.lib-body{flex:1;overflow-y:auto;padding:7px}
 .ls-title{font-size:9px;font-weight:700;color:var(--text3);
-  text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
-
-/* Composant dans bibliothèque */
-.comp-card{display:flex;align-items:center;gap:6px;padding:5px 6px;
-  border:1px solid var(--border);border-radius:6px;margin-bottom:4px;
+  text-transform:uppercase;letter-spacing:.07em;margin:8px 0 4px}
+.comp-card{display:flex;align-items:center;gap:5px;padding:4px 5px;
+  border:1px solid var(--border);border-radius:5px;margin-bottom:3px;
   cursor:grab;background:var(--bg);transition:border-color .12s;user-select:none}
 .comp-card:hover{border-color:var(--blue);background:var(--bluebg)}
-.comp-card.dragging{opacity:.5}
-.comp-thumb{width:44px;height:44px;border-radius:4px;overflow:hidden;
+.comp-thumb{width:42px;height:42px;border-radius:3px;overflow:hidden;
   flex-shrink:0;border:1px solid var(--border);background:#eee;
   display:flex;align-items:center;justify-content:center}
-.comp-thumb svg{width:100%;height:100%}
-.comp-thumb img{width:100%;height:100%;object-fit:cover}
+.comp-thumb svg,.comp-thumb img{width:100%;height:100%;object-fit:cover}
 .comp-meta{flex:1;min-width:0}
 .comp-name{font-size:10px;font-weight:600;color:var(--text);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .comp-ref{font-size:9px;color:var(--text3)}
-
-/* Upload zone */
-.upload-zone{border:1.5px dashed var(--border2);border-radius:6px;
-  padding:10px;text-align:center;cursor:pointer;font-size:10px;
-  color:var(--text3);margin-bottom:6px;transition:all .12s}
+.upload-zone{border:1.5px dashed var(--border2);border-radius:5px;
+  padding:8px;text-align:center;cursor:pointer;font-size:10px;color:var(--text3);
+  margin-bottom:5px;transition:all .12s}
 .upload-zone:hover{border-color:var(--blue);color:var(--blue)}
-.upload-zone input{display:none}
-
-/* Palette câbles */
-.cable-pal{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
-.cb{width:22px;height:22px;border-radius:50%;cursor:pointer;
+.cable-pal{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:3px}
+.cb{width:20px;height:20px;border-radius:50%;cursor:pointer;
   border:2px solid transparent;transition:transform .1s}
-.cb:hover,.cb.sel{transform:scale(1.2);border-color:#fff;
-  box-shadow:0 0 0 1px #555}
-.cb-label{font-size:9px;color:var(--text3);margin-top:2px}
+.cb:hover,.cb.sel{transform:scale(1.2);border-color:#fff;box-shadow:0 0 0 1px #555}
 
-/* ── CANVAS ── */
-.canvas-wrap{flex:1;position:relative;overflow:hidden;background:#f0f2f5;
-  background-image:radial-gradient(#c0c8d4 0.6px,transparent 0.6px);
+/* CANVAS */
+.canvas-wrap{flex:1;position:relative;overflow:hidden;
+  background:#f0f2f5;
+  background-image:radial-gradient(#c0c8d4 0.5px,transparent 0.5px);
   background-size:20px 20px}
-#cvs{position:absolute;inset:0;width:100%;height:100%}
-#cvs-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.wire-preview-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#canvas-items{position:absolute;inset:0}
+#canvas-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#wire-preview-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
-/* Composant sur canvas */
-.canvas-item{position:absolute;cursor:default;user-select:none}
-.canvas-item .ci-img{border-radius:5px;border:2px solid transparent;
-  display:block;background:#eee;overflow:hidden}
-.canvas-item .ci-img svg,.canvas-item .ci-img img{
-  display:block;width:100%;height:100%}
-.canvas-item.selected .ci-img{border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(21,101,192,.25)}
-.canvas-item .ci-label{position:absolute;top:calc(100% + 3px);left:50%;
-  transform:translateX(-50%);background:rgba(10,10,10,.75);color:#fff;
-  font-size:9px;padding:2px 6px;border-radius:3px;white-space:nowrap;
-  pointer-events:none}
-.canvas-item .ci-badge{position:absolute;top:-7px;right:-7px;
-  background:var(--blue);color:#fff;font-size:8px;font-weight:700;
-  padding:1px 5px;border-radius:8px;white-space:nowrap;pointer-events:none}
-.canvas-item .ci-state{position:absolute;top:-7px;left:-2px;
+/* Items sur canvas */
+.ci{position:absolute;user-select:none}
+.ci-body{border:2px solid transparent;border-radius:5px;
+  background:#eee;overflow:hidden;position:relative;display:flex;
+  flex-direction:column;align-items:center;justify-content:center}
+.ci.selected .ci-body{border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,.2)}
+.ci svg,.ci img{display:block}
+/* Label principal visible sur le composant */
+.ci-main-label{position:absolute;bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:700;
+  text-align:center;padding:2px 3px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;line-height:1.3}
+.ci-sub-label{position:absolute;top:0;left:0;right:0;
+  background:rgba(21,101,192,.85);color:#fff;font-size:9px;font-weight:600;
+  text-align:center;padding:1px 3px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;line-height:1.3}
+/* Indicateur état */
+.ci-state{position:absolute;top:-6px;left:-2px;
   width:14px;height:14px;border-radius:50%;border:2px solid #fff;
-  font-size:8px;display:flex;align-items:center;justify-content:center}
-.state-ok{background:#2E7D32}
-.state-warn{background:#EF6C00}
-.state-crit{background:#C62828}
-.canvas-item .ci-del{position:absolute;top:-7px;right:-7px;
-  background:#C62828;color:#fff;border:none;border-radius:50%;
-  width:15px;height:15px;font-size:9px;cursor:pointer;display:none;
-  align-items:center;justify-content:center;line-height:1}
-.canvas-item.selected .ci-del{display:flex}
+  font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.s-ok{background:#2E7D32;color:#fff}
+.s-warn{background:#EF6C00;color:#fff}
+.s-crit{background:#C62828;color:#fff}
+/* Poignées de redimensionnement */
+.resize-handle{position:absolute;width:10px;height:10px;
+  background:var(--blue);border:2px solid #fff;border-radius:2px;
+  cursor:se-resize;z-index:10}
+.rh-se{bottom:-5px;right:-5px;cursor:se-resize}
+.rh-s{bottom:-5px;left:50%;transform:translateX(-50%);cursor:s-resize}
+.rh-e{right:-5px;top:50%;transform:translateY(-50%);cursor:e-resize}
+/* Bouton supprimer */
+.ci-del{position:absolute;top:-7px;right:-7px;background:#C62828;color:#fff;
+  border:2px solid #fff;border-radius:50%;width:16px;height:16px;font-size:9px;
+  cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;z-index:11}
+.ci.selected .ci-del{display:flex}
 
-/* ── PANNEAU PROPS ── */
-.props{width:170px;background:var(--card);border-left:1px solid var(--border);
+/* PROPS */
+.props{width:175px;background:var(--card);border-left:1px solid var(--border);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
-.props-head{padding:8px 10px;border-bottom:1px solid var(--border);
+.ph{padding:7px 9px;border-bottom:1px solid var(--border);
   font-size:11px;font-weight:600;color:var(--text2);background:var(--bg);flex-shrink:0}
-.props-body{padding:8px 10px;flex:1}
-.pr{margin-bottom:8px}
-.pr label{display:block;font-size:9px;font-weight:600;color:var(--text3);
-  text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
-.pr input,.pr select,.pr textarea{width:100%;padding:4px 7px;
+.pb{padding:8px 9px}
+.pr{margin-bottom:7px}
+.pr label{display:block;font-size:9px;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.pr input,.pr select,.pr textarea{width:100%;padding:4px 6px;
   border:1px solid var(--border);border-radius:4px;
   background:#fafafa;color:var(--text);font-size:11px}
-.pr textarea{resize:vertical;min-height:48px;line-height:1.4}
-.state-select{display:flex;gap:4px;flex-wrap:wrap}
-.ss-btn{padding:3px 6px;border-radius:4px;font-size:9px;font-weight:600;
-  cursor:pointer;border:1px solid transparent;transition:all .1s}
-.ss-ok{background:var(--greenbg);color:var(--green)}
-.ss-ok.active{border-color:var(--green)}
-.ss-warn{background:var(--amberbg);color:var(--amber)}
-.ss-warn.active{border-color:var(--amber)}
-.ss-crit{background:var(--redbg);color:var(--red)}
-.ss-crit.active{border-color:var(--red)}
+.pr textarea{resize:vertical;min-height:44px;line-height:1.4}
+.pr-row{display:flex;gap:4px}
+.pr-row input{flex:1}
+.state-btns{display:flex;gap:3px}
+.sb2{padding:3px 5px;border-radius:4px;font-size:9px;font-weight:700;
+  cursor:pointer;border:1.5px solid transparent}
+.sb-ok{background:var(--greenbg);color:var(--green)}
+.sb-ok.a{border-color:var(--green)}
+.sb-warn{background:var(--amberbg);color:var(--amber)}
+.sb-warn.a{border-color:var(--amber)}
+.sb-crit{background:var(--redbg);color:var(--red)}
+.sb-crit.a{border-color:var(--red)}
 
-/* ── STATUSBAR ── */
+/* STATUSBAR */
 .sb{padding:3px 10px;background:var(--card);border-top:1px solid var(--border);
-  display:flex;gap:10px;align-items:center;font-size:11px;color:var(--text2);
-  flex-shrink:0;flex-wrap:wrap}
-.sdot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
+  display:flex;gap:8px;align-items:center;font-size:10px;color:var(--text2);flex-shrink:0;flex-wrap:wrap}
+.sdot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:3px}
 .ok{background:#2E7D32}.idle{background:#aaa}
-.busy{background:#EF9F27;animation:pulse .7s infinite alternate}
-@keyframes pulse{to{opacity:.3}}
+.busy{background:#EF9F27;animation:p .7s infinite alternate}
+@keyframes p{to{opacity:.3}}
 
-/* MODAL EXPORT */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);
   display:flex;align-items:center;justify-content:center;z-index:200}
-.modal{background:var(--card);border-radius:10px;padding:20px;
-  width:380px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2)}
-.modal h3{font-size:14px;font-weight:600;margin-bottom:12px}
-.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.md{background:var(--card);border-radius:10px;padding:18px;
+  width:360px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.md h3{font-size:13px;font-weight:600;margin-bottom:10px}
+.mf{display:flex;gap:6px;justify-content:flex-end;margin-top:12px}
+
+/* DCDB BOX preview */
+.dcdb-preview{background:#1a1a1a;border-radius:5px;padding:8px;
+  font-size:9px;color:#aaa;text-align:center;margin:4px 0}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <span class="logo">ROS<span>ELEC</span> · Photo</span>
   <div class="sep"></div>
-  <button class="btn btn-ghost on" id="btn-sel" onclick="setMode('select')">✦ Sélect.</button>
-  <button class="btn btn-ghost" id="btn-cable" onclick="setMode('cable')">〜 Câble</button>
-  <button class="btn btn-ghost" id="btn-text" onclick="setMode('text')">T Texte</button>
+  <button class="btn btn-g on" id="btn-select" onclick="setMode('select')">✦ Sélect.</button>
+  <button class="btn btn-g" id="btn-cable" onclick="setMode('cable')">〜 Câble</button>
+  <button class="btn btn-g" id="btn-text" onclick="setMode('text')">T Texte</button>
   <div class="sep"></div>
-  <button class="btn btn-ghost" onclick="undo()">↩</button>
-  <button class="btn btn-ghost" onclick="clearAll()">🗑</button>
+  <button class="btn btn-g" onclick="undo()">↩</button>
+  <button class="btn btn-g" onclick="clearAll()">🗑</button>
   <div class="sep"></div>
-  <button class="btn btn-ghost" onclick="saveLocal()">💾 Sauver</button>
-  <button class="btn btn-yellow" onclick="showExport()">📄 Export</button>
-  <button class="btn btn-green" onclick="shareWA()">📲 WhatsApp</button>
-  <span class="badge-mode" id="mode-badge">Sélection</span>
+  <button class="btn btn-g" onclick="saveLocal()">💾</button>
+  <button class="btn btn-y" onclick="showExport()">📄 Export</button>
+  <button class="btn btn-wa" onclick="shareWA()">📲 WA</button>
+  <span class="badge" id="mode-badge">Sélection</span>
 </div>
 
 <div class="body">
 
 <!-- BIBLIOTHÈQUE -->
 <div class="lib">
-  <div class="lib-tabs">
-    <div class="ltab sel" id="tab-dc" onclick="showTab('dc')">DC</div>
-    <div class="ltab" id="tab-ac" onclick="showTab('ac')">AC</div>
-    <div class="ltab" id="tab-tx" onclick="showTab('tx')">TX/RD</div>
-    <div class="ltab" id="tab-my" onclick="showTab('my')">+Photo</div>
+  <div class="lib-tabs" id="lib-tabs">
+    <div class="ltab sel" onclick="showTab('dc')">DC</div>
+    <div class="ltab" onclick="showTab('ac')">AC</div>
+    <div class="ltab" onclick="showTab('tel')">Télécom</div>
+    <div class="ltab" onclick="showTab('dcdb')">DCDB</div>
+    <div class="ltab" onclick="showTab('my')">+Photo</div>
   </div>
   <div class="lib-body" id="lib-body"></div>
 </div>
 
 <!-- CANVAS -->
 <div class="canvas-wrap" id="cw">
-  <div id="cvs"></div>
-  <svg id="cvs-svg" xmlns="http://www.w3.org/2000/svg">
+  <div id="canvas-items"></div>
+  <svg id="canvas-svg" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5"
         markerWidth="5" markerHeight="5" orient="auto-start-reverse">
@@ -203,120 +204,168 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       </marker>
     </defs>
     <g id="wires-g"></g>
+    <g id="texts-g"></g>
   </svg>
-  <svg class="wire-preview-svg" id="wp-svg" xmlns="http://www.w3.org/2000/svg">
-    <line id="wp-line" x1="0" y1="0" x2="0" y2="0"
+  <svg id="wire-preview-svg" xmlns="http://www.w3.org/2000/svg">
+    <line id="wp" x1="0" y1="0" x2="0" y2="0"
       stroke="#aaa" stroke-width="2.5" stroke-dasharray="6,3"
       stroke-linecap="round" opacity="0"/>
   </svg>
 </div>
 
-<!-- PANNEAU PROPS -->
+<!-- PROPS -->
 <div class="props">
-  <div class="props-head" id="props-head">Composant</div>
-  <div class="props-body" id="props-body">
-    <div style="color:var(--text3);font-size:11px;text-align:center;margin-top:20px">
-      Cliquer un composant<br>pour éditer
-    </div>
+  <div class="ph" id="props-head">Propriétés</div>
+  <div class="pb" id="props-body">
+    <div style="color:var(--text3);font-size:11px;text-align:center;margin-top:16px">
+      Cliquer un composant</div>
   </div>
 </div>
 
 </div>
 
-<!-- STATUSBAR -->
 <div class="sb">
   <span><span class="sdot idle" id="sdot"></span><span id="stxt">Prêt</span></span>
-  <span id="cnt-items" style="color:var(--text3)">0 composant</span>
-  <span id="cnt-wires" style="color:var(--text3)">0 câble</span>
-  <span style="margin-left:auto;font-size:10px;color:var(--text3)">
-    S=sélect · C=câble · T=texte · Suppr=effacer · Ctrl+Z=annuler · Clic droit=annuler câble
+  <span id="cnt-i" style="color:var(--text3)">0 composant</span>
+  <span id="cnt-w" style="color:var(--text3)">0 câble</span>
+  <span style="margin-left:auto;font-size:9px;color:var(--text3)">
+    S=sélect · C=câble · T=texte · Suppr=effacer · Ctrl+Z · Clic droit=annuler câble
   </span>
 </div>
 
 <!-- MODAL EXPORT -->
-<div class="modal-bg" id="modal-exp" style="display:none">
-<div class="modal">
+<div class="mo" id="mo-exp" style="display:none">
+<div class="md">
   <h3>Exporter le schéma</h3>
-  <div style="margin-bottom:10px">
-    <label style="display:block;font-size:11px;color:var(--text3);margin-bottom:3px">Titre</label>
-    <input id="ex-title" style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px" placeholder="Ex: DCPD PEAGE MOUKONDO">
-  </div>
-  <div style="margin-bottom:10px">
-    <label style="display:block;font-size:11px;color:var(--text3);margin-bottom:3px">Site</label>
-    <input id="ex-site" style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px" placeholder="Ex: PEAGE MOUKONDO">
-  </div>
-  <div style="margin-bottom:10px">
-    <label style="display:block;font-size:11px;color:var(--text3);margin-bottom:3px">Technicien</label>
-    <input id="ex-tech" style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px" placeholder="Votre nom">
-  </div>
-  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+  <div style="margin-bottom:8px"><label style="font-size:10px;color:var(--text3)">Titre</label>
+    <input id="ex-t" style="width:100%;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:12px" placeholder="DCDB PEAGE MOUKONDO"></div>
+  <div style="margin-bottom:8px"><label style="font-size:10px;color:var(--text3)">Site</label>
+    <input id="ex-s" style="width:100%;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:12px" placeholder="PEAGE MOUKONDO"></div>
+  <div style="margin-bottom:8px"><label style="font-size:10px;color:var(--text3)">Technicien</label>
+    <input id="ex-tech" style="width:100%;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:12px" placeholder="Votre nom"></div>
+  <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px">
     <button class="btn" style="background:var(--blue);color:#fff;flex:1" onclick="exportPNG()">🖼 PNG</button>
     <button class="btn" style="background:#2E7D32;color:#fff;flex:1" onclick="exportSVGFile()">📄 SVG</button>
-    <button class="btn" style="background:var(--bg);flex:1;border:1px solid var(--border)" onclick="exportJSON()">{ } JSON</button>
+    <button class="btn" style="border:1px solid var(--border);flex:1" onclick="exportJSON()">{ } JSON</button>
   </div>
   <div class="mf">
-    <button class="btn" style="border:1px solid var(--border)" onclick="document.getElementById('modal-exp').style.display='none'">Fermer</button>
+    <button class="btn" style="border:1px solid var(--border)" onclick="document.getElementById('mo-exp').style.display='none'">Fermer</button>
   </div>
 </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════
-// BIBLIOTHÈQUE DE COMPOSANTS — SVG réalistes basés sur photos terrain
-// ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// SVG COMPOSANTS RÉALISTES
+// ═══════════════════════════════════════════════════════════
 
-// Génère le SVG d'un disjoncteur CHNT/HUA JIA/TENGEN
-function svgDisj(brand, model, ampere, color='#1565C0', state='ON') {
-  const btnColor = state==='ON' ? '#1565C0' : '#555';
-  const btnText  = state==='ON' ? 'I·ON' : 'O·OFF';
-  const bColor   = brand==='CHNT'?'#1a3f6b':brand==='HUA JIA'?'#7a1a1a':'#1a4a1a';
-  return `<svg viewBox="0 0 44 72" xmlns="http://www.w3.org/2000/svg">
+function svgDisj(brand, ampere, poles, state='ON') {
+  const bc = {'CHNT':'#1a3f6b','HUA JIA':'#7a1a1a','TENGEN':'#1a4a1a','PHOENIX':'#8a2000'}[brand]||'#1a3f6b';
+  const btnC = state==='ON'?'#1565C0':'#555';
+  const btnT = state==='ON'?'I·ON':'O·OFF';
+  if(poles===1) return `<svg viewBox="0 0 44 72" xmlns="http://www.w3.org/2000/svg">
     <rect x="1" y="1" width="42" height="70" rx="5" fill="#e8e8e8" stroke="#bbb" stroke-width="1"/>
     <rect x="3" y="3" width="38" height="66" rx="4" fill="#f0f0f0"/>
-    <!-- Marque en haut -->
-    <rect x="3" y="3" width="38" height="16" rx="4" fill="${bColor}"/>
-    <text x="22" y="12" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" font-weight="700">${brand}</text>
-    <text x="22" y="18" text-anchor="middle" font-size="6" fill="rgba(255,255,255,.8)" font-family="sans-serif">${model}</text>
-    <!-- Bouton basculeur -->
-    <rect x="8" y="22" width="28" height="26" rx="4" fill="${btnColor}"/>
-    <rect x="10" y="24" width="24" height="10" rx="3" fill="rgba(255,255,255,.15)"/>
-    <text x="22" y="32" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" font-weight="700">${btnText}</text>
-    <rect x="14" y="36" width="16" height="8" rx="2" fill="rgba(0,0,0,.2)"/>
-    <!-- Bornes vis -->
-    <circle cx="14" cy="52" r="4" fill="#ccc" stroke="#999" stroke-width=".5"/>
-    <circle cx="30" cy="52" r="4" fill="#ccc" stroke="#999" stroke-width=".5"/>
-    <circle cx="14" cy="52" r="2" fill="#888"/>
-    <circle cx="30" cy="52" r="2" fill="#888"/>
-    <!-- Étiquette ampérage -->
-    <rect x="3" y="58" width="38" height="12" rx="0" rx="0 0 4 4" fill="#ddd"/>
-    <text x="22" y="67" text-anchor="middle" font-size="7" fill="#333" font-family="sans-serif" font-weight="600">${ampere}</text>
-    <!-- Bornes câble -->
-    <line x1="22" y1="1" x2="22" y2="3" stroke="#cc0000" stroke-width="3" stroke-linecap="round"/>
+    <rect x="3" y="3" width="38" height="16" rx="4" fill="${bc}"/>
+    <text x="22" y="11" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">${brand}</text>
+    <text x="22" y="17" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.8)" font-family="sans-serif">${ampere}</text>
+    <rect x="8" y="22" width="28" height="26" rx="4" fill="${btnC}"/>
+    <text x="22" y="33" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">${btnT}</text>
+    <rect x="12" y="38" width="20" height="6" rx="2" fill="rgba(0,0,0,.2)"/>
+    <circle cx="15" cy="52" r="4.5" fill="#d0d0d0" stroke="#999" stroke-width=".8"/>
+    <circle cx="29" cy="52" r="4.5" fill="#d0d0d0" stroke="#999" stroke-width=".8"/>
+    <circle cx="15" cy="52" r="2.5" fill="#888"/>
+    <circle cx="29" cy="52" r="2.5" fill="#888"/>
+    <rect x="3" y="60" width="38" height="10" rx="0 0 4 4" fill="#ddd"/>
+    <text x="22" y="68" text-anchor="middle" font-size="7" fill="#333" font-family="sans-serif" font-weight="600">${ampere} 1P</text>
+    <line x1="22" y1="0" x2="22" y2="3" stroke="#cc0000" stroke-width="3" stroke-linecap="round"/>
     <line x1="22" y1="70" x2="22" y2="72" stroke="#1565C0" stroke-width="3" stroke-linecap="round"/>
   </svg>`;
-}
-
-function svgDisj2P(brand, model, ampere) {
   return `<svg viewBox="0 0 76 72" xmlns="http://www.w3.org/2000/svg">
     <rect x="1" y="1" width="74" height="70" rx="5" fill="#e8e8e8" stroke="#bbb" stroke-width="1"/>
     <rect x="3" y="3" width="70" height="66" rx="4" fill="#f0f0f0"/>
-    <rect x="3" y="3" width="70" height="16" rx="4" fill="#1a3f6b"/>
-    <text x="38" y="12" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" font-weight="700">${brand}</text>
-    <text x="38" y="18" text-anchor="middle" font-size="6" fill="rgba(255,255,255,.8)" font-family="sans-serif">${model} · ${ampere}</text>
-    <rect x="8" y="22" width="26" height="26" rx="4" fill="#1565C0"/>
-    <text x="21" y="32" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" font-weight="700">I·ON</text>
-    <rect x="42" y="22" width="26" height="26" rx="4" fill="#1565C0"/>
-    <text x="55" y="32" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" font-weight="700">I·ON</text>
-    <circle cx="21" cy="52" r="4" fill="#ccc" stroke="#999" stroke-width=".5"/>
-    <circle cx="55" cy="52" r="4" fill="#ccc" stroke="#999" stroke-width=".5"/>
-    <circle cx="21" cy="52" r="2" fill="#888"/>
-    <circle cx="55" cy="52" r="2" fill="#888"/>
-    <rect x="3" y="58" width="70" height="12" fill="#ddd"/>
-    <text x="38" y="67" text-anchor="middle" font-size="7" fill="#333" font-family="sans-serif" font-weight="600">${ampere} 2P</text>
-    <line x1="21" y1="1" x2="21" y2="3" stroke="#cc0000" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="55" y1="1" x2="55" y2="3" stroke="#1a1a8a" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="3" y="3" width="70" height="16" rx="4" fill="${bc}"/>
+    <text x="38" y="11" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">${brand}</text>
+    <text x="38" y="17" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.8)" font-family="sans-serif">${ampere} ${poles}P</text>
+    <rect x="8" y="22" width="26" height="26" rx="4" fill="${btnC}"/>
+    <text x="21" y="33" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">${btnT}</text>
+    <rect x="42" y="22" width="26" height="26" rx="4" fill="${btnC}"/>
+    <text x="55" y="33" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">${btnT}</text>
+    <circle cx="21" cy="54" r="4" fill="#d0d0d0" stroke="#999" stroke-width=".8"/>
+    <circle cx="55" cy="54" r="4" fill="#d0d0d0" stroke="#999" stroke-width=".8"/>
+    <circle cx="21" cy="54" r="2" fill="#888"/><circle cx="55" cy="54" r="2" fill="#888"/>
+    <rect x="3" y="60" width="70" height="10" fill="#ddd"/>
+    <text x="38" y="68" text-anchor="middle" font-size="7" fill="#333" font-family="sans-serif" font-weight="600">${ampere} ${poles}P</text>
+    <line x1="21" y1="0" x2="21" y2="3" stroke="#cc0000" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="55" y1="0" x2="55" y2="3" stroke="#1a1a8a" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="21" y1="70" x2="21" y2="72" stroke="#1565C0" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="55" y1="70" x2="55" y2="72" stroke="#1565C0" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function svgDCDB() {
+  return `<svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="160" height="100" rx="5" fill="#1a1a2a" stroke="#333" stroke-width="1.5"/>
+    <rect x="2" y="2" width="156" height="96" rx="4" fill="#222233"/>
+    <rect x="4" y="4" width="50" height="92" rx="3" fill="#0d1520"/>
+    <text x="29" y="18" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="sans-serif" font-weight="800">DCDB</text>
+    <text x="29" y="26" text-anchor="middle" font-size="5.5" fill="#2a9acc" font-family="monospace">-48VDC</text>
+    <circle cx="18" cy="38" r="4" fill="#00ff44" opacity=".85"/>
+    <circle cx="30" cy="38" r="4" fill="#ff6600" opacity=".7"/>
+    <circle cx="42" cy="38" r="4" fill="#ff0000" opacity=".3"/>
+    <text x="18" y="48" text-anchor="middle" font-size="4.5" fill="#009922" font-family="sans-serif">PWR</text>
+    <text x="30" y="48" text-anchor="middle" font-size="4.5" fill="#cc4400" font-family="sans-serif">ALM</text>
+    <text x="42" y="48" text-anchor="middle" font-size="4.5" fill="#888" font-family="sans-serif">FLT</text>
+    <rect x="6" y="55" width="46" height="36" rx="2" fill="#0a1015"/>
+    <text x="29" y="66" text-anchor="middle" font-size="5" fill="#2a9acc" font-family="monospace">IDC: 128A</text>
+    <text x="29" y="74" text-anchor="middle" font-size="5" fill="#2a9acc" font-family="monospace">VDC:-54.2V</text>
+    <text x="29" y="82" text-anchor="middle" font-size="5" fill="#4a7a00" font-family="monospace">BAT: 96%</text>
+    <!-- Fusibles -->
+    <rect x="58" y="8" width="14" height="84" rx="2" fill="#0a0a0a"/>
+    <rect x="60" y="12" width="10" height="10" rx="1" fill="#3a1a00" stroke="#ff9800" stroke-width=".5"/>
+    <rect x="60" y="25" width="10" height="10" rx="1" fill="#3a1a00" stroke="#ff9800" stroke-width=".5"/>
+    <rect x="60" y="38" width="10" height="10" rx="1" fill="#3a1a00" stroke="#ff9800" stroke-width=".5"/>
+    <rect x="60" y="51" width="10" height="10" rx="1" fill="#3a1a00" stroke="#ff9800" stroke-width=".5"/>
+    <rect x="60" y="64" width="10" height="10" rx="1" fill="#3a1a00" stroke="#ff9800" stroke-width=".5"/>
+    <rect x="60" y="77" width="10" height="10" rx="1" fill="#3a1a00" stroke="#ff9800" stroke-width=".5"/>
+    <text x="65" y="17" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">F1</text>
+    <text x="65" y="30" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">F2</text>
+    <text x="65" y="43" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">F3</text>
+    <text x="65" y="56" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">F4</text>
+    <text x="65" y="69" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">F5</text>
+    <text x="65" y="82" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">F6</text>
+    <!-- Disjoncteurs DC -->
+    <rect x="76" y="8" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="90" y="8" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="104" y="8" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="118" y="8" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="132" y="8" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="146" y="8" width="10" height="20" rx="2" fill="#1a3060"/>
+    <rect x="76" y="30" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="90" y="30" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="104" y="30" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="118" y="30" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="132" y="30" width="12" height="20" rx="2" fill="#1a3060"/>
+    <rect x="146" y="30" width="10" height="20" rx="2" fill="#1a3060"/>
+    <!-- Labels sorties -->
+    <text x="82" y="22" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S1</text>
+    <text x="96" y="22" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S2</text>
+    <text x="110" y="22" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S3</text>
+    <text x="124" y="22" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S4</text>
+    <text x="138" y="22" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S5</text>
+    <text x="151" y="22" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S6</text>
+    <text x="82" y="44" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S7</text>
+    <text x="96" y="44" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S8</text>
+    <text x="110" y="44" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S9</text>
+    <text x="124" y="44" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S10</text>
+    <text x="138" y="44" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S11</text>
+    <text x="151" y="44" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif">S12</text>
+    <!-- Barre principale -->
+    <rect x="76" y="56" width="80" height="8" rx="2" fill="#3a2800" stroke="#ff9800" stroke-width=".5"/>
+    <text x="116" y="62" text-anchor="middle" font-size="5.5" fill="#ff9800" font-family="sans-serif" font-weight="700">BARRE −48V DC</text>
+    <!-- Points de connexion -->
+    <rect x="76" y="68" width="80" height="22" rx="2" fill="#0a0a0a"/>
+    <text x="116" y="82" text-anchor="middle" font-size="5" fill="#555" font-family="sans-serif">Sorties charges</text>
   </svg>`;
 }
 
@@ -324,31 +373,27 @@ function svgRectifier(model) {
   return `<svg viewBox="0 0 110 52" xmlns="http://www.w3.org/2000/svg">
     <rect x="0" y="0" width="110" height="52" rx="4" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
     <rect x="2" y="2" width="106" height="48" rx="3" fill="#222"/>
-    <!-- Ventilateur circulaire -->
     <circle cx="22" cy="26" r="18" fill="#111" stroke="#333" stroke-width="1"/>
-    <circle cx="22" cy="26" r="14" fill="none" stroke="#3a3a3a" stroke-width="1"/>
-    <circle cx="22" cy="26" r="9" fill="#0a0a0a" stroke="#444" stroke-width="1"/>
-    <path d="M22,12 Q26,18 22,26 Q18,18 22,12Z" fill="#333"/>
-    <path d="M34,18 Q28,22 22,26 Q26,18 34,18Z" fill="#333"/>
-    <path d="M34,34 Q28,30 22,26 Q28,30 34,34Z" fill="#333"/>
-    <path d="M22,40 Q18,34 22,26 Q26,34 22,40Z" fill="#333"/>
-    <path d="M10,34 Q16,30 22,26 Q16,30 10,34Z" fill="#333"/>
-    <path d="M10,18 Q16,22 22,26 Q16,22 10,18Z" fill="#333"/>
+    <circle cx="22" cy="26" r="13" fill="none" stroke="#3a3a3a" stroke-width="1"/>
+    <circle cx="22" cy="26" r="8" fill="#0a0a0a" stroke="#444" stroke-width="1"/>
+    <path d="M22,13 Q26,19 22,26 Q18,19 22,13Z" fill="#2a2a2a"/>
+    <path d="M33,19 Q27,22 22,26 Q26,19 33,19Z" fill="#2a2a2a"/>
+    <path d="M33,33 Q27,30 22,26 Q27,30 33,33Z" fill="#2a2a2a"/>
+    <path d="M22,39 Q18,33 22,26 Q26,33 22,39Z" fill="#2a2a2a"/>
+    <path d="M11,33 Q17,30 22,26 Q17,30 11,33Z" fill="#2a2a2a"/>
+    <path d="M11,19 Q17,22 22,26 Q17,22 11,19Z" fill="#2a2a2a"/>
     <circle cx="22" cy="26" r="4" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
-    <!-- Panel droit -->
     <rect x="46" y="4" width="60" height="44" rx="2" fill="#0d0d0d"/>
-    <rect x="48" y="5" width="56" height="10" rx="1" fill="#0a1520"/>
+    <rect x="48" y="5" width="56" height="9" rx="1" fill="#0a1520"/>
     <text x="76" y="12" text-anchor="middle" font-size="6" fill="#4fc3f7" font-family="sans-serif" font-weight="700">${model}</text>
-    <!-- LEDs -->
-    <circle cx="54" cy="22" r="3.5" fill="#00ff44" opacity=".85"/>
-    <circle cx="64" cy="22" r="3.5" fill="#ff6600" opacity=".7"/>
-    <circle cx="74" cy="22" r="3.5" fill="#ff0000" opacity=".3"/>
-    <text x="54" y="30" text-anchor="middle" font-size="5" fill="#009922" font-family="sans-serif">AC</text>
-    <text x="64" y="30" text-anchor="middle" font-size="5" fill="#cc4400" font-family="sans-serif">DC</text>
-    <text x="74" y="30" text-anchor="middle" font-size="5" fill="#888" font-family="sans-serif">ALM</text>
-    <!-- Barcode simulé -->
+    <circle cx="54" cy="22" r="3" fill="#00ff44" opacity=".85"/>
+    <circle cx="64" cy="22" r="3" fill="#ff6600" opacity=".7"/>
+    <circle cx="74" cy="22" r="3" fill="#ff0000" opacity=".3"/>
+    <text x="54" y="29" text-anchor="middle" font-size="4.5" fill="#009922" font-family="sans-serif">AC</text>
+    <text x="64" y="29" text-anchor="middle" font-size="4.5" fill="#cc4400" font-family="sans-serif">DC</text>
+    <text x="74" y="29" text-anchor="middle" font-size="4.5" fill="#888" font-family="sans-serif">ALM</text>
     <rect x="48" y="34" width="56" height="10" rx="1" fill="#0a0a0a"/>
-    <text x="76" y="41" text-anchor="middle" font-size="5" fill="#333" font-family="sans-serif">48VDC / 50A</text>
+    <text x="76" y="41" text-anchor="middle" font-size="5" fill="#333" font-family="monospace">48VDC/50A</text>
   </svg>`;
 }
 
@@ -360,14 +405,15 @@ function svgBattery() {
     <rect x="34" y="2" width="10" height="8" rx="2" fill="#0d0d88"/>
     <text x="21" y="8" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">+</text>
     <text x="39" y="8" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">−</text>
-    <rect x="8" y="14" width="44" height="16" rx="2" fill="#0d0d2a"/>
-    <text x="30" y="22" text-anchor="middle" font-size="6" fill="#6666cc" font-family="sans-serif" font-weight="700">VRLA 12V</text>
+    <rect x="8" y="14" width="44" height="14" rx="2" fill="#0d0d2a"/>
+    <text x="30" y="21" text-anchor="middle" font-size="6.5" fill="#6666cc" font-family="sans-serif" font-weight="700">VRLA 12V</text>
     <text x="30" y="28" text-anchor="middle" font-size="5.5" fill="#4444aa" font-family="sans-serif">200Ah</text>
-    <rect x="8" y="33" width="20" height="14" rx="1" fill="#111133"/><text x="18" y="42" text-anchor="middle" font-size="5" fill="#3333aa" font-family="sans-serif">CELL</text>
-    <rect x="32" y="33" width="20" height="14" rx="1" fill="#111133"/><text x="42" y="42" text-anchor="middle" font-size="5" fill="#3333aa" font-family="sans-serif">CELL</text>
-    <rect x="8" y="50" width="20" height="14" rx="1" fill="#111133"/><text x="18" y="59" text-anchor="middle" font-size="5" fill="#3333aa" font-family="sans-serif">CELL</text>
-    <rect x="32" y="50" width="20" height="14" rx="1" fill="#111133"/><text x="42" y="59" text-anchor="middle" font-size="5" fill="#3333aa" font-family="sans-serif">CELL</text>
-    <text x="30" y="72" text-anchor="middle" font-size="5" fill="#5555aa" font-family="sans-serif">Narada / Fiamm</text>
+    <rect x="8" y="31" width="20" height="12" rx="1" fill="#111133"/>
+    <rect x="32" y="31" width="20" height="12" rx="1" fill="#111133"/>
+    <rect x="8" y="46" width="20" height="12" rx="1" fill="#111133"/>
+    <rect x="32" y="46" width="20" height="12" rx="1" fill="#111133"/>
+    <rect x="8" y="61" width="44" height="10" rx="1" fill="#0a0a20"/>
+    <text x="30" y="68" text-anchor="middle" font-size="5" fill="#5555aa" font-family="sans-serif">Narada / Fiamm</text>
   </svg>`;
 }
 
@@ -377,111 +423,146 @@ function svgSPD() {
     <rect x="4" y="2" width="28" height="22" rx="3" fill="#1a7a1a"/>
     <text x="18" y="11" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" font-weight="700">MYS5</text>
     <text x="18" y="20" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.8)" font-family="sans-serif">XW2 275V</text>
-    <rect x="4" y="26" width="28" height="14" rx="2" fill="#ffeb3b"/>
-    <text x="18" y="35" text-anchor="middle" font-size="6" fill="#333" font-family="sans-serif" font-weight="700">MYS5 L1</text>
-    <rect x="4" y="42" width="28" height="14" rx="2" fill="#4caf50"/>
-    <text x="18" y="51" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">MYS5 L2</text>
-    <rect x="4" y="58" width="28" height="14" rx="2" fill="#ff5722"/>
-    <text x="18" y="67" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">FD2 N</text>
+    <rect x="4" y="26" width="28" height="13" rx="2" fill="#ffeb3b"/>
+    <text x="18" y="35" text-anchor="middle" font-size="6" fill="#333" font-family="sans-serif" font-weight="700">L1</text>
+    <rect x="4" y="41" width="28" height="13" rx="2" fill="#4caf50"/>
+    <text x="18" y="50" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">L2</text>
+    <rect x="4" y="56" width="28" height="13" rx="2" fill="#ff5722"/>
+    <text x="18" y="65" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">N</text>
     <line x1="18" y1="1" x2="18" y2="0" stroke="#ffd700" stroke-width="3" stroke-linecap="round"/>
     <line x1="18" y1="79" x2="18" y2="80" stroke="#1a7a1a" stroke-width="3" stroke-linecap="round"/>
   </svg>`;
 }
 
-function svgBornier() {
-  return `<svg viewBox="0 0 50 60" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1" y="1" width="48" height="58" rx="3" fill="#d0d0d0" stroke="#aaa" stroke-width="1"/>
-    <rect x="3" y="3" width="44" height="54" rx="2" fill="#e8e8e8"/>
-    <text x="25" y="10" text-anchor="middle" font-size="5.5" fill="#333" font-family="sans-serif" font-weight="700">BORNIERS</text>
-    <!-- L1 -->
-    <rect x="5" y="13" width="18" height="10" rx="1" fill="#888"/>
-    <text x="14" y="20" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="600">L1</text>
-    <rect x="27" y="13" width="18" height="10" rx="1" fill="#777"/>
-    <!-- L2 -->
-    <rect x="5" y="25" width="18" height="10" rx="1" fill="#888"/>
-    <text x="14" y="32" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="600">L2</text>
-    <rect x="27" y="25" width="18" height="10" rx="1" fill="#777"/>
-    <!-- L3 -->
-    <rect x="5" y="37" width="18" height="10" rx="1" fill="#888"/>
-    <text x="14" y="44" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="600">L3</text>
-    <rect x="27" y="37" width="18" height="10" rx="1" fill="#777"/>
-    <!-- N -->
-    <rect x="5" y="49" width="18" height="8" rx="1" fill="#888"/>
-    <text x="14" y="55" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="600">N</text>
-    <rect x="27" y="49" width="18" height="8" rx="1" fill="#777"/>
-  </svg>`;
-}
-
-function svgDCPD() {
-  return `<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="120" height="40" rx="4" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
-    <rect x="2" y="2" width="116" height="36" rx="3" fill="#333"/>
-    <rect x="4" y="4" width="30" height="32" rx="2" fill="#0d1520"/>
-    <text x="19" y="14" text-anchor="middle" font-size="6" fill="#4fc3f7" font-family="sans-serif" font-weight="700">DCPD</text>
-    <text x="19" y="23" text-anchor="middle" font-size="5" fill="#2a9acc" font-family="monospace">-48V</text>
-    <circle cx="14" cy="32" r="3" fill="#00ff44" opacity=".8"/>
-    <circle cx="24" cy="32" r="3" fill="#aaa" opacity=".5"/>
-    <!-- Sorties -->
-    <rect x="38" y="6" width="10" height="28" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
-    <rect x="52" y="6" width="10" height="28" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
-    <rect x="66" y="6" width="10" height="28" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
-    <rect x="80" y="6" width="10" height="28" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
-    <rect x="94" y="6" width="10" height="28" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
-    <rect x="108" y="6" width="8" height="28" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
-    <text x="43" y="22" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S1</text>
-    <text x="57" y="22" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S2</text>
-    <text x="71" y="22" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S3</text>
-    <text x="85" y="22" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S4</text>
-    <text x="99" y="22" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S5</text>
-    <text x="112" y="22" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S6</text>
-  </svg>`;
-}
-
-function svgAntenne() {
-  return `<svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
-    <rect x="20" y="40" width="20" height="38" rx="3" fill="#555" stroke="#333" stroke-width="1"/>
-    <rect x="22" y="42" width="16" height="34" rx="2" fill="#666"/>
-    <text x="30" y="60" text-anchor="middle" font-size="5" fill="#ccc" font-family="sans-serif">ANT</text>
-    <line x1="30" y1="40" x2="30" y2="28" stroke="#888" stroke-width="2" stroke-linecap="round"/>
-    <path d="M10,10 Q30,0 50,10" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M15,18 Q30,10 45,18" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M20,26 Q30,20 40,26" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="30" cy="28" r="3" fill="#1565C0"/>
-  </svg>`;
-}
-
 function svgRRU() {
   return `<svg viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-    <rect x="5" y="5" width="50" height="80" rx="5" fill="#2a3a4a" stroke="#1a2a3a" stroke-width="1.5"/>
-    <rect x="8" y="8" width="44" height="74" rx="4" fill="#2f4560"/>
-    <rect x="10" y="10" width="40" height="14" rx="2" fill="#1a2a3a"/>
-    <text x="30" y="19" text-anchor="middle" font-size="6.5" fill="#4fc3f7" font-family="sans-serif" font-weight="700">Huawei RRU</text>
-    <rect x="10" y="28" width="40" height="22" rx="2" fill="#1a2a3a"/>
-    <circle cx="20" cy="39" r="5" fill="#111" stroke="#333" stroke-width=".5"/>
-    <circle cx="30" cy="39" r="5" fill="#111" stroke="#333" stroke-width=".5"/>
-    <circle cx="40" cy="39" r="5" fill="#111" stroke="#333" stroke-width=".5"/>
-    <text x="30" y="55" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">TX/RX Ports</text>
-    <circle cx="18" cy="64" r="3" fill="#00ff44" opacity=".8"/>
-    <circle cx="28" cy="64" r="3" fill="#ff6600" opacity=".7"/>
-    <circle cx="38" cy="64" r="3" fill="#aaa" opacity=".5"/>
-    <text x="18" y="72" text-anchor="middle" font-size="4.5" fill="#009922" font-family="sans-serif">PWR</text>
-    <text x="28" y="72" text-anchor="middle" font-size="4.5" fill="#cc4400" font-family="sans-serif">RF</text>
-    <text x="38" y="72" text-anchor="middle" font-size="4.5" fill="#888" font-family="sans-serif">ALM</text>
-    <rect x="10" y="75" width="40" height="6" rx="1" fill="#1a2a3a"/>
-    <text x="30" y="80" text-anchor="middle" font-size="5" fill="#2a4a6a" font-family="monospace">SN: XXXXXXXXX</text>
+    <rect x="4" y="4" width="52" height="82" rx="6" fill="#2a3a4a" stroke="#1a2a3a" stroke-width="1.5"/>
+    <rect x="7" y="7" width="46" height="76" rx="5" fill="#2f4560"/>
+    <rect x="9" y="9" width="42" height="16" rx="3" fill="#1a2a3a"/>
+    <text x="30" y="20" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="sans-serif" font-weight="700">Huawei RRU</text>
+    <rect x="9" y="29" width="42" height="24" rx="3" fill="#1a2a3a"/>
+    <circle cx="20" cy="41" r="5" fill="#111" stroke="#333" stroke-width=".5"/>
+    <circle cx="30" cy="41" r="5" fill="#111" stroke="#333" stroke-width=".5"/>
+    <circle cx="40" cy="41" r="5" fill="#111" stroke="#333" stroke-width=".5"/>
+    <text x="30" y="58" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">TX/RX Ports</text>
+    <circle cx="17" cy="66" r="3" fill="#00ff44" opacity=".8"/>
+    <circle cx="27" cy="66" r="3" fill="#ff6600" opacity=".7"/>
+    <circle cx="37" cy="66" r="3" fill="#aaa" opacity=".5"/>
+    <text x="17" y="74" text-anchor="middle" font-size="5" fill="#009922" font-family="sans-serif">PWR</text>
+    <text x="27" y="74" text-anchor="middle" font-size="5" fill="#cc4400" font-family="sans-serif">RF</text>
+    <text x="37" y="74" text-anchor="middle" font-size="5" fill="#888" font-family="sans-serif">ALM</text>
+    <rect x="9" y="78" width="42" height="6" rx="1" fill="#1a2a3a"/>
+    <text x="30" y="83" text-anchor="middle" font-size="5" fill="#2a4a6a" font-family="monospace">SN: XXXXXXX</text>
   </svg>`;
 }
 
-function svgFibre() {
-  return `<svg viewBox="0 0 30 80" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" y="0" width="10" height="80" rx="3" fill="#ff6600" stroke="#cc4400" stroke-width=".5"/>
-    <rect x="12" y="2" width="6" height="76" rx="2" fill="#ff8800"/>
-    <rect x="13" y="4" width="4" height="72" rx="1" fill="#ffaa00" opacity=".7"/>
-    <text x="15" y="42" text-anchor="middle" font-size="5" fill="rgba(0,0,0,.6)" font-family="sans-serif" font-weight="700" transform="rotate(90,15,42)">FIBRE</text>
-    <circle cx="15" cy="4" r="4" fill="#333" stroke="#ffa500" stroke-width="1"/>
-    <circle cx="15" cy="76" r="4" fill="#333" stroke="#ffa500" stroke-width="1"/>
-    <circle cx="15" cy="4" r="2" fill="#ffee00" opacity=".9"/>
-    <circle cx="15" cy="76" r="2" fill="#ffee00" opacity=".9"/>
+function svgBBU() {
+  return `<svg viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="100" height="56" rx="4" fill="#1a2a1a" stroke="#2a4a2a" stroke-width="1.5"/>
+    <rect x="2" y="2" width="96" height="52" rx="3" fill="#1e3020"/>
+    <rect x="4" y="4" width="40" height="48" rx="3" fill="#0a1a0a"/>
+    <text x="24" y="18" text-anchor="middle" font-size="7" fill="#44cc44" font-family="sans-serif" font-weight="700">BBU5900</text>
+    <text x="24" y="27" text-anchor="middle" font-size="5.5" fill="#2a8a2a" font-family="monospace">Huawei</text>
+    <circle cx="14" cy="38" r="3" fill="#00ff44" opacity=".85"/>
+    <circle cx="24" cy="38" r="3" fill="#ffaa00" opacity=".7"/>
+    <circle cx="34" cy="38" r="3" fill="#aaa" opacity=".5"/>
+    <text x="14" y="46" text-anchor="middle" font-size="4.5" fill="#44aa44" font-family="sans-serif">RUN</text>
+    <text x="24" y="46" text-anchor="middle" font-size="4.5" fill="#cc8800" font-family="sans-serif">ALM</text>
+    <text x="34" y="46" text-anchor="middle" font-size="4.5" fill="#888" font-family="sans-serif">ACT</text>
+    <rect x="48" y="4" width="48" height="48" rx="2" fill="#0a0a0a"/>
+    <rect x="50" y="6" width="44" height="10" rx="1" fill="#0a1a0a"/>
+    <text x="72" y="13" text-anchor="middle" font-size="5.5" fill="#44cc44" font-family="sans-serif" font-weight="600">Modules UMPT</text>
+    <rect x="50" y="19" width="20" height="8" rx="1" fill="#1a2a1a" stroke="#2a4a2a" stroke-width=".5"/>
+    <rect x="72" y="19" width="20" height="8" rx="1" fill="#1a2a1a" stroke="#2a4a2a" stroke-width=".5"/>
+    <rect x="50" y="30" width="20" height="8" rx="1" fill="#1a2a1a" stroke="#2a4a2a" stroke-width=".5"/>
+    <rect x="72" y="30" width="20" height="8" rx="1" fill="#1a2a1a" stroke="#2a4a2a" stroke-width=".5"/>
+    <text x="60" y="25" text-anchor="middle" font-size="4.5" fill="#44cc44" font-family="sans-serif">LMPT0</text>
+    <text x="82" y="25" text-anchor="middle" font-size="4.5" fill="#44cc44" font-family="sans-serif">LMPT1</text>
+    <text x="60" y="36" text-anchor="middle" font-size="4.5" fill="#44cc44" font-family="sans-serif">UBBPg3</text>
+    <text x="82" y="36" text-anchor="middle" font-size="4.5" fill="#44cc44" font-family="sans-serif">UPEUd</text>
+    <rect x="50" y="41" width="44" height="8" rx="1" fill="#0a1a0a"/>
+    <text x="72" y="47" text-anchor="middle" font-size="5" fill="#1a4a1a" font-family="monospace">S/N: XXXXXXXXXX</text>
+  </svg>`;
+}
+
+function svgIDU() {
+  return `<svg viewBox="0 0 100 48" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="100" height="48" rx="4" fill="#2a1a0a" stroke="#4a3a0a" stroke-width="1.5"/>
+    <rect x="2" y="2" width="96" height="44" rx="3" fill="#332208"/>
+    <rect x="4" y="4" width="36" height="40" rx="3" fill="#1a1000"/>
+    <text x="22" y="16" text-anchor="middle" font-size="7" fill="#ffaa00" font-family="sans-serif" font-weight="700">IDU</text>
+    <text x="22" y="25" text-anchor="middle" font-size="5.5" fill="#cc8800" font-family="monospace">ZTE ZXMP</text>
+    <circle cx="14" cy="34" r="2.5" fill="#00ff44" opacity=".8"/>
+    <circle cx="22" cy="34" r="2.5" fill="#ffaa00" opacity=".7"/>
+    <circle cx="30" cy="34" r="2.5" fill="#ff4444" opacity=".4"/>
+    <rect x="44" y="6" width="50" height="36" rx="2" fill="#0a0800"/>
+    <rect x="46" y="8" width="46" height="8" rx="1" fill="#1a1200"/>
+    <text x="69" y="14" text-anchor="middle" font-size="5.5" fill="#ffaa00" font-family="sans-serif" font-weight="600">Ports optiques</text>
+    <circle cx="52" cy="24" r="3" fill="#222" stroke="#ff6600" stroke-width="1"/>
+    <circle cx="60" cy="24" r="3" fill="#222" stroke="#ff6600" stroke-width="1"/>
+    <circle cx="68" cy="24" r="3" fill="#222" stroke="#ff6600" stroke-width="1"/>
+    <circle cx="76" cy="24" r="3" fill="#222" stroke="#ff6600" stroke-width="1"/>
+    <circle cx="84" cy="24" r="3" fill="#222" stroke="#ff6600" stroke-width="1"/>
+    <text x="69" y="36" text-anchor="middle" font-size="5" fill="#444" font-family="monospace">STM-1/4/16</text>
+  </svg>`;
+}
+
+function svgCTN() {
+  return `<svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="80" height="56" rx="4" fill="#0a1a2a" stroke="#1a3a5a" stroke-width="1.5"/>
+    <rect x="2" y="2" width="76" height="52" rx="3" fill="#0d1e30"/>
+    <rect x="4" y="4" width="36" height="48" rx="3" fill="#0a1520"/>
+    <text x="22" y="15" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="sans-serif" font-weight="700">CTN</text>
+    <rect x="6" y="18" width="32" height="20" rx="2" fill="#060d14" stroke="#1a3a5a" stroke-width=".5"/>
+    <text x="22" y="26" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="monospace">VDC:-54.2V</text>
+    <text x="22" y="33" text-anchor="middle" font-size="5" fill="#2a9acc" font-family="monospace">IDC:128.5A</text>
+    <rect x="6" y="41" width="32" height="8" rx="1" fill="#0a1015"/>
+    <text x="22" y="47" text-anchor="middle" font-size="5" fill="#1a3a5a" font-family="monospace">BATT:96%</text>
+    <rect x="44" y="6" width="32" height="44" rx="2" fill="#0a0a0a"/>
+    <circle cx="56" cy="16" r="4" fill="#00ff44" opacity=".8"/>
+    <circle cx="68" cy="16" r="4" fill="#ff6600" opacity=".7"/>
+    <circle cx="56" cy="28" r="4" fill="#ffaa00" opacity=".6"/>
+    <circle cx="68" cy="28" r="4" fill="#aaa" opacity=".4"/>
+    <text x="56" y="38" text-anchor="middle" font-size="4.5" fill="#009922" font-family="sans-serif">SYS</text>
+    <text x="68" y="38" text-anchor="middle" font-size="4.5" fill="#cc4400" font-family="sans-serif">BAT</text>
+    <rect x="46" y="42" width="28" height="6" rx="1" fill="#0a1015"/>
+    <text x="60" y="47" text-anchor="middle" font-size="5" fill="#4a90d9" font-family="sans-serif">MENU</text>
+  </svg>`;
+}
+
+function svgRSU() {
+  return `<svg viewBox="0 0 90 52" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="90" height="52" rx="4" fill="#1a0a2a" stroke="#3a1a5a" stroke-width="1.5"/>
+    <rect x="2" y="2" width="86" height="48" rx="3" fill="#220a33"/>
+    <rect x="4" y="4" width="38" height="44" rx="3" fill="#0f0520"/>
+    <text x="23" y="16" text-anchor="middle" font-size="7" fill="#bb88ff" font-family="sans-serif" font-weight="700">RSU</text>
+    <text x="23" y="25" text-anchor="middle" font-size="5.5" fill="#9966cc" font-family="monospace">5G NR Unit</text>
+    <circle cx="14" cy="34" r="2.5" fill="#00ff44" opacity=".8"/>
+    <circle cx="22" cy="34" r="2.5" fill="#bb88ff" opacity=".7"/>
+    <circle cx="30" cy="34" r="2.5" fill="#aaa" opacity=".4"/>
+    <rect x="46" y="6" width="40" height="40" rx="2" fill="#0a0510"/>
+    <rect x="48" y="8" width="36" height="8" rx="1" fill="#150a25"/>
+    <text x="66" y="14" text-anchor="middle" font-size="5.5" fill="#bb88ff" font-family="sans-serif" font-weight="600">5G NR Ports</text>
+    <circle cx="54" cy="24" r="3.5" fill="#0a0510" stroke="#9966cc" stroke-width="1"/>
+    <circle cx="64" cy="24" r="3.5" fill="#0a0510" stroke="#9966cc" stroke-width="1"/>
+    <circle cx="74" cy="24" r="3.5" fill="#0a0510" stroke="#9966cc" stroke-width="1"/>
+    <circle cx="84" cy="24" r="3.5" fill="#0a0510" stroke="#9966cc" stroke-width="1"/>
+    <text x="66" y="38" text-anchor="middle" font-size="5" fill="#441188" font-family="monospace">NR 3.5GHz</text>
+  </svg>`;
+}
+
+function svgAntenne(type) {
+  const c = type==='omni'?'#4fc3f7':'#ff9800';
+  return `<svg viewBox="0 0 54 90" xmlns="http://www.w3.org/2000/svg">
+    <rect x="18" y="45" width="18" height="43" rx="3" fill="#555" stroke="#333" stroke-width="1"/>
+    <rect x="20" y="47" width="14" height="39" rx="2" fill="#666"/>
+    <text x="27" y="68" text-anchor="middle" font-size="5" fill="#ccc" font-family="sans-serif">${type==='omni'?'OMNI':'SECT'}</text>
+    <line x1="27" y1="45" x2="27" y2="32" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+    <path d="M8,12 Q27,2 46,12" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M12,20 Q27,12 42,20" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M16,28 Q27,22 38,28" fill="none" stroke="${c}" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="27" cy="32" r="3.5" fill="${c}" opacity=".9"/>
+    <text x="27" y="85" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">${type==='omni'?'900/1800':'2100MHz'}</text>
   </svg>`;
 }
 
@@ -490,742 +571,685 @@ function svgODU() {
     <rect x="2" y="2" width="76" height="56" rx="6" fill="#3a3a3a" stroke="#222" stroke-width="1.5"/>
     <rect x="4" y="4" width="72" height="52" rx="5" fill="#444"/>
     <circle cx="26" cy="30" r="22" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
-    <circle cx="26" cy="30" r="17" fill="#1a1a1a" stroke="#3a3a3a" stroke-width=".5"/>
-    <circle cx="26" cy="30" r="5" fill="#555"/>
-    <path d="M26,8 Q34,16 34,30 Q34,44 26,52 Q18,44 18,30 Q18,16 26,8Z" fill="rgba(255,255,255,.05)"/>
-    <rect x="56" y="8" width="18" height="44" rx="3" fill="#2a2a2a"/>
-    <circle cx="65" cy="18" r="3.5" fill="#00ff44" opacity=".8"/>
-    <circle cx="65" cy="28" r="3.5" fill="#ff6600" opacity=".7"/>
-    <text x="65" y="38" text-anchor="middle" font-size="5" fill="#4fc3f7" font-family="sans-serif" font-weight="700">ODU</text>
-    <text x="65" y="46" text-anchor="middle" font-size="4.5" fill="#aaa" font-family="sans-serif">MW</text>
+    <circle cx="26" cy="30" r="16" fill="#1a1a1a" stroke="#3a3a3a" stroke-width=".5"/>
+    <circle cx="26" cy="30" r="4" fill="#555"/>
+    <path d="M26,8 Q34,16 34,30 Q34,44 26,52 Q18,44 18,30 Q18,16 26,8Z" fill="rgba(255,255,255,.04)"/>
+    <rect x="54" y="8" width="20" height="44" rx="3" fill="#2a2a2a"/>
+    <circle cx="64" cy="18" r="3.5" fill="#00ff44" opacity=".8"/>
+    <circle cx="64" cy="28" r="3.5" fill="#ff6600" opacity=".7"/>
+    <text x="64" y="40" text-anchor="middle" font-size="6" fill="#4fc3f7" font-family="sans-serif" font-weight="700">ODU</text>
+    <text x="64" y="47" text-anchor="middle" font-size="4.5" fill="#aaa" font-family="sans-serif">MW Link</text>
   </svg>`;
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// DONNÉES BIBLIOTHÈQUE
-// ═══════════════════════════════════════════════════════════════════
+function svgDCPD() {
+  return `<svg viewBox="0 0 130 44" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="130" height="44" rx="4" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
+    <rect x="2" y="2" width="126" height="40" rx="3" fill="#333"/>
+    <rect x="4" y="4" width="34" height="36" rx="2" fill="#0d1520"/>
+    <text x="21" y="16" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="sans-serif" font-weight="800">DCPD</text>
+    <text x="21" y="25" text-anchor="middle" font-size="5" fill="#2a9acc" font-family="monospace">-48V</text>
+    <circle cx="14" cy="34" r="3" fill="#00ff44" opacity=".8"/>
+    <circle cx="24" cy="34" r="3" fill="#aaa" opacity=".4"/>
+    <rect x="42" y="6" width="10" height="32" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
+    <rect x="56" y="6" width="10" height="32" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
+    <rect x="70" y="6" width="10" height="32" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
+    <rect x="84" y="6" width="10" height="32" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
+    <rect x="98" y="6" width="10" height="32" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
+    <rect x="112" y="6" width="12" height="32" rx="1" fill="#1a1a1a" stroke="#555" stroke-width=".5"/>
+    <text x="47" y="25" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S1</text>
+    <text x="61" y="25" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S2</text>
+    <text x="75" y="25" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S3</text>
+    <text x="89" y="25" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S4</text>
+    <text x="103" y="25" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S5</text>
+    <text x="118" y="25" text-anchor="middle" font-size="5" fill="#ff9800" font-family="sans-serif">S6</text>
+  </svg>`;
+}
+
+function svgBarre() {
+  return `<svg viewBox="0 0 160 22" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="3" width="160" height="16" rx="3" fill="#3a2800" stroke="#ff9800" stroke-width="1"/>
+    <rect x="2" y="5" width="156" height="12" rx="2" fill="#4a3200"/>
+    <text x="80" y="13" text-anchor="middle" font-size="6.5" fill="#ff9800" font-family="sans-serif" font-weight="700">BARRE DC −48V</text>
+    <rect x="8" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="22" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="36" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="50" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="108" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="122" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="136" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+    <rect x="150" y="0" width="6" height="8" rx="1" fill="#ff9800" opacity=".7"/>
+  </svg>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BIBLIOTHÈQUE
+// ═══════════════════════════════════════════════════════════
 const LIBRARY = {
-  dc: [
-    {id:'chnt_cb125', name:'CHNT CB-125', ref:'In:100A DC', w:44, h:72,
-     svg: svgDisj('CHNT','CB-125','100A DC','#1565C0','ON')},
-    {id:'chnt_cb60_c50', name:'CHNT CB-60', ref:'C50 DC', w:44, h:72,
-     svg: svgDisj('CHNT','CB-60','C50 DC','#1565C0','OFF')},
-    {id:'chnt_cb60_c40', name:'CHNT CB-60', ref:'C40 DC', w:44, h:72,
-     svg: svgDisj('CHNT','CB-60','C40 DC','#1565C0','OFF')},
-    {id:'chnt_cb60_c32', name:'CHNT CB-60', ref:'C32 DC', w:44, h:72,
-     svg: svgDisj('CHNT','CB-60','C32 DC','#1565C0','ON')},
-    {id:'tengen_tgb1z', name:'TENGEN TGB1Z', ref:'63A DC', w:44, h:72,
-     svg: svgDisj('TENGEN','TGB1Z','63A DC','#1a4a1a','ON')},
-    {id:'huajia_hgm45_c20', name:'HUA JIA HGM45', ref:'C20 DC', w:44, h:72,
-     svg: svgDisj('HUA JIA','HGM45-63','C20 DC','#7a1a1a','ON')},
-    {id:'huajia_hgm45_c16', name:'HUA JIA HGM45', ref:'C16 DC', w:44, h:72,
-     svg: svgDisj('HUA JIA','HGM45-63','C16 DC','#7a1a1a','ON')},
-    {id:'chnt_cb125_2p', name:'CHNT CB-125 2P', ref:'100A 2P', w:76, h:72,
-     svg: svgDisj2P('CHNT','CB-125','100A')},
-    {id:'dcpd', name:'DCPD', ref:'Barre distrib. −48V', w:120, h:40,
-     svg: svgDCPD()},
-    {id:'zte_zxd3000', name:'ZTE ZXD3000', ref:'Rectifier 48V/50A', w:110, h:52,
-     svg: svgRectifier('ZXD3000')},
-    {id:'battery_vrla', name:'Batterie VRLA', ref:'12V 200Ah Narada', w:60, h:80,
-     svg: svgBattery()},
-    {id:'spd_xw2', name:'XW2 MYS5', ref:'Parafoudre SPD 275V', w:36, h:80,
-     svg: svgSPD()},
-    {id:'borniers_l123n', name:'Borniers L1/L2/L3/N', ref:'Jeu 4 borniers', w:50, h:60,
-     svg: svgBornier()},
+  dc:[
+    {id:'dcpd',       name:'DCPD',            ref:'Distrib. −48V',    w:130,h:44, svg:svgDCPD()},
+    {id:'barre_dc',   name:'Barre DC −48V',   ref:'Distribution',     w:160,h:22, svg:svgBarre()},
+    {id:'chnt_cb125_1p', name:'CHNT CB-125',  ref:'100A 1P',          w:44, h:72, svg:svgDisj('CHNT','100A',1,'ON')},
+    {id:'chnt_cb60_c50', name:'CHNT CB-60',   ref:'C50 1P',           w:44, h:72, svg:svgDisj('CHNT','C50',1,'OFF')},
+    {id:'chnt_cb60_c40', name:'CHNT CB-60',   ref:'C40 1P',           w:44, h:72, svg:svgDisj('CHNT','C40',1,'OFF')},
+    {id:'chnt_cb60_c32', name:'CHNT CB-60',   ref:'C32 1P',           w:44, h:72, svg:svgDisj('CHNT','C32',1,'ON')},
+    {id:'chnt_cb60_c20', name:'CHNT CB-60',   ref:'C20 1P',           w:44, h:72, svg:svgDisj('CHNT','C20',1,'ON')},
+    {id:'tengen_63a',  name:'TENGEN TGB1Z',   ref:'63A 1P',           w:44, h:72, svg:svgDisj('TENGEN','63A',1,'ON')},
+    {id:'huajia_c20',  name:'HUA JIA HGM45',  ref:'C20 1P',           w:44, h:72, svg:svgDisj('HUA JIA','C20',1,'ON')},
+    {id:'huajia_c16',  name:'HUA JIA HGM45',  ref:'C16 1P',           w:44, h:72, svg:svgDisj('HUA JIA','C16',1,'ON')},
+    {id:'chnt_2p',     name:'CHNT CB-125 2P', ref:'100A 2P',          w:76, h:72, svg:svgDisj('CHNT','100A',2,'ON')},
+    {id:'spd_xw2',     name:'XW2 MYS5',       ref:'Parafoudre 275V',  w:36, h:80, svg:svgSPD()},
+    {id:'zte_zxd3000', name:'ZTE ZXD3000',    ref:'Rectifier 48V/50A',w:110,h:52, svg:svgRectifier('ZXD3000')},
+    {id:'huawei_r4850', name:'Huawei R4850G5',ref:'Rectifier 48V/50A',w:110,h:52, svg:svgRectifier('R4850G5')},
+    {id:'battery_vrla', name:'Batterie VRLA', ref:'12V 200Ah',        w:60, h:80, svg:svgBattery()},
   ],
-  ac: [
-    {id:'chnt_cb125_ac', name:'CHNT CB-125', ref:'In:100A AC', w:44, h:72,
-     svg: svgDisj('CHNT','CB-125','100A AC','#1565C0','ON')},
-    {id:'chnt_cb60_ac', name:'CHNT CB-60', ref:'C50 AC', w:44, h:72,
-     svg: svgDisj('CHNT','CB-60','C50 AC','#1565C0','OFF')},
-    {id:'huajia_hgm_ac', name:'HUA JIA HGM45', ref:'C20 AC', w:44, h:72,
-     svg: svgDisj('HUA JIA','HGM45-63','C20 AC','#7a1a1a','ON')},
-    {id:'tengen_ac', name:'TENGEN TGB1Z', ref:'40A AC', w:44, h:72,
-     svg: svgDisj('TENGEN','TGB1Z','40A AC','#1a4a1a','ON')},
-    {id:'spd_valvetrab', name:'Phoenix VAL-MS', ref:'Parafoudre AC 75V', w:36, h:80,
-     svg: svgSPD()},
+  ac:[
+    {id:'chnt_cb125_ac', name:'CHNT CB-125',  ref:'100A AC',          w:44, h:72, svg:svgDisj('CHNT','100A AC',1,'ON')},
+    {id:'chnt_cb60_ac',  name:'CHNT CB-60',   ref:'C50 AC',           w:44, h:72, svg:svgDisj('CHNT','C50 AC',1,'OFF')},
+    {id:'tengen_ac',     name:'TENGEN',        ref:'40A AC',           w:44, h:72, svg:svgDisj('TENGEN','40A AC',1,'ON')},
+    {id:'huajia_ac',     name:'HUA JIA',       ref:'C20 AC',           w:44, h:72, svg:svgDisj('HUA JIA','C20 AC',1,'ON')},
+    {id:'spd_phx',       name:'Phoenix VAL-MS',ref:'SPD AC 75V',       w:36, h:80, svg:svgSPD()},
   ],
-  tx: [
-    {id:'antenne', name:'Antenne sectorielle', ref:'900/1800MHz', w:60, h:80,
-     svg: svgAntenne()},
-    {id:'rru_huawei', name:'Huawei RRU', ref:'BBU/RRU 4G/5G', w:60, h:90,
-     svg: svgRRU()},
-    {id:'odu_mw', name:'ODU MW', ref:'Lien micro-onde', w:80, h:60,
-     svg: svgODU()},
-    {id:'fibre', name:'Câble fibre', ref:'Connecteur LC/SC', w:30, h:80,
-     svg: svgFibre()},
+  tel:[
+    {id:'rru_huawei',    name:'Huawei RRU',   ref:'4G/5G RRU',        w:60, h:90, svg:svgRRU()},
+    {id:'bbu_5900',      name:'BBU5900',       ref:'Huawei BBU',       w:100,h:56, svg:svgBBU()},
+    {id:'rsu_5g',        name:'RSU 5G',        ref:'NR 3.5GHz',        w:90, h:52, svg:svgRSU()},
+    {id:'idu_zte',       name:'IDU ZTE',       ref:'ZXMP S200',        w:100,h:48, svg:svgIDU()},
+    {id:'ctn_huawei',    name:'CTN Huawei',    ref:'Contrôleur',       w:80, h:56, svg:svgCTN()},
+    {id:'ant_sect',      name:'Ant. Sectorielle',ref:'2100MHz',        w:54, h:90, svg:svgAntenne('sect')},
+    {id:'ant_omni',      name:'Ant. Omnidirect.',ref:'900/1800MHz',    w:54, h:90, svg:svgAntenne('omni')},
+    {id:'odu_mw',        name:'ODU MW',         ref:'Micro-onde',      w:80, h:60, svg:svgODU()},
   ],
-  my: []
+  dcdb:[
+    {id:'dcdb_box',      name:'DCDB Box',      ref:'12 sorties −48V',  w:160,h:100, svg:svgDCDB()},
+  ],
+  my:[]
 };
 
 const CABLES = [
-  {c:'#1565C0', l:'Câble −48V DC', key:'dc48'},
-  {c:'#cc0000', l:'Câble + / Alim.', key:'pos'},
-  {c:'#1a7a1a', l:'Terre / GND', key:'gnd'},
-  {c:'#222222', l:'Câble noir', key:'blk'},
-  {c:'#888888', l:'Câble gris', key:'gry'},
-  {c:'#8B4513', l:'Câble marron', key:'brn'},
-  {c:'#ff6600', l:'Câble fibre', key:'fib'},
+  {c:'#1565C0', l:'−48V DC', k:'dc'},
+  {c:'#cc0000', l:'+Alim.', k:'pos'},
+  {c:'#1a7a1a', l:'Terre/GND', k:'gnd'},
+  {c:'#222222', l:'Noir', k:'blk'},
+  {c:'#888888', l:'Gris', k:'gry'},
+  {c:'#8B4513', l:'Marron', k:'brn'},
+  {c:'#ff6600', l:'Fibre', k:'fib'},
+  {c:'#ff00ff', l:'Signal', k:'sig'},
 ];
 
-// ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // STATE
-// ═══════════════════════════════════════════════════════════════════
-let mode = 'select';
-let activeTab = 'dc';
-let activeCable = CABLES[0];
-let items = [];      // {id, libId, x, y, w, h, label, ref, state, note, svgContent, isPhoto, imgSrc}
-let wires = [];      // {id, x1,y1, x2,y2, color, colorLabel}
-let texts = [];      // {id, x,y,text}
-let selectedId = null;
-let cableStart = null;
-let dragItem = null;
-let dragOff = {x:0,y:0};
-let history = [];
+// ═══════════════════════════════════════════════════════════
+let mode='select', activeTab='dc', activeCable=CABLES[0];
+let items=[], wires=[], textItems=[];
+let selectedId=null, dragItem=null, dragOff={x:0,y:0};
+let resizing=null, resizeStart={};
+let cableStart=null, history=[];
 
 const cw = document.getElementById('cw');
-const cvs = document.getElementById('cvs');
+const canvasItems = document.getElementById('canvas-items');
 const wiresG = document.getElementById('wires-g');
-const wpLine = document.getElementById('wp-line');
-
+const textsG = document.getElementById('texts-g');
+const wpLine = document.getElementById('wp');
 const uid = () => 'e'+Date.now()+Math.floor(Math.random()*9999);
 const snap = v => Math.round(v/20)*20;
 const clone = o => JSON.parse(JSON.stringify(o));
+function saveHist(){history.push(clone({items,wires,textItems}));if(history.length>30)history.shift();}
+function getCwPos(e){const r=cw.getBoundingClientRect();const t=e.touches?.[0]||e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
 
-function saveHist() {
-  history.push(clone({items,wires,texts}));
-  if(history.length>30) history.shift();
-}
-
-// ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // BIBLIOTHÈQUE UI
-// ═══════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 function showTab(tab) {
-  activeTab = tab;
-  ['dc','ac','tx','my'].forEach(t => {
-    document.getElementById('tab-'+t).classList.toggle('sel', t===tab);
+  activeTab=tab;
+  document.querySelectorAll('.ltab').forEach((t,i)=>{
+    t.classList.toggle('sel',['dc','ac','tel','dcdb','my'][i]===tab);
   });
   renderLib();
 }
 
-function renderLib() {
-  const body = document.getElementById('lib-body');
-  body.innerHTML = '';
+function renderLib(){
+  const body=document.getElementById('lib-body');
+  body.innerHTML='';
 
-  if(activeTab === 'my') {
-    body.innerHTML = `
-      <label class="upload-zone">
-        <input type="file" accept="image/*" multiple onchange="addMyPhotos(this.files)">
-        <div style="font-size:18px;margin-bottom:4px">📷</div>
-        <div>Charger vos photos<br>de composants terrain</div>
-      </label>
-      <div id="my-photos-list"></div>`;
-    renderMyPhotos();
+  if(activeTab==='my'){
+    body.innerHTML=`<label class="upload-zone"><input type="file" accept="image/*" multiple onchange="addMyPhotos(this.files)">
+      <div style="font-size:20px;margin-bottom:4px">📷</div>
+      <div>Charger photos<br>terrain comme<br>composants</div></label>
+      <div id="my-list"></div>`;
+    setTimeout(renderMyPhotos,10);
     return;
   }
 
-  const comps = LIBRARY[activeTab] || [];
+  // Câbles
+  body.innerHTML+=`<div class="ls-title">Câble actif</div>
+    <div class="cable-pal" id="cpal"></div>
+    <div id="clab" style="font-size:9px;color:var(--text3);margin-bottom:6px">${activeCable.l}</div>`;
 
-  // Section câbles
-  const cableDiv = document.createElement('div');
-  cableDiv.className = 'lib-section';
-  cableDiv.innerHTML = `<div class="ls-title">Câble actif</div>
-    <div class="cable-pal" id="cable-pal"></div>
-    <div class="cb-label" id="cb-label-txt">${activeCable.l}</div>`;
-  body.appendChild(cableDiv);
-  setTimeout(() => {
-    const pal = document.getElementById('cable-pal');
-    if(!pal) return;
-    CABLES.forEach((c,i) => {
-      const d = document.createElement('div');
-      d.className = 'cb' + (c.key===activeCable.key?' sel':'');
-      d.style.background = c.color;
-      d.title = c.l;
-      d.onclick = () => {
-        activeCable = c;
-        document.querySelectorAll('.cb').forEach(x=>x.classList.remove('sel'));
-        d.classList.add('sel');
-        document.getElementById('cb-label-txt').textContent = c.l;
-      };
+  const comps=LIBRARY[activeTab]||[];
+  body.innerHTML+=`<div class="ls-title">Composants</div>`;
+  comps.forEach(comp=>{
+    body.innerHTML+=`<div class="comp-card" onclick="addItem('${comp.id}','${activeTab}')" draggable="true"
+      ondragstart="event.dataTransfer.setData('cid','${comp.id}');event.dataTransfer.setData('ctab','${activeTab}')">
+      <div class="comp-thumb">${comp.svg}</div>
+      <div class="comp-meta"><div class="comp-name">${comp.name}</div><div class="comp-ref">${comp.ref}</div></div>
+    </div>`;
+  });
+
+  // Palette câbles
+  setTimeout(()=>{
+    const pal=document.getElementById('cpal');
+    if(!pal)return;
+    CABLES.forEach(c=>{
+      const d=document.createElement('div');
+      d.className='cb'+(c.k===activeCable.k?' sel':'');
+      d.style.background=c.c; d.title=c.l;
+      d.onclick=()=>{activeCable=c;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');document.getElementById('clab').textContent=c.l;};
       pal.appendChild(d);
     });
-  }, 10);
-
-  // Composants
-  const compDiv = document.createElement('div');
-  compDiv.className = 'lib-section';
-  compDiv.innerHTML = `<div class="ls-title">Composants ${activeTab.toUpperCase()}</div>`;
-  comps.forEach(comp => {
-    const card = document.createElement('div');
-    card.className = 'comp-card';
-    card.draggable = true;
-    card.innerHTML = `
-      <div class="comp-thumb">${comp.svg}</div>
-      <div class="comp-meta">
-        <div class="comp-name">${comp.name}</div>
-        <div class="comp-ref">${comp.ref}</div>
-      </div>`;
-    card.addEventListener('click', () => addToCanvas(comp));
-    card.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('compId', comp.id);
-      e.dataTransfer.setData('tab', activeTab);
-    });
-    compDiv.appendChild(card);
-  });
-  body.appendChild(compDiv);
+  },10);
 }
 
-function renderMyPhotos() {
-  const list = document.getElementById('my-photos-list');
-  if(!list) return;
-  list.innerHTML = '';
-  LIBRARY.my.forEach(comp => {
-    const card = document.createElement('div');
-    card.className = 'comp-card';
-    card.innerHTML = `
-      <div class="comp-thumb"><img src="${comp.imgSrc}" alt="${comp.name}"></div>
-      <div class="comp-meta">
-        <div class="comp-name">${comp.name}</div>
-        <div class="comp-ref">${comp.ref}</div>
-      </div>`;
-    card.addEventListener('click', () => addToCanvas(comp, true));
-    list.appendChild(card);
-  });
+function renderMyPhotos(){
+  const list=document.getElementById('my-list');if(!list)return;
+  list.innerHTML=LIBRARY.my.map(c=>`<div class="comp-card" onclick="addItemFromComp(${JSON.stringify(c).replace(/"/g,'&quot;')})">
+    <div class="comp-thumb"><img src="${c.imgSrc}" alt="${c.name}"></div>
+    <div class="comp-meta"><div class="comp-name">${c.name}</div><div class="comp-ref">${c.ref}</div></div>
+  </div>`).join('');
 }
 
-function addMyPhotos(files) {
-  Array.from(files).forEach(f => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const comp = {
-        id: 'my_'+Date.now()+Math.random(),
-        name: f.name.replace(/\.[^.]+$/,'').substring(0,18),
-        ref: 'Photo terrain',
-        w: 80, h: 80,
-        isPhoto: true,
-        imgSrc: e.target.result,
-        svg: null
-      };
-      LIBRARY.my.push(comp);
+function addMyPhotos(files){
+  Array.from(files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      LIBRARY.my.push({id:'my_'+Date.now()+Math.random(),name:f.name.replace(/\.[^.]+$/,'').substring(0,16),ref:'Photo terrain',w:80,h:80,isPhoto:true,imgSrc:e.target.result,svg:null});
       renderMyPhotos();
-    };
-    reader.readAsDataURL(f);
+    };r.readAsDataURL(f);
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// CANVAS — AJOUTER COMPOSANT
-// ═══════════════════════════════════════════════════════════════════
-function addToCanvas(comp, isPhoto=false) {
+// ═══════════════════════════════════════════════════════════
+// AJOUTER ITEM
+// ═══════════════════════════════════════════════════════════
+function addItem(compId, tab) {
+  const comp=LIBRARY[tab]?.find(c=>c.id===compId);
+  if(!comp)return;
   saveHist();
-  const cwR = cw.getBoundingClientRect();
-  const cx = snap(cwR.width/2 - comp.w/2);
-  const cy = snap(cwR.height/2 - comp.h/2);
-  const item = {
-    id: uid(),
-    libId: comp.id,
-    x: cx, y: cy,
-    w: comp.w, h: comp.h,
-    label: comp.name,
-    ref: comp.ref,
-    state: 'ok',
-    note: '',
-    svgContent: isPhoto ? null : comp.svg,
-    isPhoto: isPhoto || comp.isPhoto || false,
-    imgSrc: comp.imgSrc || null,
-  };
+  const r=cw.getBoundingClientRect();
+  const item={id:uid(),libId:compId,tab,
+    x:snap(r.width/2-comp.w/2), y:snap(r.height/2-comp.h/2),
+    w:comp.w, h:comp.h,
+    label:comp.name, ref:comp.ref, ampere:'', section:'', state:'ok', note:'',
+    svgContent:comp.svg, isPhoto:comp.isPhoto||false, imgSrc:comp.imgSrc||null};
   items.push(item);
   renderItem(item);
   updateCounts();
   selectItem(item.id);
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// RENDER COMPOSANT
-// ═══════════════════════════════════════════════════════════════════
-function renderItem(item) {
-  let el = document.getElementById(item.id);
-  if(!el) {
-    el = document.createElement('div');
-    el.id = item.id;
-    el.className = 'canvas-item';
-    cvs.appendChild(el);
-  }
-  el.className = 'canvas-item' + (selectedId===item.id?' selected':'');
-  el.style.left = item.x+'px';
-  el.style.top  = item.y+'px';
-  el.style.width = item.w+'px';
-
-  const stateIcon = {ok:'🟢', warn:'🟡', crit:'🔴'}[item.state] || '';
-  const stateClass = {ok:'state-ok', warn:'state-warn', crit:'state-crit'}[item.state] || 'state-ok';
-
-  let imgContent = '';
-  if(item.isPhoto && item.imgSrc) {
-    imgContent = `<img src="${item.imgSrc}" style="width:${item.w}px;height:${item.h}px;object-fit:cover;display:block;border-radius:5px">`;
-  } else {
-    imgContent = `<div style="width:${item.w}px;height:${item.h}px">${item.svgContent||''}</div>`;
-  }
-
-  el.innerHTML = `
-    <div class="ci-img" style="width:${item.w}px;height:${item.h}px">${imgContent}</div>
-    <div class="ci-label">${item.label}</div>
-    <div class="ci-state ${stateClass}">${stateIcon}</div>
-    <button class="ci-del" onclick="deleteItem('${item.id}')">✕</button>`;
-
-  el.addEventListener('mousedown', e => onItemMousedown(e, item.id));
-  el.addEventListener('dblclick', e => { e.stopPropagation(); selectItem(item.id); });
-}
-
-function renderAllItems() {
-  items.forEach(renderItem);
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// SELECTION
-// ═══════════════════════════════════════════════════════════════════
-function selectItem(id) {
-  selectedId = id;
-  renderAllItems();
-  renderAllWires();
-  const item = items.find(i=>i.id===id);
-  if(item) showProps(item);
-  else hideProps();
-}
-
-function showProps(item) {
-  document.getElementById('props-head').textContent = item.label;
-  document.getElementById('props-body').innerHTML = `
-    <div class="pr"><label>Label</label>
-      <input value="${item.label}" oninput="updateItem('${item.id}','label',this.value)"></div>
-    <div class="pr"><label>Référence</label>
-      <input value="${item.ref||''}" oninput="updateItem('${item.id}','ref',this.value)" placeholder="Ex: CHNT CB-60 C50"></div>
-    <div class="pr"><label>État</label>
-      <div class="state-select">
-        <div class="ss-btn ss-ok ${item.state==='ok'?'active':''}"
-          onclick="updateItem('${item.id}','state','ok');renderItem(items.find(x=>x.id==='${item.id}'));showProps(items.find(x=>x.id==='${item.id}'))">✅ OK</div>
-        <div class="ss-btn ss-warn ${item.state==='warn'?'active':''}"
-          onclick="updateItem('${item.id}','state','warn');renderItem(items.find(x=>x.id==='${item.id}'));showProps(items.find(x=>x.id==='${item.id}'))">⚠️ Dégr.</div>
-        <div class="ss-btn ss-crit ${item.state==='crit'?'active':''}"
-          onclick="updateItem('${item.id}','state','crit');renderItem(items.find(x=>x.id==='${item.id}'));showProps(items.find(x=>x.id==='${item.id}'))">🔴 HS</div>
-      </div></div>
-    <div class="pr"><label>Note</label>
-      <textarea oninput="updateItem('${item.id}','note',this.value)"
-        placeholder="Observations, anomalies...">${item.note||''}</textarea></div>
-    <div class="pr"><label>Dimensions</label>
-      <div style="display:flex;gap:4px">
-        <input type="number" value="${item.w}" min="20" max="300" style="width:48%"
-          oninput="updateItem('${item.id}','w',+this.value)">
-        <input type="number" value="${item.h}" min="20" max="300" style="width:48%"
-          oninput="updateItem('${item.id}','h',+this.value)">
-      </div></div>`;
-}
-
-function hideProps() {
-  document.getElementById('props-head').textContent = 'Composant';
-  document.getElementById('props-body').innerHTML = `
-    <div style="color:var(--text3);font-size:11px;text-align:center;margin-top:20px">
-      Cliquer un composant<br>pour éditer</div>`;
-}
-
-function updateItem(id, key, val) {
-  const item = items.find(i=>i.id===id);
-  if(!item) return;
-  item[key] = val;
-  if(key==='w'||key==='h') renderItem(item);
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// MODE
-// ═══════════════════════════════════════════════════════════════════
-function setMode(m) {
-  mode = m;
-  cableStart = null;
-  wpLine.setAttribute('opacity','0');
-  ['sel','cable','text'].forEach(x => document.getElementById('btn-'+x)?.classList.remove('on'));
-  document.getElementById('btn-'+m)?.classList.add('on');
-  const labels = {select:'Sélection · déplacer', cable:'Tracer câble', text:'Ajouter texte'};
-  document.getElementById('mode-badge').textContent = labels[m]||m;
-  cw.style.cursor = m==='cable'?'crosshair': m==='text'?'text':'default';
-  setStatus(m==='cable'?'Câble '+activeCable.l+' — cliquer point départ':'Prêt');
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// EVENTS CANVAS
-// ═══════════════════════════════════════════════════════════════════
-function getCwPos(e) {
-  const r = cw.getBoundingClientRect();
-  const t = e.touches?.[0]||e;
-  return {x:t.clientX-r.left, y:t.clientY-r.top};
-}
-
-cw.addEventListener('click', e => {
-  if(e.target !== cw && !e.target.closest('#cvs-svg') && !e.target.closest('.wire-preview-svg')) return;
-
-  const pos = getCwPos(e);
-  const sx = snap(pos.x), sy = snap(pos.y);
-
-  if(mode === 'cable') {
-    if(!cableStart) {
-      cableStart = {x:sx, y:sy};
-      wpLine.setAttribute('x1',sx); wpLine.setAttribute('y1',sy);
-      wpLine.setAttribute('x2',sx); wpLine.setAttribute('y2',sy);
-      wpLine.setAttribute('stroke', activeCable.c);
-      wpLine.setAttribute('opacity','0.8');
-      setStatus('Câble — cliquer point d\'arrivée (clic droit pour annuler)');
-    } else {
-      if(sx===cableStart.x&&sy===cableStart.y){cableStart=null;wpLine.setAttribute('opacity','0');return;}
-      saveHist();
-      wires.push({id:uid(), x1:cableStart.x, y1:cableStart.y, x2:sx, y2:sy,
-        color:activeCable.c, colorLabel:activeCable.l});
-      renderAllWires();
-      cableStart={x:sx,y:sy};
-      wpLine.setAttribute('x1',sx); wpLine.setAttribute('y1',sy);
-      updateCounts();
-      setStatus('Câble '+activeCable.l+' — continuer ou clic droit pour terminer');
-    }
-  } else if(mode === 'text') {
-    const txt = prompt('Texte à ajouter :','');
-    if(!txt) return;
-    saveHist();
-    texts.push({id:uid(), x:sx, y:sy, text:txt});
-    renderAllTexts();
-  } else {
-    selectedId = null;
-    renderAllItems();
-    renderAllWires();
-    hideProps();
-  }
-});
-
-cw.addEventListener('mousemove', e => {
-  if(mode==='cable' && cableStart) {
-    const pos = getCwPos(e);
-    wpLine.setAttribute('x2', snap(pos.x));
-    wpLine.setAttribute('y2', snap(pos.y));
-  }
-  if(dragItem) {
-    const pos = getCwPos(e);
-    const item = items.find(i=>i.id===dragItem);
-    if(item) {
-      item.x = snap(pos.x - dragOff.x);
-      item.y = snap(pos.y - dragOff.y);
-      const el = document.getElementById(item.id);
-      if(el) { el.style.left=item.x+'px'; el.style.top=item.y+'px'; }
-    }
-  }
-});
-
-cw.addEventListener('mouseup', () => { dragItem = null; });
-cw.addEventListener('contextmenu', e => {
-  e.preventDefault();
-  cableStart = null;
-  wpLine.setAttribute('opacity','0');
-  setStatus('Câble annulé');
-});
-
-// Drag depuis bibliothèque
-cw.addEventListener('dragover', e => e.preventDefault());
-cw.addEventListener('drop', e => {
-  e.preventDefault();
-  const compId = e.dataTransfer.getData('compId');
-  const tab = e.dataTransfer.getData('tab');
-  const comp = LIBRARY[tab]?.find(c=>c.id===compId);
-  if(!comp) return;
-  const pos = getCwPos(e);
+function addItemFromComp(comp){
   saveHist();
-  const item = {
-    id:uid(), libId:comp.id,
-    x:snap(pos.x-comp.w/2), y:snap(pos.y-comp.h/2),
+  const r=cw.getBoundingClientRect();
+  const item={id:uid(),libId:comp.id,tab:'my',
+    x:snap(r.width/2-comp.w/2), y:snap(r.height/2-comp.h/2),
     w:comp.w, h:comp.h,
-    label:comp.name, ref:comp.ref, state:'ok', note:'',
-    svgContent:comp.svg, isPhoto:comp.isPhoto||false, imgSrc:comp.imgSrc||null
-  };
+    label:comp.name, ref:comp.ref, ampere:'', section:'', state:'ok', note:'',
+    svgContent:null, isPhoto:true, imgSrc:comp.imgSrc};
   items.push(item);
   renderItem(item);
   updateCounts();
-});
-
-function onItemMousedown(e, id) {
-  if(mode !== 'select') return;
-  e.stopPropagation();
-  saveHist();
-  selectItem(id);
-  const pos = getCwPos(e);
-  const item = items.find(i=>i.id===id);
-  dragItem = id;
-  dragOff = {x:pos.x-item.x, y:pos.y-item.y};
-  e.preventDefault();
+  selectItem(item.id);
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// WIRES
-// ═══════════════════════════════════════════════════════════════════
-function renderAllWires() {
-  wiresG.innerHTML = '';
-  wires.forEach(w => {
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1',w.x1); line.setAttribute('y1',w.y1);
-    line.setAttribute('x2',w.x2); line.setAttribute('y2',w.y2);
-    line.setAttribute('stroke',w.color);
-    line.setAttribute('stroke-width', selectedId===w.id ? '4' : '2.5');
-    line.setAttribute('stroke-linecap','round');
-    if(selectedId===w.id) line.setAttribute('stroke-dasharray','8,3');
-    line.style.cursor='pointer';
-    line.addEventListener('click', () => {
-      if(mode==='select'){ selectedId=w.id; renderAllWires(); }
-    });
-    wiresG.appendChild(line);
-  });
-  // Labels câbles
-  wires.forEach(w => {
-    const mx = (w.x1+w.x2)/2, my = (w.y1+w.y2)/2;
-    const bg = document.createElementNS('http://www.w3.org/2000/svg','rect');
-    const len = w.colorLabel.length*5+8;
-    bg.setAttribute('x',mx-len/2); bg.setAttribute('y',my-8);
-    bg.setAttribute('width',len); bg.setAttribute('height',14);
-    bg.setAttribute('rx','3'); bg.setAttribute('fill',w.color);
-    bg.setAttribute('opacity','0.85');
-    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
-    txt.setAttribute('x',mx); txt.setAttribute('y',my+2);
-    txt.setAttribute('text-anchor','middle');
-    txt.setAttribute('font-size','8');
-    txt.setAttribute('fill','#fff');
-    txt.setAttribute('font-family','sans-serif');
-    txt.setAttribute('font-weight','600');
-    txt.setAttribute('pointer-events','none');
-    txt.textContent = w.colorLabel;
-    wiresG.appendChild(bg);
-    wiresG.appendChild(txt);
-  });
-}
+// ═══════════════════════════════════════════════════════════
+// RENDER ITEM
+// ═══════════════════════════════════════════════════════════
+function renderItem(item){
+  let el=document.getElementById(item.id);
+  if(!el){el=document.createElement('div');el.id=item.id;el.className='ci';canvasItems.appendChild(el);}
+  el.className='ci'+(selectedId===item.id?' selected':'');
+  el.style.left=item.x+'px'; el.style.top=item.y+'px'; el.style.width=item.w+'px';
 
-function renderAllTexts() {
-  // Supprimer anciens textes SVG
-  document.querySelectorAll('.canvas-text').forEach(t=>t.remove());
-  texts.forEach(t => {
-    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
-    txt.setAttribute('x',t.x); txt.setAttribute('y',t.y);
-    txt.setAttribute('font-size','12');
-    txt.setAttribute('fill','#1a1a1a');
-    txt.setAttribute('font-family','sans-serif');
-    txt.setAttribute('font-weight','500');
-    txt.setAttribute('class','canvas-text');
-    txt.setAttribute('cursor','pointer');
-    txt.textContent = t.text;
-    wiresG.appendChild(txt);
-  });
-}
+  const stC={ok:'s-ok',warn:'s-warn',crit:'s-crit'}[item.state||'ok'];
+  const stI={ok:'✓',warn:'!',crit:'✕'}[item.state||'ok'];
 
-// ═══════════════════════════════════════════════════════════════════
-// KEYBOARD
-// ═══════════════════════════════════════════════════════════════════
-document.addEventListener('keydown', e => {
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
-  if(e.key==='s'||e.key==='S') setMode('select');
-  if(e.key==='c'||e.key==='C') setMode('cable');
-  if(e.key==='t'||e.key==='T') setMode('text');
-  if(e.key==='Delete'||e.key==='Backspace') {
-    if(selectedId) { deleteItem(selectedId); deleteWire(selectedId); }
+  let content='';
+  if(item.isPhoto && item.imgSrc){
+    content=`<img src="${item.imgSrc}" style="width:${item.w}px;height:${item.h}px;object-fit:cover;display:block">`;
+  } else {
+    content=`<div style="width:${item.w}px;height:${item.h}px">${item.svgContent||''}</div>`;
   }
-  if(e.ctrlKey&&e.key==='z'){ e.preventDefault(); undo(); }
-  if(e.key==='Escape'){ cableStart=null; wpLine.setAttribute('opacity','0'); }
+
+  // Label principal visible + ampérage
+  const mainLabel = item.label + (item.ampere?' · '+item.ampere:'');
+  // Sous-label = section câble si défini
+  const subLabel  = item.section ? 'Section: '+item.section : '';
+
+  el.innerHTML=`
+    <div class="ci-body" style="width:${item.w}px;height:${item.h}px">
+      ${content}
+      ${subLabel?`<div class="ci-sub-label">${subLabel}</div>`:''}
+      <div class="ci-main-label">${mainLabel}</div>
+    </div>
+    <div class="ci-state ${stC}">${stI}</div>
+    <button class="ci-del" onclick="deleteItem('${item.id}')">✕</button>
+    ${selectedId===item.id?`
+    <div class="resize-handle rh-se" onmousedown="startResize(event,'${item.id}','se')"></div>
+    <div class="resize-handle rh-s" onmousedown="startResize(event,'${item.id}','s')"></div>
+    <div class="resize-handle rh-e" onmousedown="startResize(event,'${item.id}','e')"></div>
+    `:''}`;
+
+  el.addEventListener('mousedown',e=>onItemMD(e,item.id));
+}
+
+function renderAllItems(){items.forEach(renderItem);}
+
+// ═══════════════════════════════════════════════════════════
+// RESIZE
+// ═══════════════════════════════════════════════════════════
+function startResize(e, id, dir){
+  e.stopPropagation(); e.preventDefault();
+  const item=items.find(i=>i.id===id);
+  resizing={id,dir,startW:item.w,startH:item.h,startX:e.clientX,startY:e.clientY};
+}
+
+document.addEventListener('mousemove',e=>{
+  if(resizing){
+    const item=items.find(i=>i.id===resizing.id);
+    if(!item)return;
+    const dx=e.clientX-resizing.startX, dy=e.clientY-resizing.startY;
+    if(resizing.dir==='se'||resizing.dir==='e') item.w=Math.max(30,snap(resizing.startW+dx));
+    if(resizing.dir==='se'||resizing.dir==='s') item.h=Math.max(20,snap(resizing.startH+dy));
+    renderItem(item); return;
+  }
+  if(dragItem){
+    const p=getCwPos(e);
+    const item=items.find(i=>i.id===dragItem);
+    if(item){item.x=snap(p.x-dragOff.x);item.y=snap(p.y-dragOff.y);
+      const el=document.getElementById(item.id);
+      if(el){el.style.left=item.x+'px';el.style.top=item.y+'px';}}
+  }
+  if(mode==='cable'&&cableStart){
+    const p=getCwPos(e);
+    wpLine.setAttribute('x2',snap(p.x));wpLine.setAttribute('y2',snap(p.y));
+  }
 });
 
-function deleteItem(id) {
-  saveHist();
-  items = items.filter(i=>i.id!==id);
+document.addEventListener('mouseup',()=>{
+  if(resizing){resizing=null;renderAllItems();}
+  dragItem=null;
+});
+
+// ═══════════════════════════════════════════════════════════
+// SELECTION & DRAG
+// ═══════════════════════════════════════════════════════════
+function selectItem(id){
+  selectedId=id; renderAllItems(); renderAllWires();
+  const item=items.find(i=>i.id===id);
+  if(item)showProps(item); else hideProps();
+}
+
+function onItemMD(e,id){
+  if(e.target.classList.contains('resize-handle')||e.target.classList.contains('ci-del'))return;
+  if(mode!=='select')return;
+  e.stopPropagation(); saveHist();
+  selectItem(id);
+  const p=getCwPos(e); const item=items.find(i=>i.id===id);
+  dragItem=id; dragOff={x:p.x-item.x,y:p.y-item.y}; e.preventDefault();
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROPS
+// ═══════════════════════════════════════════════════════════
+function showProps(item){
+  document.getElementById('props-head').textContent=item.label;
+  const stOk=item.state==='ok'?'a':'', stW=item.state==='warn'?'a':'', stC=item.state==='crit'?'a':'';
+  document.getElementById('props-body').innerHTML=`
+    <div class="pr"><label>Nom / Label</label>
+      <input value="${item.label}" oninput="upI('${item.id}','label',this.value);renderItem(items.find(x=>x.id==='${item.id}'))"></div>
+    <div class="pr"><label>Ampérage / Capacité</label>
+      <input value="${item.ampere||''}" placeholder="Ex: 20A / 100Ah"
+        oninput="upI('${item.id}','ampere',this.value);renderItem(items.find(x=>x.id==='${item.id}'))"></div>
+    <div class="pr"><label>Référence</label>
+      <input value="${item.ref||''}" oninput="upI('${item.id}','ref',this.value)"></div>
+    <div class="pr"><label>Section câble</label>
+      <input value="${item.section||''}" placeholder="Ex: 16mm² · 3m"
+        oninput="upI('${item.id}','section',this.value);renderItem(items.find(x=>x.id==='${item.id}'))"></div>
+    <div class="pr"><label>État</label>
+      <div class="state-btns">
+        <div class="sb2 sb-ok ${stOk}" onclick="upI('${item.id}','state','ok');selectItem('${item.id}')">✅ OK</div>
+        <div class="sb2 sb-warn ${stW}" onclick="upI('${item.id}','state','warn');selectItem('${item.id}')">⚠️</div>
+        <div class="sb2 sb-crit ${stC}" onclick="upI('${item.id}','state','crit');selectItem('${item.id}')">🔴</div>
+      </div></div>
+    <div class="pr"><label>Note / Observation</label>
+      <textarea oninput="upI('${item.id}','note',this.value)"
+        placeholder="Anomalies, mesures...">${item.note||''}</textarea></div>
+    <div class="pr"><label>Taille (L × H px)</label>
+      <div class="pr-row">
+        <input type="number" value="${item.w}" min="20" max="400" placeholder="L"
+          oninput="upI('${item.id}','w',+this.value);renderItem(items.find(x=>x.id==='${item.id}'))">
+        <input type="number" value="${item.h}" min="20" max="400" placeholder="H"
+          oninput="upI('${item.id}','h',+this.value);renderItem(items.find(x=>x.id==='${item.id}'))">
+      </div></div>`;
+}
+
+function hideProps(){
+  document.getElementById('props-head').textContent='Propriétés';
+  document.getElementById('props-body').innerHTML=`<div style="color:var(--text3);font-size:11px;text-align:center;margin-top:16px">Cliquer un composant</div>`;
+}
+
+function upI(id,k,v){const item=items.find(i=>i.id===id);if(item)item[k]=v;}
+
+// ═══════════════════════════════════════════════════════════
+// CANVAS EVENTS
+// ═══════════════════════════════════════════════════════════
+cw.addEventListener('click',e=>{
+  const onItem=e.target.closest('.ci');
+  if(onItem&&mode==='select')return;
+  if(onItem&&mode!=='cable')return;
+
+  const p=getCwPos(e);
+  const sx=snap(p.x), sy=snap(p.y);
+
+  if(mode==='cable'){
+    if(!cableStart){
+      cableStart={x:sx,y:sy};
+      wpLine.setAttribute('x1',sx);wpLine.setAttribute('y1',sy);
+      wpLine.setAttribute('x2',sx);wpLine.setAttribute('y2',sy);
+      wpLine.setAttribute('stroke',activeCable.c);wpLine.setAttribute('opacity','0.8');
+      setStatus('Cliquer point d\'arrivée · Clic droit pour terminer');
+    } else {
+      if(sx===cableStart.x&&sy===cableStart.y){cableStart=null;wpLine.setAttribute('opacity','0');return;}
+      saveHist();
+      wires.push({id:uid(),x1:cableStart.x,y1:cableStart.y,x2:sx,y2:sy,
+        color:activeCable.c,colorLabel:activeCable.l,section:'',distance:''});
+      renderAllWires();
+      cableStart={x:sx,y:sy};
+      wpLine.setAttribute('x1',sx);wpLine.setAttribute('y1',sy);
+      updateCounts();
+    }
+  } else if(mode==='text'){
+    const txt=prompt('Texte / annotation :','');
+    if(!txt)return;
+    saveHist();
+    textItems.push({id:uid(),x:sx,y:sy,text:txt,size:12});
+    renderAllTexts();
+  } else {
+    if(!e.target.closest('.ci')){selectedId=null;renderAllItems();renderAllWires();hideProps();}
+  }
+});
+
+cw.addEventListener('contextmenu',e=>{e.preventDefault();cableStart=null;wpLine.setAttribute('opacity','0');setStatus('Câble terminé');});
+
+cw.addEventListener('dragover',e=>e.preventDefault());
+cw.addEventListener('drop',e=>{
+  e.preventDefault();
+  const cid=e.dataTransfer.getData('cid'), ctab=e.dataTransfer.getData('ctab');
+  const comp=LIBRARY[ctab]?.find(c=>c.id===cid);if(!comp)return;
+  const p=getCwPos(e); saveHist();
+  const item={id:uid(),libId:comp.id,tab:ctab,
+    x:snap(p.x-comp.w/2),y:snap(p.y-comp.h/2),
+    w:comp.w,h:comp.h,label:comp.name,ref:comp.ref,
+    ampere:'',section:'',state:'ok',note:'',
+    svgContent:comp.svg,isPhoto:comp.isPhoto||false,imgSrc:comp.imgSrc||null};
+  items.push(item);renderItem(item);updateCounts();selectItem(item.id);
+});
+
+// ═══════════════════════════════════════════════════════════
+// WIRES + SECTION/DISTANCE
+// ═══════════════════════════════════════════════════════════
+function renderAllWires(){
+  wiresG.innerHTML='';
+  wires.forEach(w=>{
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',w.x1);line.setAttribute('y1',w.y1);
+    line.setAttribute('x2',w.x2);line.setAttribute('y2',w.y2);
+    line.setAttribute('stroke',w.color);
+    line.setAttribute('stroke-width',selectedId===w.id?'4.5':'3');
+    line.setAttribute('stroke-linecap','round');
+    if(selectedId===w.id)line.setAttribute('stroke-dasharray','8,3');
+    line.style.cursor='pointer';
+    line.addEventListener('click',()=>{if(mode==='select'){selectedId=w.id;renderAllWires();showWireProps(w);}});
+    wiresG.appendChild(line);
+
+    // Label câble (type + section + distance)
+    const mx=(w.x1+w.x2)/2, my=(w.y1+w.y2)/2;
+    let lbl=w.colorLabel;
+    if(w.section)lbl+=' · '+w.section;
+    if(w.distance)lbl+=' · '+w.distance;
+    const bw=lbl.length*5.5+8;
+    const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    bg.setAttribute('x',mx-bw/2);bg.setAttribute('y',my-8);
+    bg.setAttribute('width',bw);bg.setAttribute('height',14);
+    bg.setAttribute('rx','3');bg.setAttribute('fill',w.color);bg.setAttribute('opacity','0.88');
+    const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',mx);txt.setAttribute('y',my+2.5);
+    txt.setAttribute('text-anchor','middle');txt.setAttribute('font-size','8');
+    txt.setAttribute('fill','#fff');txt.setAttribute('font-family','sans-serif');
+    txt.setAttribute('font-weight','700');txt.setAttribute('pointer-events','none');
+    txt.textContent=lbl;
+    wiresG.appendChild(bg);wiresG.appendChild(txt);
+  });
+}
+
+function showWireProps(w){
+  document.getElementById('props-head').textContent='Câble';
+  document.getElementById('props-body').innerHTML=`
+    <div class="pr"><label>Type / Couleur</label>
+      <input value="${w.colorLabel}" readonly style="opacity:.6"></div>
+    <div class="pr"><label>Section (ex: 16mm²)</label>
+      <input value="${w.section||''}" placeholder="Ex: 16mm² · 4mm²"
+        oninput="upW('${w.id}','section',this.value)"></div>
+    <div class="pr"><label>Distance / Longueur</label>
+      <input value="${w.distance||''}" placeholder="Ex: 3m · 1.5m"
+        oninput="upW('${w.id}','distance',this.value)"></div>
+    <div class="pr"><label>Note</label>
+      <input value="${w.note||''}" placeholder="Remarque..."
+        oninput="upW('${w.id}','note',this.value)"></div>
+    <button class="btn" style="background:var(--red);color:#fff;width:100%;margin-top:6px;font-size:11px"
+      onclick="deleteWire('${w.id}')">🗑 Supprimer ce câble</button>`;
+}
+
+function upW(id,k,v){
+  const w=wires.find(x=>x.id===id);
+  if(w){w[k]=v;renderAllWires();}
+}
+
+// ═══════════════════════════════════════════════════════════
+// TEXTES SVG
+// ═══════════════════════════════════════════════════════════
+function renderAllTexts(){
+  textsG.innerHTML='';
+  textItems.forEach(t=>{
+    const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',t.x);txt.setAttribute('y',t.y);
+    txt.setAttribute('font-size',t.size||12);txt.setAttribute('fill','#1a1a1a');
+    txt.setAttribute('font-family','sans-serif');txt.setAttribute('font-weight','600');
+    txt.setAttribute('cursor','pointer');
+    txt.textContent=t.text;
+    txt.addEventListener('click',()=>{if(mode==='select')selectText(t.id);});
+    textsG.appendChild(txt);
+  });
+}
+
+function selectText(id){
+  selectedId=id;
+  const t=textItems.find(x=>x.id===id);if(!t)return;
+  document.getElementById('props-head').textContent='Texte';
+  document.getElementById('props-body').innerHTML=`
+    <div class="pr"><label>Contenu</label>
+      <input value="${t.text}" oninput="upT('${t.id}','text',this.value)"></div>
+    <div class="pr"><label>Taille police</label>
+      <input type="number" value="${t.size||12}" min="8" max="28" oninput="upT('${t.id}','size',+this.value)"></div>
+    <button class="btn" style="background:var(--red);color:#fff;width:100%;margin-top:6px;font-size:11px"
+      onclick="textItems=textItems.filter(x=>x.id!=='${t.id}');renderAllTexts();hideProps()">🗑 Supprimer</button>`;
+}
+
+function upT(id,k,v){const t=textItems.find(x=>x.id===id);if(t){t[k]=v;renderAllTexts();}}
+
+// ═══════════════════════════════════════════════════════════
+// MODE
+// ═══════════════════════════════════════════════════════════
+function setMode(m){
+  mode=m; cableStart=null; wpLine.setAttribute('opacity','0');
+  ['select','cable','text'].forEach(x=>document.getElementById('btn-'+x)?.classList.remove('on'));
+  document.getElementById('btn-'+m)?.classList.add('on');
+  const L={select:'Sélection · déplacer · redimensionner',cable:'Câble — cliquer départ',text:'Texte libre'};
+  document.getElementById('mode-badge').textContent=L[m]||m;
+  cw.style.cursor=m==='cable'?'crosshair':m==='text'?'text':'default';
+  setStatus(L[m]||m);
+}
+
+// ═══════════════════════════════════════════════════════════
+// KEYBOARD
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='s'||e.key==='S')setMode('select');
+  if(e.key==='c'||e.key==='C')setMode('cable');
+  if(e.key==='t'||e.key==='T')setMode('text');
+  if(e.key==='Delete'||e.key==='Backspace'){deleteItem(selectedId);deleteWire(selectedId);}
+  if(e.ctrlKey&&e.key==='z'){e.preventDefault();undo();}
+  if(e.key==='Escape'){cableStart=null;wpLine.setAttribute('opacity','0');}
+});
+
+function deleteItem(id){
+  if(!id)return;
+  const idx=items.findIndex(i=>i.id===id);if(idx<0)return;
+  saveHist();items.splice(idx,1);
   document.getElementById(id)?.remove();
-  selectedId = null;
-  hideProps();
-  updateCounts();
+  selectedId=null;hideProps();updateCounts();
 }
 
-function deleteWire(id) {
-  const idx = wires.findIndex(w=>w.id===id);
-  if(idx>=0){ saveHist(); wires.splice(idx,1); renderAllWires(); updateCounts(); }
+function deleteWire(id){
+  if(!id)return;
+  const idx=wires.findIndex(w=>w.id===id);if(idx<0)return;
+  saveHist();wires.splice(idx,1);renderAllWires();
+  selectedId=null;hideProps();updateCounts();
 }
 
-function clearAll() {
-  if(!confirm('Effacer tout le schéma ?')) return;
-  saveHist();
-  items=[]; wires=[]; texts=[];
-  cvs.innerHTML=''; wiresG.innerHTML='';
-  selectedId=null; hideProps(); updateCounts();
+function clearAll(){
+  if(!confirm('Effacer tout ?'))return;
+  saveHist();items=[];wires=[];textItems=[];
+  canvasItems.innerHTML='';wiresG.innerHTML='';textsG.innerHTML='';
+  selectedId=null;hideProps();updateCounts();
 }
 
-function undo() {
-  if(!history.length){ setStatus('Rien à annuler'); return; }
-  const prev = history.pop();
-  items=prev.items; wires=prev.wires; texts=prev.texts;
-  cvs.innerHTML=''; wiresG.innerHTML='';
-  renderAllItems(); renderAllWires(); renderAllTexts();
-  selectedId=null; hideProps(); updateCounts();
-  setStatus('Annulé','ok');
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// STATUS / COUNTS
-// ═══════════════════════════════════════════════════════════════════
-function setStatus(msg, t='idle') {
-  document.getElementById('stxt').textContent = msg;
-  document.getElementById('sdot').className = 'sdot '+(t==='ok'?'ok':t==='busy'?'busy':'idle');
-}
-
-function updateCounts() {
-  document.getElementById('cnt-items').textContent = items.length+' composant'+(items.length>1?'s':'');
-  document.getElementById('cnt-wires').textContent = wires.length+' câble'+(wires.length>1?'s':'');
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// SAVE / LOAD
-// ═══════════════════════════════════════════════════════════════════
-function saveLocal() {
-  const data = {items, wires, texts, savedAt: new Date().toISOString()};
-  // Sauver sans les gros SVG inline pour alléger
-  const light = {...data, items: data.items.map(i=>({...i, svgContent:null}))};
-  try {
-    localStorage.setItem('roselec_photo_schema', JSON.stringify(light));
-    setStatus('Sauvegardé','ok');
-    setTimeout(()=>setStatus('Prêt'), 2000);
-  } catch(e) { setStatus('Erreur sauvegarde'); }
-  window.parent?.postMessage({type:'save_photo_schema', payload:data}, '*');
-}
-
-// Auto-save 60s
-setInterval(saveLocal, 60000);
-
-window.addEventListener('message', e => {
-  if(e.data?.type==='load_photo_schema') loadSchema(e.data.payload);
-});
-
-function loadSchema(data) {
-  if(!data) return;
-  items = data.items || []; wires = data.wires || []; texts = data.texts || [];
-  // Restaurer les SVG depuis la bibliothèque
-  items.forEach(item => {
-    if(!item.svgContent && !item.isPhoto) {
-      const allComps = [...LIBRARY.dc,...LIBRARY.ac,...LIBRARY.tx];
-      const comp = allComps.find(c=>c.id===item.libId);
-      if(comp) item.svgContent = comp.svg;
+function undo(){
+  if(!history.length){setStatus('Rien à annuler');return;}
+  const p=history.pop();items=p.items;wires=p.wires;textItems=p.textItems;
+  canvasItems.innerHTML='';wiresG.innerHTML='';textsG.innerHTML='';
+  // Restaurer SVG depuis lib
+  items.forEach(item=>{
+    if(!item.svgContent&&!item.isPhoto){
+      const allC=[...LIBRARY.dc,...LIBRARY.ac,...LIBRARY.tel,...LIBRARY.dcdb];
+      const c=allC.find(x=>x.id===item.libId);if(c)item.svgContent=c.svg;
     }
   });
-  cvs.innerHTML=''; wiresG.innerHTML='';
-  renderAllItems(); renderAllWires(); renderAllTexts();
-  updateCounts();
-  setStatus('Schéma chargé','ok');
+  renderAllItems();renderAllWires();renderAllTexts();
+  selectedId=null;hideProps();updateCounts();setStatus('Annulé','ok');
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// EXPORT
-// ═══════════════════════════════════════════════════════════════════
-function showExport() { document.getElementById('modal-exp').style.display='flex'; }
+// ═══════════════════════════════════════════════════════════
+// STATUS
+// ═══════════════════════════════════════════════════════════
+function setStatus(msg,t='idle'){
+  document.getElementById('stxt').textContent=msg;
+  document.getElementById('sdot').className='sdot '+(t==='ok'?'ok':t==='busy'?'busy':'idle');
+}
+function updateCounts(){
+  document.getElementById('cnt-i').textContent=items.length+' composant'+(items.length>1?'s':'');
+  document.getElementById('cnt-w').textContent=wires.length+' câble'+(wires.length>1?'s':'');
+}
 
-function buildExportSVG() {
-  const title = document.getElementById('ex-title').value || 'Schéma photo-réaliste';
-  const site  = document.getElementById('ex-site').value  || '';
-  const tech  = document.getElementById('ex-tech').value  || '';
-  const now   = new Date().toLocaleDateString('fr-FR');
+// ═══════════════════════════════════════════════════════════
+// SAVE / EXPORT
+// ═══════════════════════════════════════════════════════════
+function saveLocal(){
+  try{localStorage.setItem('roselec_photo_v2',JSON.stringify({items:items.map(i=>({...i,svgContent:null})),wires,textItems,savedAt:new Date().toISOString()}));setStatus('Sauvegardé','ok');setTimeout(()=>setStatus('Prêt'),2000);}catch(e){setStatus('Erreur sauvegarde');}
+  window.parent?.postMessage({type:'save_photo_schema',payload:{items,wires,textItems}},'*');
+}
+setInterval(saveLocal,60000);
 
-  // Calculer bounding box
-  let minX=9999,minY=9999,maxX=0,maxY=0;
-  items.forEach(i=>{ minX=Math.min(minX,i.x); minY=Math.min(minY,i.y); maxX=Math.max(maxX,i.x+i.w); maxY=Math.max(maxY,i.y+i.h+24); });
-  wires.forEach(w=>{ minX=Math.min(minX,w.x1,w.x2); minY=Math.min(minY,w.y1,w.y2); maxX=Math.max(maxX,w.x1,w.x2); maxY=Math.max(maxY,w.y1,w.y2); });
-  if(minX===9999){minX=0;minY=0;maxX=600;maxY=400;}
-  const pad=40, W=maxX-minX+pad*2, H=maxY-minY+pad*2+56;
-  const dx=pad-minX, dy=pad-minY+56;
+function showExport(){document.getElementById('mo-exp').style.display='flex';}
 
-  // Construire le SVG des items (sans photos base64 pour SVG)
-  let itemsSVG = '';
-  items.forEach(item => {
-    if(!item.isPhoto && item.svgContent) {
-      itemsSVG += `<g transform="translate(${item.x+dx},${item.y+dy})">${item.svgContent}</g>`;
-      itemsSVG += `<text x="${item.x+dx+item.w/2}" y="${item.y+dy+item.h+14}"
-        text-anchor="middle" font-size="10" fill="#333" font-family="sans-serif">${item.label}</text>`;
+function buildSVG(){
+  const title=document.getElementById('ex-t').value||'Schéma ROSELEC';
+  const site=document.getElementById('ex-s').value||'';
+  const tech=document.getElementById('ex-tech').value||'';
+  const now=new Date().toLocaleDateString('fr-FR');
+  let mnX=9999,mnY=9999,mxX=0,mxY=0;
+  items.forEach(i=>{mnX=Math.min(mnX,i.x);mnY=Math.min(mnY,i.y);mxX=Math.max(mxX,i.x+i.w);mxY=Math.max(mxY,i.y+i.h+30);});
+  wires.forEach(w=>{mnX=Math.min(mnX,w.x1,w.x2);mnY=Math.min(mnY,w.y1,w.y2);mxX=Math.max(mxX,w.x1,w.x2);mxY=Math.max(mxY,w.y1,w.y2);});
+  if(mnX===9999){mnX=0;mnY=0;mxX=500;mxY=300;}
+  const pad=40,W=mxX-mnX+pad*2,H=mxY-mnY+pad*2+56;
+  const dx=pad-mnX,dy=pad-mnY+56;
+  let isvg='',wsvg='';
+  items.forEach(item=>{
+    if(!item.isPhoto&&item.svgContent){
+      isvg+=`<g transform="translate(${item.x+dx},${item.y+dy})">${item.svgContent}</g>`;
+      const lbl=item.label+(item.ampere?' · '+item.ampere:'');
+      isvg+=`<rect x="${item.x+dx}" y="${item.y+dy+item.h}" width="${item.w}" height="14" fill="rgba(0,0,0,.7)" rx="0 0 3 3"/>`;
+      isvg+=`<text x="${item.x+dx+item.w/2}" y="${item.y+dy+item.h+10}" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;
     }
   });
-
-  // Câbles
-  let wiresSVG = '';
-  wires.forEach(w => {
-    wiresSVG += `<line x1="${w.x1+dx}" y1="${w.y1+dy}" x2="${w.x2+dx}" y2="${w.y2+dy}"
-      stroke="${w.color}" stroke-width="2.5" stroke-linecap="round"/>`;
-    const mx=(w.x1+w.x2)/2+dx, my=(w.y1+w.y2)/2+dy;
-    const len=w.colorLabel.length*5+8;
-    wiresSVG += `<rect x="${mx-len/2}" y="${my-8}" width="${len}" height="14" rx="3" fill="${w.color}" opacity=".85"/>`;
-    wiresSVG += `<text x="${mx}" y="${my+2}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="600">${w.colorLabel}</text>`;
+  wires.forEach(w=>{
+    let lbl=w.colorLabel;if(w.section)lbl+=' · '+w.section;if(w.distance)lbl+=' · '+w.distance;
+    wsvg+=`<line x1="${w.x1+dx}" y1="${w.y1+dy}" x2="${w.x2+dx}" y2="${w.y2+dy}" stroke="${w.color}" stroke-width="3" stroke-linecap="round"/>`;
+    const mx=(w.x1+w.x2)/2+dx,my=(w.y1+w.y2)/2+dy,bw=lbl.length*5.5+8;
+    wsvg+=`<rect x="${mx-bw/2}" y="${my-8}" width="${bw}" height="14" rx="3" fill="${w.color}" opacity=".88"/>`;
+    wsvg+=`<text x="${mx}" y="${my+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;
   });
-
+  textItems.forEach(t=>{
+    isvg+=`<text x="${t.x+dx}" y="${t.y+dy}" font-size="${t.size||12}" fill="#1a1a1a" font-family="sans-serif" font-weight="600">${t.text}</text>`;
+  });
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" fill="#f8f9fa"/>
   <rect width="${W}" height="52" fill="#1565C0"/>
   <text x="16" y="22" font-size="15" fill="#fff" font-family="sans-serif" font-weight="800">ROSELEC — ${title}</text>
   <text x="16" y="40" font-size="10" fill="rgba(255,255,255,.75)" font-family="sans-serif">${site} · ${tech} · ${now}</text>
-  ${wiresSVG}
-  ${itemsSVG}
+  ${wsvg}${isvg}
 </svg>`;
 }
 
-function exportPNG() {
-  const svg = buildExportSVG();
-  const img = new Image();
-  img.onload = () => {
-    const c = document.createElement('canvas');
-    c.width=img.width*2; c.height=img.height*2;
-    const ctx=c.getContext('2d'); ctx.scale(2,2); ctx.drawImage(img,0,0);
-    const a=document.createElement('a');
-    a.href=c.toDataURL('image/png');
-    a.download='roselec_schema_'+Date.now()+'.png'; a.click();
-    setStatus('PNG exporté','ok');
+function exportPNG(){
+  const svg=buildSVG();const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;
+    const ctx=c.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
+    const a=document.createElement('a');a.href=c.toDataURL('image/png');
+    a.download='roselec_'+Date.now()+'.png';a.click();setStatus('PNG exporté','ok');
   };
   img.src=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
-  document.getElementById('modal-exp').style.display='none';
+  document.getElementById('mo-exp').style.display='none';
 }
 
-function exportSVGFile() {
-  const svg = buildExportSVG();
+function exportSVGFile(){
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
-  a.download='roselec_schema_'+Date.now()+'.svg'; a.click();
-  setStatus('SVG exporté','ok');
-  document.getElementById('modal-exp').style.display='none';
+  a.href=URL.createObjectURL(new Blob([buildSVG()],{type:'image/svg+xml'}));
+  a.download='roselec_'+Date.now()+'.svg';a.click();
+  document.getElementById('mo-exp').style.display='none';
 }
 
-function exportJSON() {
+function exportJSON(){
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([JSON.stringify({items,wires,texts},null,2)],{type:'application/json'}));
-  a.download='roselec_schema_'+Date.now()+'.json'; a.click();
-  document.getElementById('modal-exp').style.display='none';
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({items,wires,textItems},null,2)],{type:'application/json'}));
+  a.download='roselec_'+Date.now()+'.json';a.click();
+  document.getElementById('mo-exp').style.display='none';
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// WHATSAPP
-// ═══════════════════════════════════════════════════════════════════
-function shareWA() {
-  const site = document.getElementById('ex-site').value || 'Site';
-  const tech = document.getElementById('ex-tech').value || 'Technicien';
-  const now = new Date().toLocaleString('fr-FR');
-  const states = items.map(i=>({ok:'✅',warn:'⚠️',crit:'❌'}[i.state||'ok']+' '+i.label)).join('\n  ');
-  const msg = `⚡ *ROSELEC — Schéma photo-réaliste*
-━━━━━━━━━━━━━━━━━━━━
-👷 Technicien : *${tech}*
-📍 Site : *${site}*
-📅 ${now}
-━━━━━━━━━━━━━━━━━━━━
-📦 *${items.length} composant(s) schématisé(s) :*
-  ${states||'(aucun)'}
-🔌 *${wires.length} câble(s) tracé(s)*
-━━━━━━━━━━━━━━━━━━━━
-_ROSELEC · MTN Congo Zone Sud_`;
+function shareWA(){
+  const site=document.getElementById('ex-s').value||'Site';
+  const tech=document.getElementById('ex-tech').value||'Tech';
+  const states=items.map(i=>({ok:'✅',warn:'⚠️',crit:'❌'}[i.state||'ok']+' '+i.label+(i.ampere?' ('+i.ampere+')':'')).join('\n  ');
+  const winfo=wires.map(w=>w.colorLabel+(w.section?' '+w.section:'')+(w.distance?' '+w.distance:'')).join(', ');
+  const msg=`⚡ *ROSELEC — Schéma photo-réaliste*\n━━━━━━━━━━━━━━━━━━━━\n👷 *${tech}* · 📍 *${site}*\n📅 ${new Date().toLocaleString('fr-FR')}\n━━━━━━━━━━━━━━━━━━━━\n📦 *${items.length} composant(s) :*\n  ${states||'aucun'}\n🔌 *${wires.length} câble(s) :* ${winfo||'aucun'}\n━━━━━━━━━━━━━━━━━━━━\n_ROSELEC · MTN Congo Zone Sud_`;
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
-// ═══════════════════════════════════════════════════════════════════
 // INIT
-// ═══════════════════════════════════════════════════════════════════
-renderLib();
-setMode('select');
-setStatus('Prêt — glisser les composants depuis la bibliothèque');
+renderLib();setMode('select');setStatus('Prêt — glisser les composants ou cliquer pour placer');
 </script>
 </body>
 </html>

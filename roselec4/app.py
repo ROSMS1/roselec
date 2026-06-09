@@ -406,4 +406,4 @@ with col_editor:
             unsafe_allow_html=True
         )
         photo_html = PHOTO_EDITOR_HTML.read_text("utf-8")
-        stc.html(photo_html, height=760, scrolling=False)
+        stc.html(photo_html, height=780, scrolling=True)

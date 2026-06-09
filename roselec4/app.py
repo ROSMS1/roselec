@@ -289,13 +289,24 @@ with col_editor:
         inject = ""
 
         if st.session_state.pop("send_ai", False) and "ai_result" in st.session_state:
-            payload = json.dumps(st.session_state["ai_result"], ensure_ascii=False)
-            inject += f"""<script>(function(){{
-              var p={payload};
-              function s(){{var f=document.querySelector('iframe');
-                if(f&&f.contentWindow)f.contentWindow.postMessage({{type:'ai_result',payload:p}},'*');}}
-              setTimeout(s,600);setTimeout(s,1500);
-            }})();</script>"""
+    st.session_state["pending_inject"] = json.dumps(st.session_state["ai_result"], ensure_ascii=False)
+    st.rerun()
+
+if "pending_inject" in st.session_state:
+    payload = st.session_state.pop("pending_inject")
+    inject += f"""<script>
+    var attempts = 0;
+    var timer = setInterval(function(){{
+      attempts++;
+      var frames = document.querySelectorAll('iframe');
+      for(var i=0; i<frames.length; i++){{
+        try{{
+          frames[i].contentWindow.postMessage({{type:'ai_result',payload:{payload}}}, '*');
+        }}catch(e){{}}
+      }}
+      if(attempts > 10) clearInterval(timer);
+    }}, 500);
+    </script>"""
 
         if "load_schema" in st.session_state:
             payload = json.dumps(st.session_state.pop("load_schema"), ensure_ascii=False)

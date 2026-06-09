@@ -1249,7 +1249,8 @@ function shareWA(){
 }
 
 // INIT
-renderLib();setMode('select');setStatus('Prêt — glisser les composants ou cliquer pour placer');
-</script>
-</body>
-</html>
+window.addEventListener('load', function() {
+  renderLib();
+  setMode('select');
+  setStatus('Prêt — glisser les composants ou cliquer pour placer');
+});

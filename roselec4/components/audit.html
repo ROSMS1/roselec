@@ -996,28 +996,51 @@ try{
 // ══ EXPORT PNG ═══════════════════════════════════════════════════════════
 function buildSideSVG(side){
   const s=state[side];
-  let minX=9999,minY=9999,maxX=0,maxY=0;
   const allDefs=[...AC_COMPS,...DC_COMPS];
+
+  // Collect all coordinate points to compute real bounding box
+  let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+
   s.components.forEach(c=>{
     const d=allDefs.find(x=>x.t===c.type);if(!d)return;
-    minX=Math.min(minX,c.x);minY=Math.min(minY,c.y);
-    maxX=Math.max(maxX,c.x+d.w);maxY=Math.max(maxY,c.y+d.h+26);
+    minX=Math.min(minX,c.x);
+    minY=Math.min(minY,c.y);
+    maxX=Math.max(maxX,c.x+(d.w||80));
+    maxY=Math.max(maxY,c.y+(d.h||60)+30);
   });
   s.wires.forEach(w=>{
-    minX=Math.min(minX,w.x1,w.x2);minY=Math.min(minY,w.y1,w.y2);
-    maxX=Math.max(maxX,w.x1,w.x2);maxY=Math.max(maxY,w.y1,w.y2);
+    minX=Math.min(minX,w.x1,w.x2);
+    minY=Math.min(minY,w.y1,w.y2);
+    maxX=Math.max(maxX,w.x1,w.x2);
+    maxY=Math.max(maxY,w.y1,w.y2);
   });
-  if(minX===9999){minX=0;minY=0;maxX=300;maxY=200;}
-  const pad=30,W=maxX-minX+pad*2,H=maxY-minY+pad*2;
-  const dx=pad-minX,dy=pad-minY;
+  s.labels&&s.labels.forEach(l=>{
+    minX=Math.min(minX,l.x);
+    minY=Math.min(minY,l.y);
+    maxX=Math.max(maxX,l.x+120);
+    maxY=Math.max(maxY,l.y+20);
+  });
+
+  // Empty canvas fallback
+  if(!isFinite(minX)){minX=0;minY=0;maxX=400;maxY=300;}
+
+  const pad=40;
+  const W=Math.max(400, maxX-minX+pad*2);
+  const H=Math.max(300, maxY-minY+pad*2);
+  const dx=pad-minX;
+  const dy=pad-minY;
+
   const cvs=getCanvas(side);
   const content=cvs.innerHTML
     .replace(/id="wp-[^"]*"[^>]*opacity="[^"]*"/g,'opacity="0"');
-  return {svg:`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"
-    viewBox="0 0 ${W} ${H}">
+
+  return {
+    svg:`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
     <rect width="${W}" height="${H}" fill="#f8f9fa"/>
     <g transform="translate(${dx},${dy})">${content}</g>
-  </svg>`,W,H};
+  </svg>`,
+    W, H
+  };
 }
 
 function exportAuditPNG(){
@@ -1034,18 +1057,22 @@ function exportAuditPNG(){
   const obsLineH=16;
   const obsELines=(obsE||'(aucune observation)').split('\n');
   const obsCLines=(obsC||'(aucun commentaire correctif)').split('\n');
-  const obsBlockH=Math.max(obsELines.length,obsCLines.length)*obsLineH+24;
+  const obsBlockH=Math.max(obsELines.length,obsCLines.length)*obsLineH+40;
 
-  const totalW=wE+wC+20;
-  const headerH=56;
-  const totalH=headerH+Math.max(hE,hC)+obsBlockH+20;
-  const colW=Math.floor(totalW/2)-10;
+  // Use real widths — each panel gets exactly the space it needs
+  const gap=16;
+  const totalW=wE+wC+gap;
+  const headerH=60;
+  const schemaH=Math.max(hE,hC);
+  const totalH=headerH+24+schemaH+obsBlockH+20;
+  // colW for obs labels: align with real schema columns
+  const colW=wE;
 
   const obsEtxt=obsELines.map((l,i)=>
     `<text x="10" y="${22+i*obsLineH}" font-size="11" fill="#B71C1C" font-family="sans-serif">${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</text>`
   ).join('');
-  const obsCTxt=obsCLines.map((l,i)=>
-    `<text x="${colW+20}" y="${22+i*obsLineH}" font-size="11" fill="#1565C0" font-family="sans-serif">${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</text>`
+  const obsCTxt_local=obsCLines.map((l,i)=>
+    `<text x="10" y="${22+i*obsLineH}" font-size="11" fill="#1565C0" font-family="sans-serif">${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</text>`
   ).join('');
 
   const finalSVG=`<?xml version="1.0" encoding="UTF-8"?>
@@ -1053,27 +1080,27 @@ function exportAuditPNG(){
   <rect width="${totalW}" height="${totalH}" fill="#fff"/>
   <!-- Header -->
   <rect width="${totalW}" height="${headerH}" fill="#1565C0"/>
-  <text x="16" y="22" font-size="16" fill="#fff" font-family="sans-serif" font-weight="800">ROSELEC — Rapport d'audit</text>
-  <text x="16" y="42" font-size="11" fill="rgba(255,255,255,.8)" font-family="sans-serif">${title} · Site : ${site} · Technicien : ${tech} · ${now}</text>
+  <text x="16" y="24" font-size="16" fill="#fff" font-family="sans-serif" font-weight="800">ROSELEC — Rapport d'audit</text>
+  <text x="16" y="46" font-size="11" fill="rgba(255,255,255,.8)" font-family="sans-serif">${title} · Site : ${site} · Technicien : ${tech} · ${now}</text>
   <!-- Labels schémas -->
-  <rect x="0" y="${headerH}" width="${colW}" height="22" fill="#FFEBEE"/>
-  <text x="10" y="${headerH+15}" font-size="12" fill="#C62828" font-weight="700" font-family="sans-serif">📋 SCHÉMA EXISTANT</text>
-  <rect x="${colW+10}" y="${headerH}" width="${colW}" height="22" fill="#E3F2FD"/>
-  <text x="${colW+20}" y="${headerH+15}" font-size="12" fill="#1565C0" font-weight="700" font-family="sans-serif">✅ SCHÉMA CORRECTIF</text>
+  <rect x="0" y="${headerH}" width="${colW}" height="24" fill="#FFEBEE"/>
+  <text x="10" y="${headerH+17}" font-size="12" fill="#C62828" font-weight="700" font-family="sans-serif">📋 SCHÉMA EXISTANT</text>
+  <rect x="${colW+gap}" y="${headerH}" width="${wC}" height="24" fill="#E3F2FD"/>
+  <text x="${colW+gap+10}" y="${headerH+17}" font-size="12" fill="#1565C0" font-weight="700" font-family="sans-serif">✅ SCHÉMA CORRECTIF</text>
   <!-- Schéma existant -->
-  <g transform="translate(0,${headerH+22})">${svgE}</g>
+  <g transform="translate(0,${headerH+24})">${svgE}</g>
   <!-- Schéma correctif -->
-  <g transform="translate(${colW+10},${headerH+22})">${svgC}</g>
+  <g transform="translate(${colW+gap},${headerH+24})">${svgC}</g>
   <!-- Ligne séparatrice observations -->
-  <line x1="0" y1="${headerH+22+Math.max(hE,hC)+8}" x2="${totalW}" y2="${headerH+22+Math.max(hE,hC)+8}" stroke="#ddd" stroke-width="1"/>
+  <line x1="0" y1="${headerH+24+schemaH+8}" x2="${totalW}" y2="${headerH+24+schemaH+8}" stroke="#ddd" stroke-width="1"/>
   <!-- Observations existant -->
-  <rect x="0" y="${headerH+22+Math.max(hE,hC)+10}" width="${colW}" height="${obsBlockH}" fill="#FFF8F8"/>
-  <text x="10" y="${headerH+22+Math.max(hE,hC)+24}" font-size="11" fill="#C62828" font-weight="700" font-family="sans-serif">⚠ Anomalies constatées</text>
-  <g transform="translate(0,${headerH+22+Math.max(hE,hC)+10})">${obsEtxt}</g>
+  <rect x="0" y="${headerH+24+schemaH+10}" width="${colW}" height="${obsBlockH}" fill="#FFF8F8"/>
+  <text x="10" y="${headerH+24+schemaH+28}" font-size="11" fill="#C62828" font-weight="700" font-family="sans-serif">⚠ Anomalies constatées</text>
+  <g transform="translate(0,${headerH+24+schemaH+10})">${obsEtxt}</g>
   <!-- Observations correctif -->
-  <rect x="${colW+10}" y="${headerH+22+Math.max(hE,hC)+10}" width="${colW}" height="${obsBlockH}" fill="#F8FCFF"/>
-  <text x="${colW+20}" y="${headerH+22+Math.max(hE,hC)+24}" font-size="11" fill="#1565C0" font-weight="700" font-family="sans-serif">✅ Actions correctives</text>
-  <g transform="translate(0,${headerH+22+Math.max(hE,hC)+10})">${obsCTxt}</g>
+  <rect x="${colW+gap}" y="${headerH+24+schemaH+10}" width="${wC}" height="${obsBlockH}" fill="#F8FCFF"/>
+  <text x="${colW+gap+10}" y="${headerH+24+schemaH+28}" font-size="11" fill="#1565C0" font-weight="700" font-family="sans-serif">✅ Actions correctives</text>
+  <g transform="translate(${colW+gap},${headerH+24+schemaH+10})">${obsCTxt_local}</g>
 </svg>`;
 
   const img=new Image();

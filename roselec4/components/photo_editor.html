@@ -74,8 +74,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:#f0f2f5;
   background-image:radial-gradient(#c0c8d4 0.5px,transparent 0.5px);
   background-size:20px 20px}
-#canvas-items{position:absolute;inset:0}
-#canvas-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.canvas-zoom-layer{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform;}
+#canvas-svg{position:absolute;top:0;left:0;width:4000px;height:3000px;pointer-events:none}
+#canvas-items{position:absolute;top:0;left:0;width:4000px;height:3000px;}
 #wire-preview-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
 /* Items sur canvas */
@@ -174,6 +175,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <div class="sep"></div>
   <button class="btn btn-g" onclick="saveLocal()">💾</button>
   <button class="btn btn-y" onclick="showExport()">📄 Export</button>
+  <div class="sep"></div>
+  <button class="btn" onclick="zoomIn()" title="Zoom +">🔍+</button>
+  <button class="btn" onclick="zoomOut()" title="Zoom -">🔍-</button>
+  <button class="btn" onclick="fitToWindow()" title="Ajuster à la fenêtre" style="background:var(--blue);color:#fff">⊡ Fit</button>
+  <button class="btn" onclick="resetZoom()" title="Zoom 100%">1:1</button>
   <button class="btn btn-wa" onclick="shareWA()">📲 WA</button>
   <span class="badge" id="mode-badge">Sélection</span>
 </div>
@@ -194,6 +200,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 <!-- CANVAS -->
 <div class="canvas-wrap" id="cw">
+  <div class="canvas-zoom-layer" id="zoom-layer">
   <div id="canvas-items"></div>
   <svg id="canvas-svg" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -206,7 +213,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     <g id="wires-g"></g>
     <g id="texts-g"></g>
   </svg>
-  <svg id="wire-preview-svg" xmlns="http://www.w3.org/2000/svg">
+  </div><!-- /zoom-layer -->
+  <svg id="wire-preview-svg" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">
     <line id="wp" x1="0" y1="0" x2="0" y2="0"
       stroke="#aaa" stroke-width="2.5" stroke-dasharray="6,3"
       stroke-linecap="round" opacity="0"/>
@@ -226,6 +234,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 <div class="sb">
   <span><span class="sdot idle" id="sdot"></span><span id="stxt">Prêt</span></span>
+  <span style="margin-left:8px;font-size:11px;color:var(--text3)">Zoom: <b id="zoom-badge">100%</b></span>
+  <span style="font-size:10px;color:var(--text3);margin-left:8px">🖱 Molette = zoom · Espace+glisser = pan</span>
   <span id="cnt-i" style="color:var(--text3)">0 composant</span>
   <span id="cnt-w" style="color:var(--text3)">0 câble</span>
   <span style="margin-left:auto;font-size:9px;color:var(--text3)">
@@ -688,6 +698,73 @@ let cableStart=null, history=[];
 
 const cw = document.getElementById('cw');
 const canvasItems = document.getElementById('canvas-items');
+// ══ ZOOM & PAN ════════════════════════════════════════════════════════════
+let zoomScale = 1;
+let panX = 0, panY = 0;
+let isPanning = false, panStart = {x:0, y:0};
+
+function applyTransform(){
+  const zl = document.getElementById('zoom-layer');
+  zl.style.transform = `translate(${panX}px,${panY}px) scale(${zoomScale})`;
+  document.getElementById('zoom-badge').textContent = Math.round(zoomScale*100)+'%';
+}
+
+function zoomIn(){ zoomScale = Math.min(zoomScale*1.25, 4); applyTransform(); }
+function zoomOut(){ zoomScale = Math.max(zoomScale/1.25, 0.15); applyTransform(); }
+function resetZoom(){ zoomScale=1; panX=0; panY=0; applyTransform(); }
+
+function fitToWindow(){
+  if(!items.length && !wires.length){ resetZoom(); return; }
+  let mnX=Infinity,mnY=Infinity,mxX=-Infinity,mxY=-Infinity;
+  items.forEach(i=>{mnX=Math.min(mnX,i.x);mnY=Math.min(mnY,i.y);mxX=Math.max(mxX,i.x+i.w);mxY=Math.max(mxY,i.y+i.h+20);});
+  wires.forEach(w=>{mnX=Math.min(mnX,w.x1,w.x2);mnY=Math.min(mnY,w.y1,w.y2);mxX=Math.max(mxX,w.x1,w.x2);mxY=Math.max(mxY,w.y1,w.y2);});
+  if(!isFinite(mnX)){resetZoom();return;}
+  const pad=40, cwr=cw.getBoundingClientRect();
+  const scaleX=(cwr.width-pad*2)/(mxX-mnX);
+  const scaleY=(cwr.height-pad*2)/(mxY-mnY);
+  zoomScale=Math.min(scaleX,scaleY,2);
+  panX=pad-mnX*zoomScale; panY=pad-mnY*zoomScale;
+  applyTransform();
+  setStatus('Ajusté à la fenêtre','ok');
+}
+
+// Override getCwPos to account for zoom+pan
+function getCwPos(e){
+  const r=cw.getBoundingClientRect();
+  const t=e.touches?.[0]||e;
+  return {
+    x:(t.clientX-r.left-panX)/zoomScale,
+    y:(t.clientY-r.top-panY)/zoomScale
+  };
+}
+
+// Middle-click or Space+drag to pan
+let spaceDown=false;
+document.addEventListener('keydown',e=>{if(e.code==='Space'){spaceDown=true;cw.style.cursor='grab';}});
+document.addEventListener('keyup',e=>{if(e.code==='Space'){spaceDown=false;cw.style.cursor='default';isPanning=false;}});
+
+cw.addEventListener('mousedown',e=>{
+  if(e.button===1||spaceDown){isPanning=true;panStart={x:e.clientX-panX,y:e.clientY-panY};cw.classList.add('panning');e.preventDefault();}
+});
+cw.addEventListener('mousemove',e=>{
+  if(isPanning){panX=e.clientX-panStart.x;panY=e.clientY-panStart.y;applyTransform();}
+});
+cw.addEventListener('mouseup',e=>{if(e.button===1||spaceDown){isPanning=false;cw.classList.remove('panning');}});
+
+// Wheel zoom centered on cursor
+cw.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const r=cw.getBoundingClientRect();
+  const mx=e.clientX-r.left, my=e.clientY-r.top;
+  const delta=e.deltaY<0?1.12:1/1.12;
+  const newScale=Math.min(Math.max(zoomScale*delta,0.15),4);
+  panX=mx-(mx-panX)*(newScale/zoomScale);
+  panY=my-(my-panY)*(newScale/zoomScale);
+  zoomScale=newScale;
+  applyTransform();
+},{passive:false});
+// ══ END ZOOM & PAN ════════════════════════════════════════════════════════
+
 const wiresG = document.getElementById('wires-g');
 const textsG = document.getElementById('texts-g');
 const wpLine = document.getElementById('wp');
@@ -695,7 +772,7 @@ const uid = () => 'e'+Date.now()+Math.floor(Math.random()*9999);
 const snap = v => Math.round(v/20)*20;
 const clone = o => JSON.parse(JSON.stringify(o));
 function saveHist(){history.push(clone({items,wires,textItems}));if(history.length>30)history.shift();}
-function getCwPos(e){const r=cw.getBoundingClientRect();const t=e.touches?.[0]||e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+// getCwPos overridden by zoom system above
 
 // ═══════════════════════════════════════════════════════════
 // BIBLIOTHÈQUE UI

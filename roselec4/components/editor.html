@@ -875,20 +875,41 @@ function buildSVG(){
     maxX=Math.max(maxX,t.x+120);maxY=Math.max(maxY,t.y+20);
   });
   if(!isFinite(minX)){minX=0;minY=0;maxX=400;maxY=300;}
-  const pad=40,W=maxX-minX+pad*2,H=maxY-minY+pad*2+60;
+  const pad=40,W=Math.round(maxX-minX+pad*2),H=Math.round(maxY-minY+pad*2+60);
   const dx=pad-minX,dy=pad-minY+56;
   const modeLabel=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';
-  const hdr=`<rect width="${W}" height="52" fill="#185FA5"/>
-  <text x="16" y="20" font-size="14" fill="#fff" font-family="sans-serif" font-weight="700">ROSELEC — ${title}</text>
-  <text x="16" y="40" font-size="10" fill="rgba(255,255,255,.75)" font-family="sans-serif">${site} · Technicien : ${tech} · ${now} · Mode : ${modeLabel}</text>`;
-  const content=cvs.innerHTML
-    .replace(/id="wp"[^>]*opacity="[^"]*"/,'id="wp" opacity="0"')
-    .replace(/<pattern[^>]*>[\s\S]*?<\/pattern>/g,'');
+  // Rebuild SVG from data — avoids viewport truncation from innerHTML capture
+  let wireSVG='';
+  wires.forEach(w=>{
+    let lbl=w.colorLabel||'';if(w.section)lbl+=' · '+w.section;if(w.distance)lbl+=' · '+w.distance;
+    const x1=Math.round(w.x1+dx),y1=Math.round(w.y1+dy),x2=Math.round(w.x2+dx),y2=Math.round(w.y2+dy);
+    wireSVG+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${w.color}" stroke-width="2.2" stroke-linecap="round"/>`;
+    if(lbl){const mx=(x1+x2)/2,my=(y1+y2)/2,bw=lbl.length*5.5+8;
+      wireSVG+=`<rect x="${mx-bw/2}" y="${my-8}" width="${bw}" height="14" rx="3" fill="${w.color}" opacity=".88"/>`;
+      wireSVG+=`<text x="${mx}" y="${my+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;}
+  });
+  let compSVG='';
+  components.forEach(comp=>{
+    const def=allDefs.find(c=>c.t===comp.type);if(!def)return;
+    const tmpG=document.createElementNS('http://www.w3.org/2000/svg','g');
+    def.d(tmpG,0,0,def.w,def.h,COLORS[comp.type]||'#444');
+    const cx=Math.round(comp.x+dx),cy=Math.round(comp.y+dy);
+    const lbl=(comp.label||def.l)+(comp.amperage?' · '+comp.amperage:'');
+    compSVG+=`<g transform="translate(${cx},${cy})">${tmpG.innerHTML}</g>`;
+    compSVG+=`<rect x="${cx}" y="${cy+def.h}" width="${def.w}" height="14" fill="rgba(0,0,0,.7)" rx="2"/>`;
+    compSVG+=`<text x="${cx+def.w/2}" y="${cy+def.h+10}" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;
+  });
+  let labelSVG='';
+  textLabels&&textLabels.forEach&&textLabels.forEach(t=>{
+    labelSVG+=`<text x="${Math.round(t.x+dx)}" y="${Math.round(t.y+dy)}" font-size="${t.size||12}" fill="${t.color||'#333'}" font-family="sans-serif" font-weight="${t.bold?'600':'400'}">${t.text}</text>`;
+  });
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" fill="#f8f9fa"/>
-  ${hdr}
-  <g transform="translate(${dx},${dy})">${content}</g>
+  <rect width="${W}" height="52" fill="#185FA5"/>
+  <text x="16" y="20" font-size="14" fill="#fff" font-family="sans-serif" font-weight="700">ROSELEC — ${title}</text>
+  <text x="16" y="40" font-size="10" fill="rgba(255,255,255,.75)" font-family="sans-serif">${site} · Technicien : ${tech} · ${now} · Mode : ${modeLabel}</text>
+  ${wireSVG}${compSVG}${labelSVG}
 </svg>`;
 }
 

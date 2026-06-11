@@ -859,18 +859,22 @@ function buildSVG(){
   const site=document.getElementById('ex-site')?.value||'';
   const tech=document.getElementById('ex-tech')?.value||'';
   const now=new Date().toLocaleDateString('fr');
-  let minX=9999,minY=9999,maxX=0,maxY=0;
+  let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
   const allDefs=[...AC_COMPS,...DC_COMPS];
   components.forEach(c=>{
     const d=allDefs.find(x=>x.t===c.type);if(!d)return;
     minX=Math.min(minX,c.x);minY=Math.min(minY,c.y);
-    maxX=Math.max(maxX,c.x+d.w);maxY=Math.max(maxY,c.y+d.h+26);
+    maxX=Math.max(maxX,c.x+(d.w||80));maxY=Math.max(maxY,c.y+(d.h||60)+30);
   });
   wires.forEach(w=>{
     minX=Math.min(minX,w.x1,w.x2);minY=Math.min(minY,w.y1,w.y2);
     maxX=Math.max(maxX,w.x1,w.x2);maxY=Math.max(maxY,w.y1,w.y2);
   });
-  if(minX===9999){minX=0;minY=0;maxX=400;maxY=300;}
+  textLabels&&textLabels.forEach&&textLabels.forEach(t=>{
+    minX=Math.min(minX,t.x);minY=Math.min(minY,t.y);
+    maxX=Math.max(maxX,t.x+120);maxY=Math.max(maxY,t.y+20);
+  });
+  if(!isFinite(minX)){minX=0;minY=0;maxX=400;maxY=300;}
   const pad=40,W=maxX-minX+pad*2,H=maxY-minY+pad*2+60;
   const dx=pad-minX,dy=pad-minY+56;
   const modeLabel=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';

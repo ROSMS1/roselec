@@ -1196,10 +1196,10 @@ function buildSVG(){
   const site=document.getElementById('ex-s').value||'';
   const tech=document.getElementById('ex-tech').value||'';
   const now=new Date().toLocaleDateString('fr-FR');
-  let mnX=9999,mnY=9999,mxX=0,mxY=0;
-  items.forEach(i=>{mnX=Math.min(mnX,i.x);mnY=Math.min(mnY,i.y);mxX=Math.max(mxX,i.x+i.w);mxY=Math.max(mxY,i.y+i.h+30);});
+  let mnX=Infinity,mnY=Infinity,mxX=-Infinity,mxY=-Infinity;
+  items.forEach(i=>{mnX=Math.min(mnX,i.x);mnY=Math.min(mnY,i.y);mxX=Math.max(mxX,i.x+(i.w||80));mxY=Math.max(mxY,i.y+(i.h||60)+30);});
   wires.forEach(w=>{mnX=Math.min(mnX,w.x1,w.x2);mnY=Math.min(mnY,w.y1,w.y2);mxX=Math.max(mxX,w.x1,w.x2);mxY=Math.max(mxY,w.y1,w.y2);});
-  if(mnX===9999){mnX=0;mnY=0;mxX=500;mxY=300;}
+  if(!isFinite(mnX)){mnX=0;mnY=0;mxX=500;mxY=300;}
   const pad=40,W=mxX-mnX+pad*2,H=mxY-mnY+pad*2+56;
   const dx=pad-mnX,dy=pad-mnY+56;
   let isvg='',wsvg='';

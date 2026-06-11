@@ -8,7 +8,26 @@ import streamlit as st
 import streamlit.components.v1 as stc
 from pathlib import Path
 from PIL import Image
-import json, io
+import json, io, base64
+
+# ── Export PNG côté serveur ───────────────────────────────────────────────────
+def svg_to_png_server(svg_b64: str) -> bytes | None:
+    """Convertit un SVG base64 en PNG via cairosvg (sans limite de taille browser)."""
+    try:
+        import cairosvg
+        svg_bytes = base64.b64decode(svg_b64)
+        return cairosvg.svg2png(bytestring=svg_bytes, scale=2)
+    except Exception as e:
+        st.error(f"cairosvg error: {e}")
+        return None
+
+# Gérer la requête d'export PNG
+if "export_svg_b64" in st.query_params:
+    svg_b64 = st.query_params["export_svg_b64"]
+    png_bytes = svg_to_png_server(svg_b64)
+    if png_bytes:
+        st.download_button("⬇ Télécharger PNG", png_bytes, "roselec.png", "image/png")
+    st.stop()
 
 EDITOR_HTML = Path(__file__).parent / "components" / "editor.html"
 AUDIT_HTML  = Path(__file__).parent / "components" / "audit.html"
@@ -406,4 +425,29 @@ with col_editor:
             unsafe_allow_html=True
         )
         photo_html = PHOTO_EDITOR_HTML.read_text("utf-8")
+
+        # Réception du SVG depuis le composant HTML pour export serveur
+        if "svg_export" not in st.session_state:
+            st.session_state["svg_export"] = None
+
         stc.html(photo_html, height=780, scrolling=True)
+
+        # Bouton export PNG côté serveur (cairosvg)
+        svg_data = st.session_state.get("svg_export")
+        if svg_data:
+            try:
+                import cairosvg
+                png_bytes = cairosvg.svg2png(bytestring=svg_data.encode("utf-8"), scale=2)
+                st.download_button(
+                    "⬇ Télécharger PNG haute résolution",
+                    png_bytes,
+                    f"roselec_{__import__('time').strftime('%Y%m%d_%H%M%S')}.png",
+                    "image/png",
+                    type="primary",
+                    use_container_width=True,
+                )
+                st.session_state["svg_export"] = None
+            except ImportError:
+                st.error("cairosvg non installé — ajouter dans requirements.txt")
+            except Exception as e:
+                st.error(f"Erreur export: {e}")

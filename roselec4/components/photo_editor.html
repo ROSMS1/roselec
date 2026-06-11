@@ -1288,23 +1288,26 @@ function buildSVG(){
 
 function exportPNG(){
   const svg=buildSVG();
-  // Parse real dimensions from SVG attributes — not from rendered img.width/height
+  // 1. Envoyer SVG à Streamlit pour export serveur (cairosvg — pas de limite)
+  try{
+    window.parent.postMessage({type:'streamlit:setComponentValue', value:{svg_export:svg}}, '*');
+    setStatus('PNG envoyé au serveur — cliquer le bouton ⬇ dans Streamlit','ok');
+  }catch(e){}
+  // 2. Fallback browser (peut être tronqué sur petits écrans)
   const parser=new DOMParser();
   const doc=parser.parseFromString(svg,'image/svg+xml');
   const svgEl=doc.querySelector('svg');
   const W=parseFloat(svgEl?.getAttribute('width')||'800');
   const H=parseFloat(svgEl?.getAttribute('height')||'600');
-  const scale=2; // Retina 2x
+  const scale=2;
   const img=new Image();
   img.onload=()=>{
     const c=document.createElement('canvas');
-    c.width=Math.round(W*scale);
-    c.height=Math.round(H*scale);
-    const ctx=c.getContext('2d');
-    ctx.scale(scale,scale);
-    ctx.drawImage(img,0,0,W,H);
+    c.width=Math.round(W*scale); c.height=Math.round(H*scale);
+    const ctx=c.getContext('2d');ctx.scale(scale,scale);ctx.drawImage(img,0,0,W,H);
     const a=document.createElement('a');a.href=c.toDataURL('image/png');
-    a.download='roselec_'+Date.now()+'.png';a.click();setStatus('PNG exporté — '+Math.round(W)+'×'+Math.round(H)+'px','ok');
+    a.download='roselec_'+Date.now()+'.png';a.click();
+    setStatus('PNG exporté — '+Math.round(W)+'×'+Math.round(H)+'px','ok');
   };
   img.src=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
   document.getElementById('mo-exp').style.display='none';

@@ -1204,12 +1204,17 @@ function buildSVG(){
   const dx=pad-mnX,dy=pad-mnY+56;
   let isvg='',wsvg='';
   items.forEach(item=>{
-    if(!item.isPhoto&&item.svgContent){
-      isvg+=`<g transform="translate(${item.x+dx},${item.y+dy})">${item.svgContent}</g>`;
-      const lbl=item.label+(item.ampere?' · '+item.ampere:'');
-      isvg+=`<rect x="${item.x+dx}" y="${item.y+dy+item.h}" width="${item.w}" height="14" fill="rgba(0,0,0,.7)" rx="0 0 3 3"/>`;
-      isvg+=`<text x="${item.x+dx+item.w/2}" y="${item.y+dy+item.h+10}" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;
+    const cx=item.x+dx, cy=item.y+dy;
+    const lbl=item.label+(item.ampere?' · '+item.ampere:'');
+    if(item.isPhoto&&item.imgSrc){
+      // Photo item: draw as rect placeholder with label (images not embeddable in SVG without base64)
+      isvg+=`<rect x="${cx}" y="${cy}" width="${item.w}" height="${item.h}" fill="#dde3ea" stroke="#aaa" stroke-width="1" rx="4"/>`;
+      isvg+=`<text x="${cx+item.w/2}" y="${cy+item.h/2}" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="#555" font-family="sans-serif">📷 ${item.label}</text>`;
+    } else if(item.svgContent){
+      isvg+=`<g transform="translate(${cx},${cy})">${item.svgContent}</g>`;
     }
+    isvg+=`<rect x="${cx}" y="${cy+item.h}" width="${item.w}" height="14" fill="rgba(0,0,0,.7)" rx="2"/>`;
+    isvg+=`<text x="${cx+item.w/2}" y="${cy+item.h+10}" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;
   });
   wires.forEach(w=>{
     let lbl=w.colorLabel;if(w.section)lbl+=' · '+w.section;if(w.distance)lbl+=' · '+w.distance;

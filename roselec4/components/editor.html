@@ -13,98 +13,129 @@
   --green:#27500A;--green-bg:#EAF3DE;
   --amber:#633806;--amber-bg:#FAEEDA;
   --red:#791F1F;--red-bg:#FCEBEB;
-  --orange:#7a3a00;--orange-bg:#fff3e0;
+  --purple:#5a1a8a;--purple-bg:#f3eafd;
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:var(--bg2);color:var(--text);font-size:13px;height:100vh;overflow:hidden}
 .app{display:flex;flex-direction:column;height:100vh}
-.topbar{display:flex;align-items:center;gap:6px;padding:6px 10px;
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;gap:5px;padding:5px 10px;
   background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;flex-shrink:0;min-height:44px}
 .logo{font-size:15px;font-weight:700;color:var(--blue);white-space:nowrap;letter-spacing:-.3px}
 .logo span{color:#E24B4A}
 .sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
-.btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;
+.btn{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;
   border-radius:5px;border:1px solid var(--border);background:var(--bg);
-  color:var(--text);font-size:12px;cursor:pointer;white-space:nowrap;transition:all .1s}
+  color:var(--text);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .1s}
 .btn:hover{background:var(--bg3)}
 .btn.on,.btn-p{background:var(--blue);color:#fff;border-color:var(--blue)}
 .btn-p:hover,.btn.on:hover{background:var(--blue2)}
 .btn-g{background:#3B6D11;color:#fff;border-color:#3B6D11}
 .btn-g:hover{background:var(--green)}
 .btn-r{background:#A32D2D;color:#fff;border-color:#A32D2D}
-.btn-photo{background:#7B1FA2;color:#fff;border-color:#6A1B9A;font-size:11px}
+.btn-photo{background:#7B1FA2;color:#fff;border-color:#6A1B9A}
 .btn-photo:hover{background:#6A1B9A}
 .badge{padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500}
 .b-blue{background:var(--blue-bg);color:var(--blue2)}
 .b-green{background:var(--green-bg);color:var(--green)}
 .b-amber{background:var(--amber-bg);color:var(--amber)}
-.b-orange{background:var(--orange-bg);color:var(--orange)}
+.b-purple{background:var(--purple-bg);color:var(--purple)}
 .mode-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.mtab{padding:4px 12px;font-size:11px;font-weight:500;cursor:pointer;
+.mtab{padding:4px 11px;font-size:11px;font-weight:500;cursor:pointer;
   background:var(--bg2);color:var(--text2);border:none;transition:all .12s}
 .mtab.sel{background:var(--blue);color:#fff}
+
+/* BODY */
 .body{display:flex;flex:1;overflow:hidden}
-.sidebar{width:200px;background:var(--bg);border-right:1px solid var(--border);
+
+/* SIDEBAR */
+.sidebar{width:196px;background:var(--bg);border-right:1px solid var(--border);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
-.ss{padding:8px 10px;border-bottom:1px solid var(--border)}
+.ss{padding:7px 9px;border-bottom:1px solid var(--border)}
 .st{font-size:10px;font-weight:600;color:var(--text3);
-  text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+/* PALETTE GRILLE */
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 .ci{display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:6px 3px;border:1px solid var(--border);border-radius:5px;
-  cursor:pointer;background:var(--bg2);font-size:10px;color:var(--text2);
-  transition:all .1s;user-select:none}
-.ci:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
-.ci.sel{border-color:var(--blue);background:var(--blue-bg);color:var(--blue);font-weight:600}
+  padding:5px 3px;border:1px solid var(--border);border-radius:5px;
+  cursor:pointer;background:var(--bg2);font-size:9px;color:var(--text2);
+  transition:all .1s;user-select:none;position:relative;overflow:hidden}
+.ci:hover{border-color:var(--blue);background:var(--blue-bg)}
+.ci.sel{border-color:var(--blue);background:var(--blue-bg);font-weight:600}
+.ci img{width:100%;height:44px;object-fit:contain;border-radius:3px;display:block}
+.ci .ci-del{position:absolute;top:2px;right:2px;background:rgba(163,45,45,.85);
+  color:#fff;border:none;border-radius:3px;font-size:9px;padding:0 3px;cursor:pointer;display:none}
+.ci:hover .ci-del{display:block}
+
+/* PHOTO UPLOAD ZONE */
+.photo-upload-zone{border:2px dashed var(--border2);border-radius:6px;
+  padding:10px;text-align:center;cursor:pointer;background:var(--bg2);
+  transition:all .15s;font-size:11px;color:var(--text3);margin-bottom:6px}
+.photo-upload-zone:hover,.photo-upload-zone.drag{border-color:var(--purple);
+  background:var(--purple-bg);color:var(--purple)}
+
+/* WIRE PALETTE */
 .wr{display:flex;gap:4px;flex-wrap:wrap}
-.wc{width:24px;height:24px;border-radius:50%;border:2px solid transparent;
+.wc{width:22px;height:22px;border-radius:50%;border:2px solid transparent;
   cursor:pointer;transition:transform .1s}
 .wc:hover,.wc.sel{transform:scale(1.25);border-color:#222}
-.pr{margin-bottom:6px}
+
+/* PROPS */
+.pr{margin-bottom:5px}
 .pr label{display:block;font-size:10px;color:var(--text3);margin-bottom:2px;
   text-transform:uppercase;letter-spacing:.04em}
 .pr input,.pr select{width:100%;padding:3px 6px;border:1px solid var(--border);
-  border-radius:4px;background:var(--bg2);color:var(--text);font-size:12px}
+  border-radius:4px;background:var(--bg2);color:var(--text);font-size:11px}
+
+/* CANVAS */
 .cw{flex:1;position:relative;overflow:hidden;background:#f0f2f5;
   background-image:radial-gradient(#c0c8d0 0.7px,transparent 0.7px);
   background-size:20px 20px}
 #cvs{width:100%;height:100%}
+
+/* STATUSBAR */
 .sb{padding:3px 10px;background:var(--bg);border-top:1px solid var(--border);
-  display:flex;gap:12px;align-items:center;flex-shrink:0;font-size:11px;flex-wrap:wrap}
+  display:flex;gap:10px;align-items:center;flex-shrink:0;font-size:11px;flex-wrap:wrap}
 .sd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
 .ok{background:#639922}.idle{background:#aaa}
 .busy{background:#EF9F27;animation:pulse .7s infinite alternate}
 @keyframes pulse{to{opacity:.3}}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);
+
+/* MODALS */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.48);
   display:flex;align-items:center;justify-content:center;z-index:200}
 .md{background:var(--bg);border-radius:10px;padding:20px;
-  width:360px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+  width:520px;max-width:96vw;box-shadow:0 8px 32px rgba(0,0,0,.22)}
 .md h3{font-size:14px;font-weight:600;margin-bottom:12px}
 .mf{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
-.ac{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;
-  border-radius:10px;font-size:11px;background:var(--blue-bg);
-  color:var(--blue2);border:1px solid #B5D4F4;cursor:pointer;
-  margin:2px;transition:background .1s}
-.ac:hover{background:#B5D4F4}
-.ac.dc-chip{background:var(--orange-bg);color:var(--orange);border-color:#ffcc80}
-.ac.dc-chip:hover{background:#ffe0b2}
-.ac.placed{background:var(--green-bg);color:var(--green);border-color:#C0DD97}
-.chips-wrap{display:flex;flex-wrap:wrap;max-height:130px;overflow-y:auto;margin-top:4px}
-.sys-info{background:var(--bg3);border:1px solid var(--border);border-radius:5px;
-  padding:7px;font-size:11px;color:var(--text2);line-height:1.5;margin-top:5px}
-/* Photo analysis modal */
-.md-wide{width:480px;max-width:96vw}
-.photo-drop{border:2px dashed var(--border2);border-radius:8px;padding:18px;
-  text-align:center;cursor:pointer;background:var(--bg2);transition:all .15s;font-size:12px;color:var(--text3)}
-.photo-drop:hover{border-color:var(--blue);background:var(--blue-bg)}
-.photo-drop.dragging{border-color:var(--blue);background:var(--blue-bg)}
-.thumb-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.thumb-row img{width:72px;height:72px;object-fit:cover;border-radius:5px;border:1px solid var(--border)}
-.ai-log{background:var(--bg3);border:1px solid var(--border);border-radius:5px;
-  padding:8px;font-size:11px;max-height:160px;overflow-y:auto;line-height:1.6;
-  font-family:monospace;color:var(--text2);margin-top:8px}
-.ai-tag{display:inline-block;background:#7B1FA2;color:#fff;font-size:10px;
-  padding:1px 6px;border-radius:8px;margin-right:4px}
+
+/* ANALYSE MODAL */
+.thumb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+  gap:6px;margin:8px 0;max-height:200px;overflow-y:auto}
+.thumb-item{position:relative;border:1px solid var(--border);border-radius:5px;overflow:hidden;cursor:pointer}
+.thumb-item img{width:100%;height:80px;object-fit:cover;display:block}
+.thumb-item .thumb-label{position:absolute;bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.7);color:#fff;font-size:9px;padding:2px 4px;text-align:center}
+.thumb-item.selected{border-color:var(--blue);border-width:2px}
+.ai-log{background:#0a0a0a;border-radius:5px;padding:8px;font-size:10px;
+  max-height:120px;overflow-y:auto;line-height:1.6;font-family:monospace;
+  color:#aaa;margin-top:8px}
+
+/* DETECTED CHIPS */
+.det-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:6px;margin-top:8px;max-height:220px;overflow-y:auto}
+.det-card{border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  cursor:pointer;background:var(--bg2);transition:all .1s}
+.det-card:hover{border-color:var(--blue);transform:scale(1.02)}
+.det-card.placed{border-color:#3B6D11;border-width:2px;opacity:.7}
+.det-card img{width:100%;height:60px;object-fit:cover;display:block}
+.det-card .det-info{padding:3px 5px;font-size:9px;color:var(--text2);line-height:1.3}
+.det-card .det-name{font-weight:600;color:var(--text);font-size:10px}
+
+/* EXPORT / SAVE modals */
+.md-sm{width:360px}
 </style>
 </head>
 <body>
@@ -115,8 +146,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <span class="logo">ROS<span>ELEC</span></span>
   <div class="sep"></div>
   <div class="mode-tabs">
-    <button class="mtab sel" id="tab-ac" onclick="switchSchemaMode('ac')">⚡ AC</button>
-    <button class="mtab" id="tab-dc" onclick="switchSchemaMode('dc')">🔋 DC / Rectifier</button>
+    <button class="mtab sel" id="tab-ac" onclick="switchMode('ac')">⚡ AC</button>
+    <button class="mtab" id="tab-dc" onclick="switchMode('dc')">🔋 DC</button>
   </div>
   <div class="sep"></div>
   <button class="btn" id="btn-sel" onclick="setMode('select')">✦ Sélect.</button>
@@ -124,45 +155,65 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <button class="btn" id="btn-wire" onclick="setMode('wire')">〜 Fil</button>
   <button class="btn" id="btn-label" onclick="setMode('label')">T Texte</button>
   <div class="sep"></div>
-  <button class="btn" onclick="undo()">↩</button>
+  <button class="btn" onclick="undo()" title="Ctrl+Z">↩</button>
   <button class="btn" onclick="clearAll()">🗑</button>
   <div class="sep"></div>
-  <button class="btn btn-photo" onclick="openPhotoModal()">📷 Photo→Schéma</button>
+  <button class="btn btn-photo" onclick="openAnalyze()">📷 Charger photos</button>
   <div class="sep"></div>
-  <button class="btn btn-g" onclick="saveToSupabase()">💾 Sauvegarder</button>
-  <button class="btn btn-p" onclick="showExport()">⬇ Exporter</button>
-  <button class="btn" style="background:#25D366;color:#fff;border-color:#1ebe5d" onclick="showRapport()">📲 Rapport WhatsApp</button>
-  <span class="badge b-blue" id="mode-badge" style="margin-left:2px">Ajout composant</span>
+  <button class="btn btn-g" onclick="openSave()">💾 Sauvegarder</button>
+  <button class="btn btn-p" onclick="openExport()">⬇ Exporter</button>
+  <button class="btn" style="background:#25D366;color:#fff;border-color:#1ebe5d;font-size:11px" onclick="openRapport()">📲 WhatsApp</button>
+  <span class="badge b-blue" id="mode-badge" style="margin-left:2px">Ajout</span>
 </div>
 
 <div class="body">
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="ss" id="comps-section">
-    <div class="st" id="comps-title">Composants AC</div>
-    <div class="cg" id="comp-palette"></div>
+
+  <!-- CHARGER PHOTOS -->
+  <div class="ss">
+    <div class="st">📷 Photos terrain</div>
+    <div class="photo-upload-zone" id="drop-zone"
+      ondragover="event.preventDefault();this.classList.add('drag')"
+      ondragleave="this.classList.remove('drag')"
+      ondrop="handleSidebarDrop(event)"
+      onclick="document.getElementById('sidebar-file').click()">
+      Glisser photos ici<br><span style="font-size:10px">ou cliquer pour choisir</span>
+    </div>
+    <input type="file" id="sidebar-file" accept="image/*" multiple style="display:none" onchange="handleSidebarFiles(event)">
+    <div style="font-size:10px;color:var(--text3);margin-bottom:4px" id="lib-count">Bibliothèque vide</div>
   </div>
+
+  <!-- PALETTE COMPOSANTS -->
+  <div class="ss" id="comps-section">
+    <div class="st" id="comps-title">Composants photo</div>
+    <div class="cg" id="comp-palette">
+      <div style="grid-column:1/-1;font-size:10px;color:var(--text3);padding:4px;text-align:center">
+        Charger des photos pour créer les composants
+      </div>
+    </div>
+  </div>
+
+  <!-- FILS -->
   <div class="ss">
     <div class="st">Couleur du fil</div>
     <div class="wr" id="wire-pal"></div>
     <div style="font-size:10px;color:var(--text3);margin-top:4px" id="wire-lbl">Phase L1</div>
   </div>
-  <div class="ss" id="ai-section">
-    <div class="st">Composants détectés</div>
-    <div id="ai-empty" style="font-size:11px;color:var(--text3)">Analyser des photos via 📷 Photo→Schéma ou le panneau principal.</div>
-    <div class="chips-wrap" id="ai-chips" style="display:none"></div>
-    <div id="sys-info-box" style="display:none"></div>
-  </div>
+
+  <!-- PROPS -->
   <div class="ss" id="props-sec" style="display:none">
     <div class="st">Propriétés</div>
     <div id="props-body"></div>
-    <button class="btn btn-r" style="width:100%;margin-top:6px;font-size:11px" onclick="deleteSelected()">🗑 Supprimer</button>
+    <button class="btn btn-r" style="width:100%;margin-top:5px;font-size:11px" onclick="deleteSelected()">🗑 Supprimer</button>
   </div>
+
 </div>
 
 <!-- CANVAS -->
 <div class="cw" id="cw">
   <svg id="cvs" xmlns="http://www.w3.org/2000/svg">
+    <defs><clipPath id="no-clip"></clipPath></defs>
     <g id="wl"></g>
     <g id="cl"></g>
     <g id="ll"></g>
@@ -174,74 +225,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 <!-- STATUSBAR -->
 <div class="sb">
-  <span><span class="sd idle" id="sdot"></span><span id="stxt">Prêt</span></span>
+  <span><span class="sd idle" id="sdot"></span><span id="stxt">Prêt — charger des photos pour commencer</span></span>
   <span class="badge b-blue" id="cnt-c">0 composant</span>
   <span class="badge b-amber" id="cnt-w">0 fil</span>
-  <span style="margin-left:auto;color:var(--text3)">S=sélect · A=ajout · W=fil · T=texte · Suppr=effacer · Ctrl+Z=annuler · Clic droit=annuler fil</span>
+  <span style="margin-left:auto;color:var(--text3)">S=sélect · A=ajout · W=fil · T=texte · Suppr=effacer · Ctrl+Z=annuler</span>
 </div>
 </div>
 
-<!-- MODAL PHOTO → SCHEMA -->
-<div class="mo" id="mo-photo" style="display:none">
-<div class="md md-wide">
-  <h3>📷 Analyser photo → Générer schéma</h3>
-  <div style="display:flex;gap:8px;margin-bottom:10px">
-    <label style="font-size:11px;color:var(--text2)">Type :</label>
-    <select id="ph-mode" style="font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg2)">
-      <option value="auto">🔍 Auto-détection</option>
-      <option value="ac">⚡ AC — Coffret BT</option>
-      <option value="dc">🔋 DC — Rectifier 48V</option>
-    </select>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODAL ANALYSE PHOTOS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="mo" id="mo-analyze" style="display:none">
+<div class="md">
+  <h3>📷 Charger et analyser les photos terrain</h3>
+
+  <!-- STEP 1: Drop zone -->
+  <div id="step1">
+    <div style="border:2px dashed var(--border2);border-radius:8px;padding:16px;
+      text-align:center;cursor:pointer;background:var(--bg2);font-size:12px;color:var(--text3)"
+      id="modal-drop"
+      ondragover="event.preventDefault();this.style.borderColor='var(--purple)'"
+      ondragleave="this.style.borderColor=''"
+      ondrop="handleModalDrop(event)"
+      onclick="document.getElementById('modal-file').click()">
+      📷 Glisser vos photos ici<br>
+      <span style="font-size:10px">JPG · PNG · WEBP · Jusqu'à 10 photos</span>
+    </div>
+    <input type="file" id="modal-file" accept="image/*" multiple style="display:none" onchange="handleModalFiles(event)">
+    <div class="thumb-grid" id="modal-thumbs"></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+      <label style="font-size:11px;color:var(--text2)">Type :</label>
+      <select id="ana-mode" style="font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg2)">
+        <option value="auto">🔍 Auto-détection</option>
+        <option value="ac">⚡ AC — Coffret BT</option>
+        <option value="dc">🔋 DC — Armoire 48V</option>
+      </select>
+      <span id="n-loaded" style="font-size:11px;color:var(--text3);margin-left:auto"></span>
+    </div>
   </div>
-  <div class="photo-drop" id="photo-drop"
-    ondragover="ev.preventDefault();this.classList.add('dragging')"
-    ondragleave="this.classList.remove('dragging')"
-    ondrop="handleDrop(event)"
-    onclick="document.getElementById('ph-file').click()">
-    📷 Glisser des photos ici ou cliquer pour choisir<br>
-    <span style="font-size:10px">(JPG/PNG/WEBP · max 4 photos)</span>
+
+  <!-- STEP 2: Results -->
+  <div id="step2" style="display:none">
+    <div style="font-size:12px;font-weight:500;margin-bottom:6px" id="det-title">Composants détectés</div>
+    <div class="det-grid" id="det-grid"></div>
+    <div style="font-size:10px;color:var(--text3);margin-top:6px">
+      Cliquer sur un composant pour le placer · Cliquer à nouveau pour retirer
+    </div>
   </div>
-  <input type="file" id="ph-file" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
-  <div class="thumb-row" id="ph-thumbs"></div>
-  <div class="ai-log" id="ph-log" style="display:none"></div>
+
+  <div class="ai-log" id="ana-log" style="display:none"></div>
+
   <div class="mf">
-    <button class="btn" onclick="document.getElementById('mo-photo').style.display='none'">Annuler</button>
-    <button class="btn btn-photo" id="ph-btn-analyze" onclick="analyzePhotos()" disabled>🤖 Analyser avec Claude Vision</button>
+    <button class="btn" onclick="closeAnalyze()">Fermer</button>
+    <button class="btn btn-photo" id="ana-btn" onclick="runAnalysis()" disabled>🤖 Analyser avec Claude Vision</button>
+    <button class="btn btn-g" id="place-all-btn" onclick="placeAll()" style="display:none">✅ Tout placer sur le canvas</button>
   </div>
 </div>
 </div>
 
 <!-- MODAL EXPORT -->
 <div class="mo" id="mo-export" style="display:none">
-<div class="md">
+<div class="md md-sm">
   <h3>Exporter le schéma</h3>
-  <div class="pr"><label>Titre</label>
-    <input id="ex-title" value="Schéma coffret" placeholder="Ex: Tableau RDC - Bâtiment A"></div>
-  <div class="pr"><label>Site</label>
-    <input id="ex-site" placeholder="Ex: DOLISIE4"></div>
-  <div class="pr"><label>Technicien</label>
-    <input id="ex-tech" placeholder="Nom"></div>
+  <div class="pr"><label>Titre</label><input id="ex-title" value="Schéma coffret"></div>
+  <div class="pr"><label>Site</label><input id="ex-site" placeholder="Ex: DOLISIE4"></div>
+  <div class="pr"><label>Technicien</label><input id="ex-tech" placeholder="Nom"></div>
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-    <button class="btn btn-p" onclick="exportSVG()">📄 SVG</button>
-    <button class="btn btn-g" onclick="exportPNG()">🖼 PNG</button>
+    <button class="btn btn-p" onclick="exportPNG()">🖼 PNG</button>
+    <button class="btn" onclick="exportSVGFile()">📄 SVG</button>
     <button class="btn" onclick="exportJSON()">{ } JSON</button>
   </div>
-  <div class="mf">
-    <button class="btn" onclick="document.getElementById('mo-export').style.display='none'">Fermer</button>
-  </div>
+  <div class="mf"><button class="btn" onclick="document.getElementById('mo-export').style.display='none'">Fermer</button></div>
 </div>
 </div>
 
 <!-- MODAL SAVE -->
 <div class="mo" id="mo-save" style="display:none">
-<div class="md">
+<div class="md md-sm">
   <h3>Sauvegarder le schéma</h3>
   <div class="pr"><label>Titre</label><input id="sv-title" placeholder="Ex: Armoire DC DOLISIE4"></div>
   <div class="pr"><label>Site</label><input id="sv-site" placeholder="Ex: DOLISIE4"></div>
   <div class="pr"><label>Type</label>
     <select id="sv-type">
-      <option value="ac">AC — Coffret BT / Tableau distribution</option>
-      <option value="dc">DC — Armoire rectifier / 48V télécom</option>
+      <option value="ac">AC — Coffret BT</option>
+      <option value="dc">DC — Armoire rectifier 48V</option>
     </select></div>
   <div class="mf">
     <button class="btn" onclick="document.getElementById('mo-save').style.display='none'">Annuler</button>
@@ -253,584 +320,67 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 <!-- MODAL RAPPORT WHATSAPP -->
 <div class="mo" id="mo-rapport" style="display:none">
 <div class="md" style="max-width:460px">
-  <h3>📲 Rapport site — partager sur WhatsApp</h3>
-  <div class="pr"><label>Technicien</label>
-    <input id="rp-tech" placeholder="Votre nom" oninput="previewMsg()"></div>
-  <div class="pr"><label>Site / Localité</label>
-    <input id="rp-site" placeholder="Ex: DOLISIE4" oninput="previewMsg()"></div>
+  <h3>📲 Rapport site — WhatsApp</h3>
+  <div class="pr"><label>Technicien</label><input id="rp-tech" placeholder="Votre nom" oninput="previewMsg()"></div>
+  <div class="pr"><label>Site</label><input id="rp-site" placeholder="Ex: DOLISIE4" oninput="previewMsg()"></div>
   <div class="pr"><label>Type de travail</label>
     <select id="rp-travail" onchange="previewMsg()">
-      <option value="Schématisation coffret électrique">Schématisation coffret électrique</option>
-      <option value="Schématisation armoire DC 48V">Schématisation armoire DC 48V</option>
-      <option value="Audit électrique">Audit électrique</option>
-      <option value="Maintenance préventive">Maintenance préventive</option>
-      <option value="Intervention corrective">Intervention corrective</option>
+      <option>Schématisation coffret électrique</option>
+      <option>Schématisation armoire DC 48V</option>
+      <option>Audit électrique</option>
+      <option>Maintenance préventive</option>
+      <option>Intervention corrective</option>
     </select></div>
-  <div class="pr"><label>Observations / Remarques</label>
-    <textarea id="rp-obs" rows="2" placeholder="Ex: Disjoncteur principal à remplacer…"
-      style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:4px;
-        font-size:12px;background:var(--bg2);color:var(--text);resize:vertical"
-      oninput="previewMsg()"></textarea></div>
+  <div class="pr"><label>Observations</label>
+    <textarea id="rp-obs" rows="2" style="width:100%;padding:5px 8px;border:1px solid var(--border);
+      border-radius:4px;font-size:11px;background:var(--bg2);resize:vertical" oninput="previewMsg()"></textarea></div>
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;
-    padding:10px;margin-bottom:12px;font-size:12px;line-height:1.6;color:var(--text2)">
-    <div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;
-      letter-spacing:.05em;margin-bottom:5px">Aperçu du message WhatsApp</div>
-    <div id="msg-preview" style="white-space:pre-wrap;font-family:monospace;font-size:11px;color:var(--text)"></div>
+    padding:8px;margin-bottom:10px;font-size:11px">
+    <div style="font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;
+      letter-spacing:.05em;margin-bottom:4px">Aperçu</div>
+    <div id="msg-preview" style="white-space:pre-wrap;font-family:monospace;font-size:10px;color:var(--text)"></div>
   </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-    <button class="btn" style="flex:1;background:#25D366;color:#fff;border-color:#1ebe5d;font-size:12px"
-      onclick="exportPNGandWhatsApp()">🖼 Exporter image + ouvrir WhatsApp</button>
-    <button class="btn btn-p" style="flex:1;font-size:12px"
-      onclick="openWhatsAppOnly()">📨 Envoyer message seul</button>
+  <div style="display:flex;gap:8px;margin-bottom:8px">
+    <button class="btn" style="flex:1;background:#25D366;color:#fff;border-color:#1ebe5d"
+      onclick="exportPNGandWA()">🖼 Image + WhatsApp</button>
+    <button class="btn btn-p" style="flex:1" onclick="openWAonly()">📨 Message seul</button>
   </div>
-  <div class="mf">
-    <button class="btn" onclick="document.getElementById('mo-rapport').style.display='none'">Fermer</button>
-  </div>
+  <div class="mf"><button class="btn" onclick="document.getElementById('mo-rapport').style.display='none'">Fermer</button></div>
 </div>
 </div>
 
 <script>
-// ══ COMPOSANTS AC ══════════════════════════════════════════════════════════
-const AC_COMPS = [
-  // ── Originaux ──────────────────────────────────────────────────────────
-  {t:'disj1p', l:'Disj. 1P', w:22,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
-    <line x1="${x+w/2}" y1="${y+h/2-4}" x2="${x+w/2}" y2="${y+h/2+4}" stroke="#fff" stroke-width="1.5"/>`}},
-  {t:'disj2p', l:'Disj. 2P', w:40,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+12}" y1="${y}" x2="${x+12}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-12}" y1="${y}" x2="${x+w-12}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+12}" y1="${y+h-10}" x2="${x+12}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <path d="M${x+10},${y+h/2} Q${x+w/2},${y+h/2-10} ${x+w-10},${y+h/2}" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
-    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
-  {t:'disj3p', l:'Disj. 3P', w:56,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
-  {t:'disj4p', l:'Disj. 4P', w:64,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+9}" y1="${y}" x2="${x+9}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+18}" y1="${y}" x2="${x+9+18}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+36}" y1="${y}" x2="${x+9+36}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+54}" y1="${y}" x2="${x+9+54}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9}" y1="${y+h-10}" x2="${x+9}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+18}" y1="${y+h-10}" x2="${x+9+18}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+36}" y1="${y+h-10}" x2="${x+9+36}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+54}" y1="${y+h-10}" x2="${x+9+54}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
-    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif">4P</text>`}},
-  {t:'diff2p', l:'Diff. 2P', w:44,h:50,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+12}" y1="${y}" x2="${x+12}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-12}" y1="${y}" x2="${x+w-12}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+12}" y1="${y+h-10}" x2="${x+12}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+6}" y="${y+8}" width="${w-12}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
-    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" font-family="sans-serif">Δ</text>`}},
-  {t:'diff4p', l:'Diff. 4P', w:52,h:54,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+9}" y1="${y}" x2="${x+9}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+11}" y1="${y}" x2="${x+9+11}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+22}" y1="${y}" x2="${x+9+22}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+33}" y1="${y}" x2="${x+9+33}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9}" y1="${y+h-10}" x2="${x+9}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+11}" y1="${y+h-10}" x2="${x+9+11}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+22}" y1="${y+h-10}" x2="${x+9+22}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+9+33}" y1="${y+h-10}" x2="${x+9+33}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+4}" y="${y+12}" width="${w-8}" height="${h-24}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
-    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" font-family="sans-serif">Δ4P</text>`}},
-  {t:'fusible', l:'Fusible', w:14,h:38,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+5}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-5}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="${x+2}" y="${y+5}" width="${w-4}" height="${h-10}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".5"/>
-    <line x1="${x+4}" y1="${y+h/2}" x2="${x+w-4}" y2="${y+h/2-8}" stroke="#ffd700" stroke-width="1.2"/>
-    <line x1="${x+4}" y1="${y+h/2-8}" x2="${x+w-4}" y2="${y+h/2}" stroke="#ffd700" stroke-width="1.2"/>`}},
-  {t:'contacteur', l:'Contact.', w:40,h:56,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+12}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+12}" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+12}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+8}" y1="${y+h-12}" x2="${x+8}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-12}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y+h-12}" x2="${x+w-8}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+5}" y="${y+14}" width="${w-10}" height="${h-28}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".5"/>
-    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#fff" stroke-width="1.2" opacity=".7"/>`}},
-  {t:'parafoudre', l:'Parafoudre', w:20,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
-    <path d="M${x+w/2},${y+12} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ffd700" opacity=".85"/>`}},
-  {t:'terre', l:'Terre PE', w:26,h:26,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <line x1="${x+w/2}" y1="${y+2}" x2="${x+w/2}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+3}" y1="${y+h-10}" x2="${x+w-3}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="${x+6}" y1="${y+h-6}" x2="${x+w-6}" y2="${y+h-6}" stroke="#1a7a1a" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="${x+9}" y1="${y+h-2}" x2="${x+w-9}" y2="${y+h-2}" stroke="#1a7a1a" stroke-width="1.2" stroke-linecap="round"/>`}},
-  {t:'voyant', l:'Voyant', w:20,h:20,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#ffe066" opacity=".9"/>
-    <circle cx="${x+w/2-2}" cy="${y+h/2-2}" r="2.5" fill="#fff" opacity=".6"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
-  {t:'bornier', l:'Bornier', w:14,h:20,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <rect x="${x+3}" y="${y+4}" width="${w-6}" height="${h-8}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".6"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>`}},
-  // ── Nouveaux composants AC ─────────────────────────────────────────────
-  {t:'tgbt', l:'TGBT', w:64,h:56,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="${c}" stroke="#222" stroke-width="1.5"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#0d2c50" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="sans-serif" font-weight="700">TGBT</text>
-    <line x1="${x+10}" y1="${y+22}" x2="${x+10}" y2="${y+h-8}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+22}" x2="${x+w/2}" y2="${y+h-8}" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y+22}" x2="${x+w-10}" y2="${y+h-8}" stroke="#003580" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+4}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+4}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'transfo', l:'Transfo.', w:52,h:56,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <ellipse cx="${x+w/2-6}" cy="${y+h/2}" rx="12" ry="16" fill="none" stroke="#ffd700" stroke-width="1.5" opacity=".8"/>
-    <ellipse cx="${x+w/2+6}" cy="${y+h/2}" rx="12" ry="16" fill="none" stroke="#4fc3f7" stroke-width="1.5" opacity=".8"/>
-    <line x1="${x+w/2-6}" y1="${y}" x2="${x+w/2-6}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2+6}" y1="${y}" x2="${x+w/2+6}" y2="${y+10}" stroke="#4fc3f7" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2-6}" y1="${y+h-10}" x2="${x+w/2-6}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2+6}" y1="${y+h-10}" x2="${x+w/2+6}" y2="${y+h}" stroke="#4fc3f7" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'compteur', l:'Compteur', w:48,h:52,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+6}" y="${y+8}" width="${w-12}" height="16" rx="2" fill="#111" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+20}" text-anchor="middle" font-size="9" fill="#00ff88" font-family="monospace">kWh</text>
-    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#8B0000" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+8}" stroke="#003580" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#8B0000" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="${x+w/2}" cy="${y+h-12}" r="5" fill="none" stroke="#fff" stroke-width="1" opacity=".5"/>
-    <text x="${x+w/2}" y="${y+h-9}" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif">⟳</text>`}},
-  {t:'sect3p', l:'Sect. 3P', w:52,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+10}" y1="${y+h-16}" x2="${x+14}" y2="${y+14}" stroke="#8B0000" stroke-width="1.5" opacity=".7"/>
-    <line x1="${x+w/2}" y1="${y+h-16}" x2="${x+w/2+4}" y2="${y+14}" stroke="#333" stroke-width="1.5" opacity=".7"/>
-    <line x1="${x+w-10}" y1="${y+h-16}" x2="${x+w-6}" y2="${y+14}" stroke="#003580" stroke-width="1.5" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" opacity=".5">SECT</text>`}},
-  {t:'prise32a', l:'Prise 32A', w:32,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-5}" fill="none" stroke="#ffd700" stroke-width="1" opacity=".6"/>
-    <circle cx="${x+w/2-5}" cy="${y+h/2-3}" r="2.5" fill="#fff" opacity=".7"/>
-    <circle cx="${x+w/2+5}" cy="${y+h/2-3}" r="2.5" fill="#fff" opacity=".7"/>
-    <circle cx="${x+w/2}" cy="${y+h/2+5}" r="2.5" fill="#1a7a1a" opacity=".8"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+5}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-5}" x2="${x+w/2}" y2="${y+h}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>`}},
-  {t:'bp_arret', l:'BP Arrêt', w:28,h:28,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#cc0000" opacity=".9"/>
-    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">STOP</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
-  {t:'alarme', l:'Alarme', w:28,h:36,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
-    <polygon points="${x+w/2},${y+8} ${x+w-4},${y+h-8} ${x+4},${y+h-8}" fill="#ff4444" opacity=".85"/>
-    <text x="${x+w/2}" y="${y+h-10}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">!</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ff4444" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-0}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
-  {t:'inter_sect', l:'Inter. Sect.', w:36,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+6}" y="${y+12}" width="${w-12}" height="${h-24}" rx="2" fill="none" stroke="#fff" stroke-width=".8" opacity=".5"/>
-    <path d="M${x+10},${y+h-16} L${x+13},${y+16}" fill="none" stroke="#8B0000" stroke-width="1.2" opacity=".7"/>
-    <path d="M${x+w-10},${y+h-16} L${x+w-13},${y+16}" fill="none" stroke="#003580" stroke-width="1.2" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif">IS</text>`}},
-];
+// ══════════════════════════════════════════════════════════════════════
+// ROSELEC v2.0 — Photo-first schema editor
+// ══════════════════════════════════════════════════════════════════════
 
-// ══ COMPOSANTS DC — Vrais équipements MTN Congo ════════════════════════════
-const DC_COMPS = [
-  // ── Rectifiers Huawei ──────────────────────────────────────────────────
-  {t:'r4850g5', l:'R4850G5', w:68,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a1a0a" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">HUAWEI</text>
-    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">R4850G5 · 48V</text>
-    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'r48200g', l:'R48-200G', w:68,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a1a0a" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">HUAWEI</text>
-    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">R48-200G</text>
-    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  // ── Rectifiers ZTE ────────────────────────────────────────────────────
-  {t:'zxd3000', l:'ZXD3000', w:68,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#001a2a" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE</text>
-    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#80d8ff" font-family="monospace">ZXD3000 · 48V</text>
-    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  // ── SMU / Contrôleurs ──────────────────────────────────────────────────
-  {t:'smu01c', l:'SMU01C', w:64,h:36,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a0a1a" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">SMU01C</text>
-    <text x="${x+w/2}" y="${y+24}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">EMS Controller</text>
-    <circle cx="${x+10}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
-    <circle cx="${x+18}" cy="${y+8}" r="3" fill="#ffd700" opacity=".8"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round"/>`}},
-  {t:'bmu', l:'BMU', w:56,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#1a1a00" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="monospace" font-weight="700">BMU</text>
-    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#fff" font-family="monospace" opacity=".7">Bat. Mgt Unit</text>
-    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+4}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  // ── Batteries ─────────────────────────────────────────────────────────
-  {t:'vrla_200', l:'VRLA 200Ah', w:52,h:64,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+w/2-6}" y="${y-5}" width="12" height="7" rx="2" fill="#ff9800" opacity=".8"/>
-    <rect x="${x+4}" y="${y+8}" width="${w-8}" height="${h-16}" rx="2" fill="#1a1a2a" opacity=".8"/>
-    <rect x="${x+8}" y="${y+12}" width="${w-16}" height="8" rx="1" fill="#333" opacity=".9"/>
-    <rect x="${x+8}" y="${y+22}" width="${w-16}" height="8" rx="1" fill="#333" opacity=".8"/>
-    <rect x="${x+8}" y="${y+32}" width="${w-16}" height="8" rx="1" fill="#333" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+h-10}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="monospace" font-weight="700">VRLA</text>
-    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="7" fill="#fff" font-family="monospace" opacity=".7">200Ah·12V</text>
-    <line x1="${x+8}" y1="${y+h-4}" x2="${x+8}" y2="${y+h}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y+h-4}" x2="${x+w-8}" y2="${y+h}" stroke="#0000cc" stroke-width="2.5" stroke-linecap="round"/>`}},
-  {t:'vrla_100', l:'VRLA 100Ah', w:44,h:56,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+w/2-5}" y="${y-4}" width="10" height="6" rx="2" fill="#ff9800" opacity=".8"/>
-    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-14}" rx="2" fill="#1a1a2a" opacity=".8"/>
-    <rect x="${x+7}" y="${y+10}" width="${w-14}" height="7" rx="1" fill="#333" opacity=".9"/>
-    <rect x="${x+7}" y="${y+19}" width="${w-14}" height="7" rx="1" fill="#333" opacity=".8"/>
-    <rect x="${x+7}" y="${y+28}" width="${w-14}" height="7" rx="1" fill="#333" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+h-8}" text-anchor="middle" font-size="7" fill="#ff9800" font-family="monospace" font-weight="700">VRLA 100Ah</text>
-    <line x1="${x+6}" y1="${y+h-4}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h-4}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  // ── BBU / RAN ──────────────────────────────────────────────────────────
-  {t:'bbu5900', l:'BBU5900', w:64,h:40,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a1520" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">HUAWEI BBU</text>
-    <text x="${x+w/2}" y="${y+24}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">5900 · LTE/NR</text>
-    <circle cx="${x+10}" cy="${y+8}" r="2.5" fill="#00ff88" opacity=".8"/>
-    <circle cx="${x+17}" cy="${y+8}" r="2.5" fill="#00ff88" opacity=".6"/>
-    <circle cx="${x+24}" cy="${y+8}" r="2.5" fill="#ffd700" opacity=".8"/>
-    <line x1="${x+6}" y1="${y+h-4}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h-4}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  // ── PDU / Distribution ─────────────────────────────────────────────────
-  {t:'pdu48v', l:'PDU 48V', w:56,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#1a1a00" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="sans-serif" font-weight="700">PDU 48V</text>
-    <line x1="${x+10}" y1="${y+22}" x2="${x+10}" y2="${y+h-6}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+22}" x2="${x+w/2}" y2="${y+h-6}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w-10}" y1="${y+22}" x2="${x+w-10}" y2="${y+h-6}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>`}},
-  // ── Protection ─────────────────────────────────────────────────────────
-  {t:'mcb_dc', l:'MCB DC', w:24,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#ff9800" stroke-width="1.2" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="7" fill="#ff9800" font-family="sans-serif">DC</text>`}},
-  {t:'fuse_dc', l:'Fusible DC', w:16,h:40,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+6}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-6}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <rect x="${x+3}" y="${y+6}" width="${w-6}" height="${h-12}" rx="1" fill="none" stroke="#ff9800" stroke-width=".8" opacity=".7"/>
-    <line x1="${x+5}" y1="${y+h/2-6}" x2="${x+w-5}" y2="${y+h/2+6}" stroke="#ff9800" stroke-width="1.2"/>`}},
-  {t:'surge_dc', l:'Paraf. DC', w:20,h:40,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
-    <path d="M${x+w/2},${y+10} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ff9800" opacity=".8"/>`}},
-  {t:'lvc', l:'LVC', w:32,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
-    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff4444" font-family="sans-serif" font-weight="700">LVC</text>
-    <line x1="${x}" y1="${y+h/2}" x2="${x+6}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'shunt', l:'Shunt', w:30,h:20,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <path d="M${x+8},${y+h/2} L${x+12},${y+4} L${x+18},${y+h-4} L${x+22},${y+4} L${x+w-8},${y+h/2}" fill="none" stroke="#ff9800" stroke-width="1.5"/>
-    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'barre_dc', l:'Barre DC', w:80,h:16,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round" opacity=".7"/>`}},
-  {t:'terre_dc', l:'Terre GND', w:26,h:26,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <line x1="${x+w/2}" y1="${y+2}" x2="${x+w/2}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+3}" y1="${y+h-10}" x2="${x+w-3}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="${x+6}" y1="${y+h-6}" x2="${x+w-6}" y2="${y+h-6}" stroke="#1a7a1a" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="${x+9}" y1="${y+h-2}" x2="${x+w-9}" y2="${y+h-2}" stroke="#1a7a1a" stroke-width="1.2" stroke-linecap="round"/>`}},
-
-  // ── Composants réels terrain MTN Congo ─────────────────────────────────
-  {t:'chnt_cb125', l:'CHNT CB-125', w:28,h:52,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.3"/>
-    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="16" rx="2" fill="#e8e8e8" opacity=".9"/>
-    <text x="${x+w/2}" y="${y+12}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">CHNT</text>
-    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="5.5" fill="#555" font-family="sans-serif">CB-125</text>
-    <rect x="${x+4}" y="${y+22}" width="${w-8}" height="16" rx="2" fill="#2060c8"/>
-    <text x="${x+w/2}" y="${y+32}" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+3}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-3}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <text x="${x+w/2}" y="${y+h-3}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">100A</text>`}},
-  {t:'chnt_cb60', l:'CHNT CB-60', w:24,h:48,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
-    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#e8e8e8" opacity=".9"/>
-    <text x="${x+w/2}" y="${y+9}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">CHNT</text>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="5" fill="#555" font-family="sans-serif">CB-60</text>
-    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="14" rx="2" fill="#2060c8"/>
-    <text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C50</text>`}},
-  {t:'tengen_tgb1z', l:'TENGEN TGB1Z', w:24,h:48,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
-    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#e0f0e0" opacity=".9"/>
-    <text x="${x+w/2}" y="${y+8}" text-anchor="middle" font-size="5" fill="#1a5a1a" font-family="sans-serif" font-weight="700">TENGEN</text>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">TGB1Z-63</text>
-    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="14" rx="2" fill="#2060c8"/>
-    <text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C40</text>`}},
-  {t:'huajia_hgm45', l:'HUA JIA HGM45', w:22,h:46,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
-    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#f0f0f0" opacity=".9"/>
-    <text x="${x+w/2}" y="${y+8}" text-anchor="middle" font-size="5" fill="#333" font-family="sans-serif" font-weight="700">HUA JIA</text>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">HGM45-63</text>
-    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="13" rx="2" fill="#2060c8"/>
-    <text x="${x+w/2}" y="${y+27}" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="1.5" stroke-linecap="round"/>
-    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C16</text>`}},
-  {t:'nader_125', l:'Nader NDM1A-125', w:28,h:54,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.3"/>
-    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="16" rx="2" fill="#e0e0e0" opacity=".95"/>
-    <text x="${x+w/2}" y="${y+10}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">Nader</text>
-    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">NDM1A-125</text>
-    <rect x="${x+4}" y="${y+22}" width="${w-8}" height="18" rx="3" fill="#777"/>
-    <rect x="${x+6}" y="${y+24}" width="${w-12}" height="14" rx="2" fill="#999"/>
-    <text x="${x+w/2}" y="${y+33}" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">↑ ON</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+3}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-3}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <text x="${x+w/2}" y="${y+h-3}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">100A</text>`}},
-  {t:'nader_63', l:'Nader NDM1A-63', w:24,h:50,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
-    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#e0e0e0" opacity=".95"/>
-    <text x="${x+w/2}" y="${y+9}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">Nader</text>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">NDM1A-63</text>
-    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="16" rx="3" fill="#777"/>
-    <rect x="${x+5}" y="${y+20}" width="${w-10}" height="12" rx="2" fill="#999"/>
-    <text x="${x+w/2}" y="${y+29}" text-anchor="middle" font-size="5.5" fill="#fff" font-family="sans-serif" font-weight="700">↑ ON</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
-    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C63</text>`}},
-  {t:'xw2_para', l:'Paraf. XW2', w:22,h:50,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
-    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="16" rx="2" fill="#cc2222" opacity=".85"/>
-    <text x="${x+w/2}" y="${y+10}" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">XW²</text>
-    <text x="${x+w/2}" y="${y+17}" text-anchor="middle" font-size="5" fill="#ffd700" font-family="sans-serif">SPD</text>
-    <path d="M${x+w/2},${y+20} L${x+w-3},${y+34} L${x+w/2},${y+34} L${x+3},${y+44} Z" fill="#ffd700" opacity=".9"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'phoenix_valms', l:'Phoenix VAL-MS', w:24,h:50,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
-    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="18" rx="2" fill="#c0210a" opacity=".9"/>
-    <text x="${x+w/2}" y="${y+9}" text-anchor="middle" font-size="5.5" fill="#fff" font-family="sans-serif" font-weight="700">PHOENIX</text>
-    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="5" fill="#ffd700" font-family="sans-serif">VAL-MS</text>
-    <text x="${x+w/2}" y="${y+21}" text-anchor="middle" font-size="4.5" fill="#ffaaaa" font-family="sans-serif">75/40 ST GY</text>
-    <path d="M${x+w/2},${y+23} L${x+w-3},${y+37} L${x+w/2},${y+37} L${x+3},${y+47} Z" fill="#ffd700" opacity=".85"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'voyant_vert', l:'Voyant Vert', w:22,h:22,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#00dd44" opacity=".9"/>
-    <circle cx="${x+w/2-3}" cy="${y+h/2-3}" r="3" fill="#88ffaa" opacity=".7"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
-
-  // ── Équipements ZTE terrain MTN Congo ──────────────────────────────────
-  {t:'zxdu58', l:'ZXDU58 B121', w:80,h:48,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="${c}" stroke="#222" stroke-width="1.5"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="18" rx="2" fill="#001a2a" opacity=".85"/>
-    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE 中兴</text>
-    <text x="${x+w/2}" y="${y+21}" text-anchor="middle" font-size="7" fill="#80d8ff" font-family="monospace">ZXDU58 B121</text>
-    <rect x="${x+6}" y="${y+26}" width="10" height="8" rx="1" fill="#ff4444" opacity=".8"/>
-    <rect x="${x+18}" y="${y+26}" width="10" height="8" rx="1" fill="#ff4444" opacity=".7"/>
-    <rect x="${x+30}" y="${y+26}" width="10" height="8" rx="1" fill="#333" opacity=".7"/>
-    <rect x="${x+42}" y="${y+26}" width="10" height="8" rx="1" fill="#333" opacity=".7"/>
-    <text x="${x+w-10}" y="${y+32}" text-anchor="middle" font-size="6" fill="#00ff88" font-family="monospace">PWR</text>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2.5" stroke-linecap="round"/>`}},
-  {t:'zxdr_b8200', l:'ZXDR B8200', w:72,h:40,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="16" rx="2" fill="#001530" opacity=".85"/>
-    <text x="${x+w/2}" y="${y+12}" text-anchor="middle" font-size="7.5" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE 中兴</text>
-    <text x="${x+w/2}" y="${y+20}" text-anchor="middle" font-size="6.5" fill="#80d8ff" font-family="monospace">ZXDR B8200</text>
-    <circle cx="${x+10}" cy="${y+30}" r="3" fill="#00ff88" opacity=".8"/>
-    <circle cx="${x+18}" cy="${y+30}" r="3" fill="#ffd700" opacity=".8"/>
-    <circle cx="${x+26}" cy="${y+30}" r="3" fill="#00ff88" opacity=".6"/>
-    <line x1="${x+6}" y1="${y+h-4}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h-4}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'zxm10_eisu', l:'ZXM10 EISU', w:72,h:36,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#001a0a" opacity=".85"/>
-    <text x="${x+w/2}" y="${y+11}" text-anchor="middle" font-size="7" fill="#00d4aa" font-family="monospace" font-weight="700">ZNV</text>
-    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="6" fill="#4fc3f7" font-family="monospace">ZXM10 EISU</text>
-    <rect x="${x+6}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
-    <rect x="${x+13}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
-    <rect x="${x+20}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
-    <rect x="${x+27}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
-    <circle cx="${x+w-10}" cy="${y+28}" r="3" fill="#00ff88" opacity=".8"/>
-    <line x1="${x+6}" y1="${y+h-3}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h-3}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'nr8250', l:'ZXMW NR8250', w:68,h:36,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#001530" opacity=".85"/>
-    <text x="${x+w/2}" y="${y+11}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE 中兴</text>
-    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="6" fill="#80d8ff" font-family="monospace">ZXMW NR8250</text>
-    <path d="M${x+10},${y+28} Q${x+w/2},${y+20} ${x+w-10},${y+28}" fill="none" stroke="#4fc3f7" stroke-width="1.5" opacity=".7"/>
-    <circle cx="${x+w/2}" cy="${y+30}" r="3" fill="#ffd700" opacity=".8"/>
-    <line x1="${x+6}" y1="${y+h-3}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h-3}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'zte_eguard', l:'ZTE E-Guard', w:60,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="14" rx="2" fill="#001a2a" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+11}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE E-Guard</text>
-    <text x="${x+w/2}" y="${y+17}" text-anchor="middle" font-size="5.5" fill="#80d8ff" font-family="monospace">Supervision 48V</text>
-    <circle cx="${x+10}" cy="${y+25}" r="3" fill="#00ff88" opacity=".8"/>
-    <circle cx="${x+18}" cy="${y+25}" r="3" fill="#00ff88" opacity=".6"/>
-    <circle cx="${x+26}" cy="${y+25}" r="3" fill="#ffd700" opacity=".7"/>
-    <line x1="${x+w/2}" y1="${y+h-3}" x2="${x+w/2}" y2="${y+h}" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round"/>`}},
-  {t:'dcpd', l:'DCPD', w:64,h:36,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
-    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="12" rx="2" fill="#1a1a00" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="monospace" font-weight="700">DCPD</text>
-    <line x1="${x+10}" y1="${y+20}" x2="${x+10}" y2="${y+h-4}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+18}" y1="${y+20}" x2="${x+18}" y2="${y+h-4}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+26}" y1="${y+20}" x2="${x+26}" y2="${y+h-4}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+34}" y1="${y+20}" x2="${x+34}" y2="${y+h-4}" stroke="#0000cc" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+42}" y1="${y+20}" x2="${x+42}" y2="${y+h-4}" stroke="#0000cc" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>`}},
-];
-
-const AC_COLORS = {
-  disj1p:'#2563a8',disj2p:'#1a3f6b',disj3p:'#0d2c50',disj4p:'#0a2040',
-  diff2p:'#5a2e8a',diff4p:'#4a1a7a',fusible:'#8a3d10',contacteur:'#2a2a2a',
-  parafoudre:'#8a6a00',terre:'#1a4a1a',voyant:'#443355',bornier:'#5a4a3a',
-  tgbt:'#0d2c50',transfo:'#2a3a2a',compteur:'#1a3a2a',sect3p:'#2a2040',
-  prise32a:'#2a4a1a',bp_arret:'#3a1a1a',alarme:'#3a1010',inter_sect:'#1a2a3a',
-  chnt_cb125:'#1a3060',chnt_cb60:'#1a3060',tengen_tgb1z:'#1a4a1a',
-  huajia_hgm45:'#1a3060',nader_125:'#3a3a3a',nader_63:'#3a3a3a',
-  xw2_para:'#5a0a0a',phoenix_valms:'#5a0a0a',voyant_vert:'#1a3a1a'
-};
-const DC_COLORS = {
-  r4850g5:'#0a1a0a',r48200g:'#0a1a0a',zxd3000:'#001a2a',
-  smu01c:'#0a0a1a',bmu:'#1a1a00',
-  vrla_200:'#1a1a2a',vrla_100:'#1a1a2a',bbu5900:'#0a1520',
-  pdu48v:'#1a1a00',mcb_dc:'#2a1a00',fuse_dc:'#3a1a00',
-  surge_dc:'#2a1a00',lvc:'#3a0a0a',shunt:'#2a2a2a',
-  barre_dc:'#3a2a00',terre_dc:'#1a4a1a',
-  zxdu58:'#001a2a',zxdr_b8200:'#001530',zxm10_eisu:'#001a0a',
-  nr8250:'#001530',zte_eguard:'#001a2a',dcpd:'#1a1a00'
-};
-
-// ══ FILS ════════════════════════════════════════════════════════════════════
+// ── WIRE PALETTES ──────────────────────────────────────────────────────
 const AC_WIRES = [
   {c:'#8B0000',l:'Phase L1'},{c:'#003580',l:'Phase L2'},
   {c:'#222222',l:'Phase L3'},{c:'#1a7a1a',l:'Terre PE'},
   {c:'#1a1a8a',l:'Neutre N'},{c:'#888888',l:'Commun'},
 ];
 const DC_WIRES = [
-  {c:'#ff0000',l:'+ Positif DC'},{c:'#0000cc',l:'- Négatif DC (−48V)'},
+  {c:'#ff0000',l:'+ Positif DC'},{c:'#0000cc',l:'− Négatif (−48V)'},
   {c:'#1a7a1a',l:'Terre / GND'},{c:'#ff8800',l:'Signal alarme'},
-  {c:'#888888',l:'Commun signal'},{c:'#aa00aa',l:'Bus données'},
+  {c:'#888888',l:'Commun'},{c:'#aa00aa',l:'Bus données'},
 ];
 
-// ══ STATE ═══════════════════════════════════════════════════════════════════
+// ── STATE ──────────────────────────────────────────────────────────────
 let schemaMode = 'ac';
-let COMPS = AC_COMPS;
-let COLORS = AC_COLORS;
 let WIRES = AC_WIRES;
-let mode = 'add', selType = 'disj1p';
+let mode = 'add';
+let selType = null;           // key into photoLib
 let wireColor = '#8B0000', wireColorLabel = 'Phase L1';
 let wireStart = null;
 let components = [], wires = [], textLabels = [];
 let selectedId = null, dragComp = null, dragOff = {x:0,y:0};
 let history = [];
 let currentSchemaId = null;
+
+// ── PHOTO LIBRARY ──────────────────────────────────────────────────────
+// photoLib: { key: { dataUrl, label, amperage, marque, ref, w, h } }
+let photoLib = {};
 
 const cvs = document.getElementById('cvs');
 const wl  = document.getElementById('wl');
@@ -847,44 +397,99 @@ const getPos = e => {
   return {x:t.clientX-r.left, y:t.clientY-r.top};
 };
 const clone = o => JSON.parse(JSON.stringify(o));
-const saveHist = () => { history.push(clone({components,wires,textLabels})); if(history.length>40)history.shift(); };
+const saveHist = () => {
+  history.push(clone({components,wires,textLabels}));
+  if(history.length>40) history.shift();
+};
 
-// ══ SCHEMA MODE ══════════════════════════════════════════════════════════
-function switchSchemaMode(m) {
+// ══ SCHEMA MODE ═══════════════════════════════════════════════════════
+function switchMode(m) {
   schemaMode = m;
-  COMPS  = m==='ac' ? AC_COMPS  : DC_COMPS;
-  COLORS = m==='ac' ? AC_COLORS : DC_COLORS;
-  WIRES  = m==='ac' ? AC_WIRES  : DC_WIRES;
-  selType = COMPS[0].t;
+  WIRES = m==='ac' ? AC_WIRES : DC_WIRES;
   document.getElementById('tab-ac').classList.toggle('sel', m==='ac');
   document.getElementById('tab-dc').classList.toggle('sel', m==='dc');
   document.getElementById('comps-title').textContent = m==='ac' ? 'Composants AC' : 'Composants DC — MTN';
-  buildPalette(); buildWirePal();
+  buildWirePal();
   wireColor = WIRES[0].c; wireColorLabel = WIRES[0].l;
   document.getElementById('wire-lbl').textContent = wireColorLabel;
-  setMode('add');
 }
 
-// ══ PALETTE ══════════════════════════════════════════════════════════════
+// ══ PHOTO LIBRARY ════════════════════════════════════════════════════
+function addToLib(key, dataUrl, label, meta={}) {
+  // Resize to 120x80 for canvas use
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas');
+    const TW=120, TH=80;
+    c.width=TW; c.height=TH;
+    const ctx = c.getContext('2d');
+    // Fill background
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(0,0,TW,TH);
+    // Fit image centered
+    const scale = Math.min(TW/img.width, TH/img.height);
+    const sw = img.width*scale, sh = img.height*scale;
+    ctx.drawImage(img, (TW-sw)/2, (TH-sh)/2, sw, sh);
+    const thumb = c.toDataURL('image/jpeg', 0.85);
+    photoLib[key] = { dataUrl:thumb, label, w:TW, h:TH, ...meta };
+    if(selType===null) selType = key;
+    buildPalette();
+    updateLibCount();
+  };
+  img.src = dataUrl;
+}
+
+function removeFromLib(key) {
+  delete photoLib[key];
+  if(selType===key) selType = Object.keys(photoLib)[0]||null;
+  buildPalette();
+  updateLibCount();
+}
+
+function updateLibCount() {
+  const n = Object.keys(photoLib).length;
+  document.getElementById('lib-count').textContent =
+    n===0 ? 'Bibliothèque vide' : n+' composant'+(n>1?'s':'');
+}
+
+// ══ PALETTE ══════════════════════════════════════════════════════════
 function buildPalette() {
   const g = document.getElementById('comp-palette');
   g.innerHTML = '';
-  COMPS.forEach(c=>{
+  const keys = Object.keys(photoLib);
+  if(keys.length===0){
+    g.innerHTML='<div style="grid-column:1/-1;font-size:10px;color:var(--text3);padding:4px;text-align:center">Charger des photos pour créer les composants</div>';
+    return;
+  }
+  keys.forEach(key=>{
+    const p = photoLib[key];
     const div = document.createElement('div');
-    div.className = 'ci'+(c.t===selType?' sel':'');
-    div.id = 'ci-'+c.t;
-    const sw = Math.max(c.w,36), sh = Math.max(c.h,36);
-    const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    s.setAttribute('width',sw); s.setAttribute('height',sh);
-    const gg = document.createElementNS('http://www.w3.org/2000/svg','g');
-    c.d(gg,(sw-c.w)/2,(sh-c.h)/2,c.w,c.h,COLORS[c.t]||'#444');
-    s.appendChild(gg); div.appendChild(s);
-    div.appendChild(document.createTextNode(c.l));
-    div.onclick = ()=>{ selType=c.t; setMode('add'); };
+    div.className = 'ci'+(key===selType?' sel':'');
+    div.id = 'ci-'+key;
+
+    const img = document.createElement('img');
+    img.src = p.dataUrl;
+    img.alt = p.label;
+    div.appendChild(img);
+
+    const lbl = document.createElement('div');
+    lbl.textContent = p.label;
+    lbl.style.cssText = 'font-size:9px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%';
+    div.appendChild(lbl);
+
+    const del = document.createElement('button');
+    del.className = 'ci-del';
+    del.textContent = '×';
+    del.title = 'Retirer';
+    del.onclick = e => { e.stopPropagation(); removeFromLib(key); };
+    div.appendChild(del);
+
+    div.onclick = () => { selType=key; setMode('add'); };
     g.appendChild(div);
   });
 }
 
+// ══ WIRE PALETTE ═════════════════════════════════════════════════════
 function buildWirePal() {
   const p = document.getElementById('wire-pal');
   p.innerHTML = '';
@@ -902,7 +507,7 @@ function buildWirePal() {
   });
 }
 
-// ══ MODE ════════════════════════════════════════════════════════════════
+// ══ MODE ═════════════════════════════════════════════════════════════
 function setMode(m) {
   mode=m; wireStart=null; wp.setAttribute('opacity','0');
   ['sel','add','wire','label'].forEach(x=>document.getElementById('btn-'+x)?.classList.remove('on'));
@@ -913,140 +518,213 @@ function setMode(m) {
   document.querySelectorAll('.ci').forEach(b=>b.classList.toggle('sel',b.id==='ci-'+selType&&m==='add'));
 }
 
-// ══ RENDER ═══════════════════════════════════════════════════════════════
+// ══ RENDER COMP ══════════════════════════════════════════════════════
 function renderComp(comp) {
   let g = document.getElementById(comp.id);
-  if(!g){g=document.createElementNS('http://www.w3.org/2000/svg','g');g.id=comp.id;cl.appendChild(g);}
-  const def = [...AC_COMPS,...DC_COMPS].find(c=>c.t===comp.type);
-  if(!def) return;
-  g.innerHTML='';
+  if(!g){ g=document.createElementNS('http://www.w3.org/2000/svg','g'); g.id=comp.id; cl.appendChild(g); }
+  g.innerHTML = '';
+
+  const p = photoLib[comp.type];
+  const W = p ? p.w : 80;
+  const H = p ? p.h : 60;
+
+  // Selection ring
   if(selectedId===comp.id){
     const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
-    r.setAttribute('x',-4);r.setAttribute('y',-4);
-    r.setAttribute('width',def.w+8);r.setAttribute('height',def.h+8);
-    r.setAttribute('rx',5);r.setAttribute('fill','none');
-    r.setAttribute('stroke','#185FA5');r.setAttribute('stroke-width','1.5');
-    r.setAttribute('stroke-dasharray','5,2');
+    r.setAttribute('x',-4); r.setAttribute('y',-4);
+    r.setAttribute('width',W+8); r.setAttribute('height',H+8);
+    r.setAttribute('rx',6); r.setAttribute('fill','none');
+    r.setAttribute('stroke','#185FA5'); r.setAttribute('stroke-width','2');
+    r.setAttribute('stroke-dasharray','6,2');
     g.appendChild(r);
   }
-  const inner=document.createElementNS('http://www.w3.org/2000/svg','g');
-  const col = DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444';
-  def.d(inner,0,0,def.w,def.h,col);
-  g.appendChild(inner);
+
+  if(p){
+    // Photo image
+    const fo = document.createElementNS('http://www.w3.org/2000/svg','foreignObject');
+    fo.setAttribute('x',0); fo.setAttribute('y',0);
+    fo.setAttribute('width',W); fo.setAttribute('height',H);
+    const div = document.createElement('div');
+    div.style.cssText = `width:${W}px;height:${H}px;overflow:hidden;border-radius:4px;border:1px solid #444`;
+    const img = document.createElement('img');
+    img.src = p.dataUrl;
+    img.style.cssText = `width:100%;height:100%;object-fit:contain;background:#1a1a1a;display:block`;
+    div.appendChild(img); fo.appendChild(div); g.appendChild(fo);
+  } else {
+    // Fallback placeholder
+    const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x',0);rect.setAttribute('y',0);
+    rect.setAttribute('width',W);rect.setAttribute('height',H);
+    rect.setAttribute('rx',4);rect.setAttribute('fill','#444');
+    g.appendChild(rect);
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',W/2);t.setAttribute('y',H/2+4);
+    t.setAttribute('text-anchor','middle');t.setAttribute('fill','#fff');
+    t.setAttribute('font-size','9');t.textContent=comp.type;
+    g.appendChild(t);
+  }
+
+  // Connection dots top-center and bottom-center
+  const dotTop = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  dotTop.setAttribute('cx',W/2); dotTop.setAttribute('cy',0);
+  dotTop.setAttribute('r',4); dotTop.setAttribute('fill','#ffd700');
+  dotTop.setAttribute('stroke','#222'); dotTop.setAttribute('stroke-width','1');
+  g.appendChild(dotTop);
+
+  const dotBot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  dotBot.setAttribute('cx',W/2); dotBot.setAttribute('cy',H);
+  dotBot.setAttribute('r',4); dotBot.setAttribute('fill','#1a1a8a');
+  dotBot.setAttribute('stroke','#222'); dotBot.setAttribute('stroke-width','1');
+  g.appendChild(dotBot);
+
+  // Label below
   if(comp.label){
+    const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    const lw=comp.label.length*5.5+8;
+    bg.setAttribute('x',(W-lw)/2); bg.setAttribute('y',H+2);
+    bg.setAttribute('width',lw); bg.setAttribute('height',13);
+    bg.setAttribute('rx',3); bg.setAttribute('fill','rgba(0,0,0,.75)');
+    g.appendChild(bg);
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x',def.w/2);t.setAttribute('y',def.h+11);
-    t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
-    t.setAttribute('fill','#444');t.setAttribute('font-family','sans-serif');
-    t.textContent=comp.label;g.appendChild(t);
+    t.setAttribute('x',W/2); t.setAttribute('y',H+12);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-size','9');
+    t.setAttribute('fill','#fff'); t.setAttribute('font-family','sans-serif');
+    t.textContent=comp.label; g.appendChild(t);
   }
-  if(comp.valeur||comp.amperage){
-    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x',def.w/2);t.setAttribute('y',def.h+21);
-    t.setAttribute('text-anchor','middle');t.setAttribute('font-size','8');
-    t.setAttribute('fill','#999');t.setAttribute('font-family','sans-serif');
-    t.textContent=comp.valeur||comp.amperage;g.appendChild(t);
+
+  // State badge
+  if(comp.etat && comp.etat!=='ok'){
+    const badges={alarme:{c:'#ff8800',t:'⚠'},defaut:{c:'#ff2200',t:'●'},hs:{c:'#888',t:'✕'}};
+    const b=badges[comp.etat];
+    if(b){
+      const bc=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      bc.setAttribute('cx',W-4);bc.setAttribute('cy',4);bc.setAttribute('r',6);
+      bc.setAttribute('fill',b.c);g.appendChild(bc);
+      const bt=document.createElementNS('http://www.w3.org/2000/svg','text');
+      bt.setAttribute('x',W-4);bt.setAttribute('y',8);bt.setAttribute('text-anchor','middle');
+      bt.setAttribute('font-size','8');bt.setAttribute('fill','#fff');bt.textContent=b.t;
+      g.appendChild(bt);
+    }
   }
+
   g.setAttribute('transform',`translate(${comp.x},${comp.y})`);
-  g.style.cursor=mode==='select'?'move':'default';
-  g.onmousedown=e=>{
-    if(mode!=='select')return;
+  g.style.cursor = mode==='select'?'move':'default';
+
+  g.onmousedown = e => {
+    if(mode!=='select') return;
     e.stopPropagation(); saveHist();
     selectedId=comp.id;
-    const p=getPos(e); dragComp=comp.id;
-    dragOff={x:p.x-comp.x,y:p.y-comp.y};
+    const pos=getPos(e); dragComp=comp.id;
+    dragOff={x:pos.x-comp.x, y:pos.y-comp.y};
     updateUI(); e.preventDefault();
   };
-  g.ondblclick=e=>{e.stopPropagation();selectedId=comp.id;showProps(comp.id);};
+  g.ondblclick = e => { e.stopPropagation(); selectedId=comp.id; showProps(comp.id); };
 }
 
 function renderWire(wire) {
   let el=document.getElementById(wire.id);
-  if(!el){el=document.createElementNS('http://www.w3.org/2000/svg','line');wl.appendChild(el);}
+  if(!el){ el=document.createElementNS('http://www.w3.org/2000/svg','line'); wl.appendChild(el); }
   el.id=wire.id;
   ['x1','y1','x2','y2'].forEach(a=>el.setAttribute(a,wire[a]));
   el.setAttribute('stroke',wire.color);
   el.setAttribute('stroke-width',selectedId===wire.id?'3.5':'2.2');
   el.setAttribute('stroke-linecap','round');
-  if(selectedId===wire.id)el.setAttribute('stroke-dasharray','8,3');
+  if(selectedId===wire.id) el.setAttribute('stroke-dasharray','8,3');
   else el.removeAttribute('stroke-dasharray');
   el.style.cursor='pointer';
-  el.onclick=()=>{if(mode==='select'){selectedId=wire.id;updateUI();}};
+  el.onclick=()=>{ if(mode==='select'){selectedId=wire.id;updateUI();} };
 }
 
 function renderLabel(lb) {
   let el=document.getElementById(lb.id);
-  if(!el){el=document.createElementNS('http://www.w3.org/2000/svg','text');ll.appendChild(el);}
+  if(!el){ el=document.createElementNS('http://www.w3.org/2000/svg','text'); ll.appendChild(el); }
   el.id=lb.id;
-  el.setAttribute('x',lb.x);el.setAttribute('y',lb.y);
-  el.setAttribute('font-size',lb.size||12);el.setAttribute('fill',lb.color||'#333');
-  el.setAttribute('font-family','sans-serif');el.setAttribute('font-weight',lb.bold?'600':'400');
+  el.setAttribute('x',lb.x); el.setAttribute('y',lb.y);
+  el.setAttribute('font-size',lb.size||12); el.setAttribute('fill',lb.color||'#333');
+  el.setAttribute('font-family','sans-serif'); el.setAttribute('font-weight',lb.bold?'600':'400');
   el.setAttribute('cursor','pointer');
   el.textContent=lb.text;
-  el.onclick=()=>{if(mode==='select'){selectedId=lb.id;updateUI();}};
+  el.onclick=()=>{ if(mode==='select'){selectedId=lb.id;updateUI();} };
 }
 
 function renderAll(){
-  cl.innerHTML='';wl.innerHTML='';ll.innerHTML='';
-  wires.forEach(renderWire); components.forEach(renderComp); textLabels.forEach(renderLabel);
+  cl.innerHTML=''; wl.innerHTML=''; ll.innerHTML='';
+  wires.forEach(renderWire);
+  components.forEach(renderComp);
+  textLabels.forEach(renderLabel);
   updateCounts();
 }
 
-// ══ EVENTS ════════════════════════════════════════════════════════════════
+// ══ CANVAS EVENTS ═════════════════════════════════════════════════════
 cvs.addEventListener('click', e=>{
-  if(dragComp){dragComp=null;return;}
-  const p=getPos(e); const sx=snap(p.x),sy=snap(p.y);
+  if(dragComp){ dragComp=null; return; }
+  const pos=getPos(e); const sx=snap(pos.x), sy=snap(pos.y);
+
   if(mode==='add'){
-    const def=COMPS.find(c=>c.t===selType); if(!def)return;
+    if(!selType || !photoLib[selType]) {
+      setStatus('Choisir un composant dans la palette','idle'); return;
+    }
     saveHist();
+    const p=photoLib[selType];
     const n=components.filter(c=>c.type===selType).length+1;
-    const comp={id:uid(),type:selType,x:sx-Math.round(def.w/2/20)*20,
-      y:sy-Math.round(def.h/2/20)*20,label:def.l+' '+n,amperage:'',valeur:'',ref:'',etat:'ok'};
+    const comp={id:uid(), type:selType,
+      x:sx-Math.round(p.w/2/20)*20, y:sy-Math.round(p.h/2/20)*20,
+      label:p.label+' '+n, amperage:p.amperage||'',
+      valeur:'', ref:'', marque:p.marque||'', etat:'ok', notes:''};
     components.push(comp); renderComp(comp); updateCounts();
+    setStatus('Placé : '+comp.label,'ok');
+
   } else if(mode==='wire'){
     if(!wireStart){
       wireStart={x:sx,y:sy};
-      wp.setAttribute('x1',sx);wp.setAttribute('y1',sy);
-      wp.setAttribute('x2',sx);wp.setAttribute('y2',sy);
-      wp.setAttribute('stroke',wireColor);wp.setAttribute('opacity','0.8');
+      wp.setAttribute('x1',sx); wp.setAttribute('y1',sy);
+      wp.setAttribute('x2',sx); wp.setAttribute('y2',sy);
+      wp.setAttribute('stroke',wireColor); wp.setAttribute('opacity','0.8');
     } else {
-      if(sx===wireStart.x&&sy===wireStart.y){wireStart=null;wp.setAttribute('opacity','0');return;}
+      if(sx===wireStart.x && sy===wireStart.y){ wireStart=null; wp.setAttribute('opacity','0'); return; }
       saveHist();
-      const wire={id:uid(),x1:wireStart.x,y1:wireStart.y,x2:sx,y2:sy,color:wireColor,colorLabel:wireColorLabel};
+      const wire={id:uid(),x1:wireStart.x,y1:wireStart.y,x2:sx,y2:sy,
+        color:wireColor, colorLabel:wireColorLabel};
       wires.push(wire); renderWire(wire);
       wireStart={x:sx,y:sy};
-      wp.setAttribute('x1',sx);wp.setAttribute('y1',sy);
+      wp.setAttribute('x1',sx); wp.setAttribute('y1',sy);
       updateCounts();
     }
   } else if(mode==='label'){
     const txt=prompt('Texte à ajouter :','');
-    if(!txt)return; saveHist();
+    if(!txt) return; saveHist();
     const lb={id:uid(),x:sx,y:sy,text:txt,size:12,color:'#333',bold:false};
     textLabels.push(lb); renderLabel(lb);
-  } else if(mode==='select'){selectedId=null;updateUI();}
-});
-
-cvs.addEventListener('mousemove',e=>{
-  if(mode==='wire'&&wireStart){const p=getPos(e);wp.setAttribute('x2',snap(p.x));wp.setAttribute('y2',snap(p.y));}
-  if(dragComp){
-    const p=getPos(e); const c=components.find(x=>x.id===dragComp);
-    if(c){c.x=snap(p.x-dragOff.x);c.y=snap(p.y-dragOff.y);renderComp(c);}
+  } else if(mode==='select'){
+    selectedId=null; updateUI();
   }
 });
-cvs.addEventListener('mouseup',()=>{dragComp=null;});
-cvs.addEventListener('contextmenu',e=>{e.preventDefault();wireStart=null;wp.setAttribute('opacity','0');});
+
+cvs.addEventListener('mousemove', e=>{
+  if(mode==='wire' && wireStart){
+    const pos=getPos(e);
+    wp.setAttribute('x2',snap(pos.x)); wp.setAttribute('y2',snap(pos.y));
+  }
+  if(dragComp){
+    const pos=getPos(e); const c=components.find(x=>x.id===dragComp);
+    if(c){ c.x=snap(pos.x-dragOff.x); c.y=snap(pos.y-dragOff.y); renderComp(c); }
+  }
+});
+cvs.addEventListener('mouseup',()=>{ dragComp=null; });
+cvs.addEventListener('contextmenu',e=>{ e.preventDefault(); wireStart=null; wp.setAttribute('opacity','0'); });
+
 document.addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
-  if(e.key==='s'||e.key==='S')setMode('select');
-  if(e.key==='a'||e.key==='A')setMode('add');
-  if(e.key==='w'||e.key==='W')setMode('wire');
-  if(e.key==='t'||e.key==='T')setMode('label');
-  if(e.key==='Delete'||e.key==='Backspace')deleteSelected();
-  if(e.ctrlKey&&e.key==='z'){e.preventDefault();undo();}
-  if(e.key==='Escape'){wireStart=null;wp.setAttribute('opacity','0');selectedId=null;updateUI();}
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.key==='s'||e.key==='S') setMode('select');
+  if(e.key==='a'||e.key==='A') setMode('add');
+  if(e.key==='w'||e.key==='W') setMode('wire');
+  if(e.key==='t'||e.key==='T') setMode('label');
+  if(e.key==='Delete'||e.key==='Backspace') deleteSelected();
+  if(e.ctrlKey&&e.key==='z'){ e.preventDefault(); undo(); }
+  if(e.key==='Escape'){ wireStart=null; wp.setAttribute('opacity','0'); selectedId=null; updateUI(); }
 });
 
-// ══ UI / PROPS ════════════════════════════════════════════════════════════
+// ══ UI ════════════════════════════════════════════════════════════════
 function updateUI(){
   components.forEach(renderComp); wires.forEach(renderWire);
   const sec=document.getElementById('props-sec');
@@ -1055,16 +733,13 @@ function updateUI(){
   const lb=textLabels.find(l=>l.id===selectedId);
   if(comp){
     sec.style.display='';
-    const isDC = DC_COLORS[comp.type]!==undefined;
     document.getElementById('props-body').innerHTML=`
       <div class="pr"><label>Label</label>
         <input value="${comp.label||''}" oninput="upP('${comp.id}','label',this.value)"></div>
-      ${isDC?`<div class="pr"><label>Valeur nominale</label>
-        <input value="${comp.valeur||''}" oninput="upP('${comp.id}','valeur',this.value)" placeholder="48V / 50A"></div>`
-      :`<div class="pr"><label>Ampérage</label>
-        <input value="${comp.amperage||''}" oninput="upP('${comp.id}','amperage',this.value)" placeholder="16A"></div>`}
-      <div class="pr"><label>Marque / Modèle</label>
-        <input value="${comp.marque||''}" oninput="upP('${comp.id}','marque',this.value)" placeholder="Huawei / ZTE / CHNT"></div>
+      <div class="pr"><label>Ampérage / Valeur</label>
+        <input value="${comp.amperage||comp.valeur||''}" oninput="upP('${comp.id}','amperage',this.value)" placeholder="16A / 48V"></div>
+      <div class="pr"><label>Marque · Modèle</label>
+        <input value="${comp.marque||''}" oninput="upP('${comp.id}','marque',this.value)" placeholder="CHNT / Huawei"></div>
       <div class="pr"><label>Référence</label>
         <input value="${comp.ref||''}" oninput="upP('${comp.id}','ref',this.value)"></div>
       <div class="pr"><label>État</label>
@@ -1079,7 +754,7 @@ function updateUI(){
   } else if(wire){
     sec.style.display='';
     document.getElementById('props-body').innerHTML=`
-      <div class="pr"><label>Type</label>
+      <div class="pr"><label>Type de fil</label>
         <input value="${wire.colorLabel||''}" readonly style="opacity:.7"></div>`;
   } else if(lb){
     sec.style.display='';
@@ -1087,36 +762,36 @@ function updateUI(){
       <div class="pr"><label>Texte</label>
         <input value="${lb.text}" oninput="upL('${lb.id}','text',this.value)"></div>
       <div class="pr"><label>Taille</label>
-        <input type="number" value="${lb.size||12}" min="8" max="28"
+        <input type="number" value="${lb.size||12}" min="8" max="36"
           oninput="upL('${lb.id}','size',+this.value)"></div>`;
   } else sec.style.display='none';
 }
 
-function upP(id,k,v){const c=components.find(x=>x.id===id);if(c){c[k]=v;renderComp(c);}}
-function upL(id,k,v){const l=textLabels.find(x=>x.id===id);if(l){l[k]=v;renderLabel(l);}}
-function showProps(id){setMode('select');selectedId=id;updateUI();}
+function upP(id,k,v){ const c=components.find(x=>x.id===id); if(c){c[k]=v;renderComp(c);} }
+function upL(id,k,v){ const l=textLabels.find(x=>x.id===id); if(l){l[k]=v;renderLabel(l);} }
+function showProps(id){ setMode('select'); selectedId=id; updateUI(); }
 
 function deleteSelected(){
-  if(!selectedId)return; saveHist();
+  if(!selectedId) return; saveHist();
   components=components.filter(c=>c.id!==selectedId);
   wires=wires.filter(w=>w.id!==selectedId);
   textLabels=textLabels.filter(l=>l.id!==selectedId);
   document.getElementById(selectedId)?.remove();
-  selectedId=null;updateUI();updateCounts();
+  selectedId=null; updateUI(); updateCounts();
 }
 
 function clearAll(){
-  if(!confirm('Effacer tout le schéma ?'))return; saveHist();
-  components=[];wires=[];textLabels=[];
-  cl.innerHTML='';wl.innerHTML='';ll.innerHTML='';
-  selectedId=null;updateUI();updateCounts();
+  if(!confirm('Effacer tout le schéma ?')) return; saveHist();
+  components=[]; wires=[]; textLabels=[];
+  cl.innerHTML=''; wl.innerHTML=''; ll.innerHTML='';
+  selectedId=null; updateUI(); updateCounts();
 }
 
 function undo(){
-  if(!history.length){setStatus('Rien à annuler');return;}
+  if(!history.length){ setStatus('Rien à annuler'); return; }
   const p=history.pop();
-  components=p.components;wires=p.wires;textLabels=p.textLabels;
-  selectedId=null;renderAll();updateUI();setStatus('Annulé','ok');
+  components=p.components; wires=p.wires; textLabels=p.textLabels;
+  selectedId=null; renderAll(); updateUI(); setStatus('Annulé','ok');
 }
 
 function updateCounts(){
@@ -1129,363 +804,489 @@ function setStatus(msg,t='idle'){
   document.getElementById('sdot').className='sd '+(t==='ok'?'ok':t==='busy'?'busy':'idle');
 }
 
-// ══ PHOTO → SCHEMA (Claude Vision intégré) ═══════════════════════════════
-let photoFiles = [];
-
-function openPhotoModal(){
-  photoFiles = [];
-  document.getElementById('ph-thumbs').innerHTML = '';
-  document.getElementById('ph-log').style.display = 'none';
-  document.getElementById('ph-log').innerHTML = '';
-  document.getElementById('ph-btn-analyze').disabled = true;
-  document.getElementById('mo-photo').style.display = 'flex';
-}
-
-function handleDrop(ev){
+// ══ SIDEBAR FILE UPLOAD ══════════════════════════════════════════════
+function handleSidebarDrop(ev){
   ev.preventDefault();
-  document.getElementById('photo-drop').classList.remove('dragging');
-  const files = [...ev.dataTransfer.files].filter(f=>f.type.startsWith('image/')).slice(0,4);
-  addPhotoFiles(files);
+  document.getElementById('drop-zone').classList.remove('drag');
+  [...ev.dataTransfer.files].filter(f=>f.type.startsWith('image/')).forEach(processFileForLib);
+}
+function handleSidebarFiles(ev){
+  [...ev.target.files].forEach(processFileForLib);
+  ev.target.value='';
+}
+function processFileForLib(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    // Use filename as initial label (clean it up)
+    const name=file.name.replace(/\.[^.]+$/,'').replace(/[_\-]/g,' ').replace(/\d{10,}/g,'').trim();
+    const key='lib_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+    addToLib(key, e.target.result, name||'Composant');
+    setStatus('Photo ajoutée : '+name,'ok');
+  };
+  reader.readAsDataURL(file);
 }
 
-function handleFileSelect(ev){
-  const files = [...ev.target.files].slice(0,4);
-  addPhotoFiles(files);
+// ══ MODAL ANALYSE ════════════════════════════════════════════════════
+let modalFiles = [];
+let detectedComponents = []; // [{key, dataUrl, label, meta, placed}]
+
+function openAnalyze(){
+  modalFiles=[]; detectedComponents=[];
+  document.getElementById('modal-thumbs').innerHTML='';
+  document.getElementById('det-grid').innerHTML='';
+  document.getElementById('ana-log').style.display='none';
+  document.getElementById('ana-log').innerHTML='';
+  document.getElementById('step1').style.display='';
+  document.getElementById('step2').style.display='none';
+  document.getElementById('ana-btn').disabled=true;
+  document.getElementById('place-all-btn').style.display='none';
+  document.getElementById('n-loaded').textContent='';
+  document.getElementById('mo-analyze').style.display='flex';
 }
 
-function addPhotoFiles(files){
-  photoFiles = files;
-  const row = document.getElementById('ph-thumbs');
-  row.innerHTML = '';
-  files.forEach(f=>{
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(f);
-    row.appendChild(img);
-  });
-  document.getElementById('ph-btn-analyze').disabled = files.length === 0;
+function closeAnalyze(){ document.getElementById('mo-analyze').style.display='none'; }
+
+function handleModalDrop(ev){
+  ev.preventDefault();
+  document.getElementById('modal-drop').style.borderColor='';
+  [...ev.dataTransfer.files].filter(f=>f.type.startsWith('image/')).forEach(addModalFile);
+}
+function handleModalFiles(ev){
+  [...ev.target.files].forEach(addModalFile);
+  ev.target.value='';
 }
 
-function logPhoto(msg, type='info'){
-  const log = document.getElementById('ph-log');
-  log.style.display = 'block';
-  const colors = {info:'#4fc3f7', ok:'#00d4aa', err:'#ff4444', warn:'#ffd700'};
-  log.innerHTML += `<span style="color:${colors[type]||'#ccc'}">${msg}</span>\n`;
-  log.scrollTop = log.scrollHeight;
+function addModalFile(file){
+  if(modalFiles.length>=10) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const entry={file, dataUrl:e.target.result, name:file.name};
+    modalFiles.push(entry);
+    // Add thumb
+    const grid=document.getElementById('modal-thumbs');
+    const item=document.createElement('div');
+    item.className='thumb-item';
+    item.id='mthumb-'+modalFiles.length;
+    const img=document.createElement('img');
+    img.src=e.target.result;
+    const lbl=document.createElement('div');
+    lbl.className='thumb-label';
+    lbl.textContent=file.name.slice(0,20);
+    item.appendChild(img); item.appendChild(lbl);
+    grid.appendChild(item);
+    document.getElementById('n-loaded').textContent=modalFiles.length+' photo(s)';
+    document.getElementById('ana-btn').disabled=false;
+  };
+  reader.readAsDataURL(file);
 }
 
-async function fileToBase64(file){
-  return new Promise((resolve,reject)=>{
-    const r = new FileReader();
-    r.onload = ()=>resolve(r.result.split(',')[1]);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
+function anaLog(msg,type='info'){
+  const log=document.getElementById('ana-log');
+  log.style.display='block';
+  const colors={info:'#4fc3f7',ok:'#00d4aa',err:'#ff4444',warn:'#ffd700'};
+  log.innerHTML+=`<span style="color:${colors[type]||'#ccc'}">${msg}</span>\n`;
+  log.scrollTop=log.scrollHeight;
 }
 
-async function analyzePhotos(){
-  if(!photoFiles.length) return;
-  document.getElementById('ph-btn-analyze').disabled = true;
-  document.getElementById('ph-log').innerHTML = '';
-  logPhoto('📷 Chargement des photos…');
+async function runAnalysis(){
+  if(!modalFiles.length) return;
+  document.getElementById('ana-btn').disabled=true;
+  document.getElementById('ana-log').innerHTML='';
+  anaLog('🔍 Préparation des photos…');
 
-  const modeVal = document.getElementById('ph-mode').value;
-  const modeLabel = modeVal==='ac'?'AC — Coffret BT':modeVal==='dc'?'DC — Rectifier 48V':'Auto-détection';
+  const modeVal=document.getElementById('ana-mode').value;
 
-  // Build image blocks for Claude API
-  const imageBlocks = [];
-  for(const f of photoFiles){
-    const b64 = await fileToBase64(f);
-    const mt = f.type || 'image/jpeg';
-    imageBlocks.push({
-      type:'image',
-      source:{type:'base64',media_type:mt,data:b64}
-    });
+  // Build image content blocks
+  const blocks=[];
+  for(const entry of modalFiles){
+    const b64=entry.dataUrl.split(',')[1];
+    const mt=entry.file.type||'image/jpeg';
+    blocks.push({type:'image',source:{type:'base64',media_type:mt,data:b64}});
   }
 
-  const systemPrompt = `Tu es ROSELEC Vision, expert en équipements électriques et télécommunications MTN Congo.
-Analyse les photos et retourne UNIQUEMENT un objet JSON valide (pas de markdown, pas de texte autour).
+  const sysPrompt=`Tu es ROSELEC Vision, expert en équipements électriques et télécoms MTN Congo Zone Sud.
+Analyse les photos et identifie chaque équipement/composant visible.
 
-Structure JSON obligatoire :
+Retourne UNIQUEMENT un JSON valide (pas de markdown, pas de texte):
 {
   "mode": "ac" ou "dc",
-  "coffret": {
-    "type": "string",
-    "tension_nominale": "string",
-    "observations": "string"
-  },
   "composants": [
     {
-      "type": "string (voir liste)",
-      "label": "string",
-      "valeur": "string",
-      "amperage": "string",
-      "marque": "string",
-      "ref": "string",
-      "etat": "ok|alarme|defaut|hs"
+      "label": "nom court affiché",
+      "marque": "fabricant",
+      "ref": "référence",
+      "amperage": "valeur nominale",
+      "etat": "ok|alarme|defaut|hs",
+      "description": "description courte max 60 chars"
     }
   ]
 }
 
-Types AC disponibles: disj1p, disj2p, disj3p, disj4p, diff2p, diff4p, fusible, contacteur, parafoudre, terre, voyant, bornier, tgbt, transfo, compteur, sect3p, prise32a, bp_arret, alarme, inter_sect, chnt_cb125, chnt_cb60, tengen_tgb1z, huajia_hgm45, nader_125, nader_63, xw2_para, phoenix_valms, voyant_vert
-Types DC disponibles: r4850g5, r48200g, zxd3000, smu01c, bmu, vrla_200, vrla_100, bbu5900, pdu48v, mcb_dc, fuse_dc, surge_dc, lvc, shunt, barre_dc, terre_dc, zxdu58, zxdr_b8200, zxm10_eisu, nr8250, zte_eguard, dcpd
+Mode demandé: ${modeVal==='auto'?'auto-détection':modeVal}.
+Donne un composant par équipement clairement identifiable.
+Maximum 15 composants.`;
 
-Mode demandé : ${modeLabel}
-Si auto-détection : détermine toi-même si c'est AC ou DC selon le contenu des photos.
-Retourne UNIQUEMENT le JSON, sans aucun texte avant ou après.`;
+  blocks.push({type:'text',text:`Analyser ${modalFiles.length} photo(s) — identifier tous les équipements.`});
 
-  const userContent = [
-    ...imageBlocks,
-    {type:'text',text:`Analyse ${photoFiles.length} photo(s) de coffret électrique MTN Congo. Mode: ${modeLabel}. Retourne le JSON de schématisation.`}
-  ];
-
-  logPhoto(`🤖 Envoi à Claude Vision (${photoFiles.length} photo(s), mode: ${modeLabel})…`);
+  anaLog(`📡 Envoi à Claude Vision (${modalFiles.length} photo(s))…`);
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
+      body:JSON.stringify({
         model:'claude-sonnet-4-6',
-        max_tokens:1000,
-        system: systemPrompt,
-        messages:[{role:'user', content:userContent}]
+        max_tokens:1200,
+        system:sysPrompt,
+        messages:[{role:'user',content:blocks}]
       })
     });
 
     if(!resp.ok){
-      const err = await resp.text();
-      logPhoto(`❌ Erreur API: ${resp.status} — ${err.slice(0,200)}`, 'err');
-      document.getElementById('ph-btn-analyze').disabled = false;
+      const err=await resp.text();
+      anaLog(`❌ Erreur API ${resp.status}: ${err.slice(0,200)}`,'err');
+      document.getElementById('ana-btn').disabled=false;
       return;
     }
 
-    const data = await resp.json();
-    const rawText = data.content?.map(b=>b.text||'').join('') || '';
+    const data=await resp.json();
+    const raw=data.content?.map(b=>b.text||'').join('')||'';
+    anaLog(`✅ Réponse reçue — parsing…`,'ok');
 
-    logPhoto(`✅ Réponse reçue (${rawText.length} chars)`, 'ok');
-
-    // Parse JSON
     let result;
     try {
-      const clean = rawText.replace(/```json|```/g,'').trim();
-      result = JSON.parse(clean);
+      result=JSON.parse(raw.replace(/```json|```/g,'').trim());
     } catch(pe){
-      logPhoto(`⚠️ Erreur parsing JSON: ${pe.message}`, 'warn');
-      logPhoto(`Réponse brute: ${rawText.slice(0,300)}`, 'warn');
-      document.getElementById('ph-btn-analyze').disabled = false;
+      anaLog(`⚠️ Erreur JSON: ${pe.message}`,'warn');
+      anaLog(raw.slice(0,300),'warn');
+      document.getElementById('ana-btn').disabled=false;
       return;
     }
 
-    const n = result.composants?.length || 0;
-    logPhoto(`✅ ${n} composant(s) détecté(s) — fermeture et chargement dans l'éditeur…`, 'ok');
+    const n=result.composants?.length||0;
+    anaLog(`✅ ${n} composant(s) identifié(s)`,'ok');
 
-    // Close modal after short delay & load into editor
-    setTimeout(()=>{
-      document.getElementById('mo-photo').style.display = 'none';
-      loadAI(result);
-    }, 800);
+    // Switch schema mode if detected
+    if(result.mode==='dc' && modeVal==='auto') switchMode('dc');
+    else if(result.mode==='ac' && modeVal==='auto') switchMode('ac');
+
+    // Build detected list — pair each detected component with the photo
+    // Strategy: distribute photos across components, or use the same photo for each
+    detectedComponents = result.composants.map((c,i)=>{
+      // Assign photo: cycle through available photos
+      const photoEntry = modalFiles[i % modalFiles.length];
+      return {
+        key: 'det_'+Date.now()+'_'+i,
+        dataUrl: photoEntry.dataUrl,
+        label: c.label,
+        marque: c.marque||'',
+        ref: c.ref||'',
+        amperage: c.amperage||'',
+        etat: c.etat||'ok',
+        description: c.description||'',
+        placed: false
+      };
+    });
+
+    buildDetGrid();
+    document.getElementById('step1').style.display='none';
+    document.getElementById('step2').style.display='';
+    document.getElementById('det-title').textContent=`${n} composant(s) détecté(s) — cliquer pour ajouter à la palette`;
+    document.getElementById('place-all-btn').style.display='';
 
   } catch(err){
-    logPhoto(`❌ Erreur réseau: ${err.message}`, 'err');
-    document.getElementById('ph-btn-analyze').disabled = false;
+    anaLog(`❌ Erreur réseau: ${err.message}`,'err');
+    document.getElementById('ana-btn').disabled=false;
   }
 }
 
-// ══ AI INJECT ════════════════════════════════════════════════════════════
+function buildDetGrid(){
+  const grid=document.getElementById('det-grid');
+  grid.innerHTML='';
+  detectedComponents.forEach((det,i)=>{
+    const card=document.createElement('div');
+    card.className='det-card'+(det.placed?' placed':'');
+    card.id='detcard-'+i;
+
+    const img=document.createElement('img');
+    img.src=det.dataUrl;
+
+    const info=document.createElement('div');
+    info.className='det-info';
+    info.innerHTML=`<div class="det-name">${det.label}</div>
+      ${det.marque?`<div>${det.marque}</div>`:''}
+      ${det.amperage?`<div style="color:#ff9800">${det.amperage}</div>`:''}
+      ${det.description?`<div style="color:var(--text3);font-size:8px">${det.description}</div>`:''}`;
+
+    card.appendChild(img); card.appendChild(info);
+    card.onclick=()=>toggleDetCard(i);
+    grid.appendChild(card);
+  });
+}
+
+function toggleDetCard(i){
+  const det=detectedComponents[i];
+  if(det.placed){
+    // Remove from lib
+    removeFromLib(det.key);
+    det.placed=false;
+  } else {
+    // Add to lib
+    addToLib(det.key, det.dataUrl, det.label, {
+      marque:det.marque, ref:det.ref, amperage:det.amperage, etat:det.etat
+    });
+    det.placed=true;
+  }
+  // Refresh card
+  const card=document.getElementById('detcard-'+i);
+  if(card) card.className='det-card'+(det.placed?' placed':'');
+  setStatus(det.placed?'Ajouté à la palette : '+det.label:'Retiré : '+det.label, det.placed?'ok':'idle');
+}
+
+function placeAll(){
+  detectedComponents.forEach((det,i)=>{
+    if(!det.placed){
+      addToLib(det.key, det.dataUrl, det.label, {
+        marque:det.marque, ref:det.ref, amperage:det.amperage, etat:det.etat
+      });
+      det.placed=true;
+      const card=document.getElementById('detcard-'+i);
+      if(card) card.className='det-card placed';
+    }
+  });
+  setStatus(detectedComponents.length+' composants ajoutés à la palette','ok');
+  setTimeout(closeAnalyze, 600);
+}
+
+// ══ LOAD FROM PARENT (Streamlit) ══════════════════════════════════════
 window.addEventListener('message',e=>{
-  if(e.data?.type==='ai_result') loadAI(e.data.payload);
+  if(e.data?.type==='ai_result') injectAIResult(e.data.payload);
   if(e.data?.type==='load_schema') loadSchemaData(e.data.payload);
 });
 
-function loadAI(payload){
-  if(!payload||payload.error){setStatus('Erreur IA : '+(payload?.error||'inconnue'));return;}
-  const detected = payload.composants||[];
-  const isdc = payload.mode==='dc';
-  if(isdc && schemaMode==='ac') switchSchemaMode('dc');
-  else if(!isdc && schemaMode==='dc') switchSchemaMode('ac');
-  const chips = document.getElementById('ai-chips');
-  const empty = document.getElementById('ai-empty');
-  chips.innerHTML='';
-  detected.forEach((c,i)=>{
-    const chip=document.createElement('div');
-    chip.className='ac'+(isdc?' dc-chip':'');
-    chip.id='chip-'+i;
-    chip.innerHTML=`<b>${c.label||c.type}</b> <span style="opacity:.6">${c.valeur||c.amperage||''}</span>`;
-    chip.title='Cliquer pour placer sur le canvas';
-    chip.onclick=()=>placeAI(c,i,isdc);
-    chips.appendChild(chip);
-  });
-  const sysInfo = payload.coffret||payload.systeme;
-  if(sysInfo){
-    const box=document.getElementById('sys-info-box');
-    box.style.display='';
-    box.innerHTML=`<div class="sys-info"><b>${(sysInfo.type||'').replace(/_/g,' ')}</b>
-      · ${sysInfo.tension_nominale||sysInfo.tension||''}<br>
-      <span style="color:#666">${sysInfo.observations||''}</span></div>`;
-  }
-  chips.style.display='flex';empty.style.display='none';
-  setStatus(detected.length+' composant(s) détecté(s) — cliquer pour placer','ok');
-}
-
-function placeAI(c,idx,isdc){
-  const allComps=[...AC_COMPS,...DC_COMPS];
-  const def=allComps.find(x=>x.t===c.type)||(isdc?DC_COMPS[0]:AC_COMPS[0]);
-  saveHist();
-  const bx=60+(idx%5)*80, by=60+Math.floor(idx/5)*100;
-  const comp={id:uid(),type:def.t,x:snap(bx),y:snap(by),
-    label:c.label||def.l, amperage:c.amperage||'',
-    valeur:c.valeur||'', ref:c.ref||'', marque:c.marque||'', etat:c.etat||'ok'};
-  components.push(comp); renderComp(comp); updateCounts();
-  document.getElementById('chip-'+idx)?.classList.add('placed');
-  setStatus('Placé : '+comp.label,'ok');
+function injectAIResult(payload){
+  if(!payload||payload.error) return;
+  // Handled by the modal flow — just open analyze if closed
+  setStatus('Résultats IA reçus','ok');
 }
 
 function loadSchemaData(data){
-  if(!data)return;
+  if(!data) return;
   if(data.content){
     components=data.content.components||[];
     wires=data.content.wires||[];
     textLabels=data.content.textLabels||[];
   }
   currentSchemaId=data.id||null;
-  if(data.type) switchSchemaMode(data.type==='dc'?'dc':'ac');
+  if(data.type) switchMode(data.type==='dc'?'dc':'ac');
   renderAll(); updateUI();
   setStatus('Schéma chargé : '+(data.title||''),'ok');
 }
 
-// ══ SAVE ═════════════════════════════════════════════════════════════════
-function saveToSupabase(){
-  document.getElementById('sv-type').value=schemaMode;
-  document.getElementById('mo-save').style.display='flex';
-}
+// ══ SAVE ══════════════════════════════════════════════════════════════
+function openSave(){ document.getElementById('sv-type').value=schemaMode; document.getElementById('mo-save').style.display='flex'; }
 
 function confirmSave(){
-  const payload={
-    type:'save_schema',
-    payload:{
-      id: currentSchemaId,
-      title: document.getElementById('sv-title').value||'Schéma sans titre',
-      site:  document.getElementById('sv-site').value||'',
-      type:  document.getElementById('sv-type').value,
-      content:{components,wires,textLabels},
-    }
-  };
+  const payload={type:'save_schema', payload:{
+    id:currentSchemaId,
+    title:document.getElementById('sv-title').value||'Schéma sans titre',
+    site:document.getElementById('sv-site').value||'',
+    type:document.getElementById('sv-type').value,
+    content:{components,wires,textLabels}
+  }};
   window.parent.postMessage(payload,'*');
   document.getElementById('mo-save').style.display='none';
   setStatus('Sauvegarde en cours…','busy');
 }
 
-// ══ EXPORT ════════════════════════════════════════════════════════════════
-function showExport(){document.getElementById('mo-export').style.display='flex';}
+// ══ EXPORT PNG (with real photos) ════════════════════════════════════
+function openExport(){ document.getElementById('mo-export').style.display='flex'; }
 
-function buildSVG(){
-  const title=document.getElementById('ex-title')?.value||'Schéma';
-  const site=document.getElementById('ex-site')?.value||'';
-  const tech=document.getElementById('ex-tech')?.value||'';
+async function exportPNG(){
+  document.getElementById('mo-export').style.display='none';
+  setStatus('Génération PNG…','busy');
+
+  const title=document.getElementById('ex-title').value||'Schéma';
+  const site=document.getElementById('ex-site').value||'';
+  const tech=document.getElementById('ex-tech').value||'';
   const now=new Date().toLocaleDateString('fr');
+
+  // Calculate bounds
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
-  const allDefs=[...AC_COMPS,...DC_COMPS];
   components.forEach(c=>{
-    const d=allDefs.find(x=>x.t===c.type);if(!d)return;
-    minX=Math.min(minX,c.x);minY=Math.min(minY,c.y);
-    maxX=Math.max(maxX,c.x+(d.w||80));maxY=Math.max(maxY,c.y+(d.h||60)+30);
+    const p=photoLib[c.type]||{w:80,h:60};
+    minX=Math.min(minX,c.x); minY=Math.min(minY,c.y);
+    maxX=Math.max(maxX,c.x+p.w); maxY=Math.max(maxY,c.y+p.h+20);
   });
   wires.forEach(w=>{
-    minX=Math.min(minX,w.x1,w.x2);minY=Math.min(minY,w.y1,w.y2);
-    maxX=Math.max(maxX,w.x1,w.x2);maxY=Math.max(maxY,w.y1,w.y2);
+    minX=Math.min(minX,w.x1,w.x2); minY=Math.min(minY,w.y1,w.y2);
+    maxX=Math.max(maxX,w.x1,w.x2); maxY=Math.max(maxY,w.y1,w.y2);
   });
-  textLabels&&textLabels.forEach&&textLabels.forEach(t=>{
-    minX=Math.min(minX,t.x);minY=Math.min(minY,t.y);
-    maxX=Math.max(maxX,t.x+120);maxY=Math.max(maxY,t.y+20);
-  });
-  if(!isFinite(minX)){minX=0;minY=0;maxX=400;maxY=300;}
-  const pad=40,W=Math.round(maxX-minX+pad*2),H=Math.round(maxY-minY+pad*2+60);
-  const dx=pad-minX,dy=pad-minY+56;
-  const modeLabel=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';
-  let wireSVG='';
+  textLabels.forEach(t=>{ minX=Math.min(minX,t.x); minY=Math.min(minY,t.y-20); maxX=Math.max(maxX,t.x+200); maxY=Math.max(maxY,t.y+10); });
+
+  if(!isFinite(minX)){ minX=0;minY=0;maxX=600;maxY=400; }
+  const PAD=40, HDR=60;
+  const W=Math.max(400,maxX-minX+PAD*2);
+  const H=Math.max(300,maxY-minY+PAD*2+HDR);
+  const dx=PAD-minX, dy=PAD-minY+HDR;
+
+  const SCALE=2;
+  const canvas=document.createElement('canvas');
+  canvas.width=W*SCALE; canvas.height=H*SCALE;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(SCALE,SCALE);
+
+  // Background
+  ctx.fillStyle='#f8f9fa'; ctx.fillRect(0,0,W,H);
+
+  // Dot grid
+  ctx.fillStyle='#c8cdd5';
+  for(let gx=20;gx<W;gx+=20) for(let gy=HDR+20;gy<H;gy+=20){
+    ctx.beginPath(); ctx.arc(gx,gy,.8,0,Math.PI*2); ctx.fill();
+  }
+
+  // Header bar
+  ctx.fillStyle='#185FA5'; ctx.fillRect(0,0,W,HDR);
+  ctx.fillStyle='#fff'; ctx.font='bold 15px sans-serif';
+  ctx.fillText('ROSELEC — '+title, 16, 22);
+  ctx.font='11px sans-serif'; ctx.fillStyle='rgba(255,255,255,.75)';
+  ctx.fillText((site?site+' · ':'')+( tech?'Tech: '+tech+' · ':'')+now+' · Mode: '+(schemaMode==='dc'?'DC/48V':'AC/BT'), 16, 44);
+
+  // Wires
   wires.forEach(w=>{
-    let lbl=w.colorLabel||'';if(w.section)lbl+=' · '+w.section;if(w.distance)lbl+=' · '+w.distance;
-    const x1=Math.round(w.x1+dx),y1=Math.round(w.y1+dy),x2=Math.round(w.x2+dx),y2=Math.round(w.y2+dy);
-    wireSVG+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${w.color}" stroke-width="2.2" stroke-linecap="round"/>`;
-    if(lbl){const mx=(x1+x2)/2,my=(y1+y2)/2,bw=lbl.length*5.5+8;
-      wireSVG+=`<rect x="${mx-bw/2}" y="${my-8}" width="${bw}" height="14" rx="3" fill="${w.color}" opacity=".88"/>`;
-      wireSVG+=`<text x="${mx}" y="${my+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;}
+    ctx.strokeStyle=w.color; ctx.lineWidth=2.5; ctx.lineCap='round';
+    ctx.beginPath();
+    ctx.moveTo(w.x1+dx,w.y1+dy); ctx.lineTo(w.x2+dx,w.y2+dy);
+    ctx.stroke();
+    // Wire label
+    const lbl=w.colorLabel||'';
+    if(lbl){
+      const mx=(w.x1+w.x2)/2+dx, my=(w.y1+w.y2)/2+dy;
+      const tw=ctx.measureText(lbl).width;
+      ctx.fillStyle=w.color;
+      roundRect(ctx,mx-tw/2-4,my-8,tw+8,14,3);
+      ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 8px sans-serif';
+      ctx.textAlign='center'; ctx.fillText(lbl,mx,my+3);
+    }
   });
-  let compSVG='';
-  components.forEach(comp=>{
-    const def=allDefs.find(c=>c.t===comp.type);if(!def)return;
-    const tmpG=document.createElementNS('http://www.w3.org/2000/svg','g');
-    const col=DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444';
-    def.d(tmpG,0,0,def.w,def.h,col);
-    const cx=Math.round(comp.x+dx),cy=Math.round(comp.y+dy);
-    const lbl=(comp.label||def.l)+(comp.amperage?' · '+comp.amperage:'');
-    compSVG+=`<g transform="translate(${cx},${cy})">${tmpG.innerHTML}</g>`;
-    compSVG+=`<rect x="${cx}" y="${cy+def.h}" width="${def.w}" height="14" fill="rgba(0,0,0,.7)" rx="2"/>`;
-    compSVG+=`<text x="${cx+def.w/2}" y="${cy+def.h+10}" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif" font-weight="700">${lbl}</text>`;
-  });
-  let labelSVG='';
-  textLabels&&textLabels.forEach&&textLabels.forEach(t=>{
-    labelSVG+=`<text x="${Math.round(t.x+dx)}" y="${Math.round(t.y+dy)}" font-size="${t.size||12}" fill="${t.color||'#333'}" font-family="sans-serif" font-weight="${t.bold?'600':'400'}">${t.text}</text>`;
-  });
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-  <rect width="${W}" height="${H}" fill="#f8f9fa"/>
-  <rect width="${W}" height="52" fill="#185FA5"/>
-  <text x="16" y="20" font-size="14" fill="#fff" font-family="sans-serif" font-weight="700">ROSELEC — ${title}</text>
-  <text x="16" y="40" font-size="10" fill="rgba(255,255,255,.75)" font-family="sans-serif">${site} · Technicien : ${tech} · ${now} · Mode : ${modeLabel}</text>
-  ${wireSVG}${compSVG}${labelSVG}
-</svg>`;
-}
 
-function exportSVG(){
-  const svg=buildSVG();
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
-  a.download='roselec_schema_'+Date.now()+'.svg'; a.click();
-  setStatus('SVG exporté','ok');
-  document.getElementById('mo-export').style.display='none';
-  window.parent.postMessage({type:'export_done',format:'svg',data:svg},'*');
-}
+  // Components (draw photos)
+  const imgPromises=components.map(comp=>new Promise(resolve=>{
+    const p=photoLib[comp.type];
+    if(!p){ resolve({comp,img:null}); return; }
+    const img=new Image();
+    img.onload=()=>resolve({comp,img,p});
+    img.onerror=()=>resolve({comp,img:null,p});
+    img.src=p.dataUrl;
+  }));
 
-function exportPNG(){
-  const svg=buildSVG();
-  const img=new Image();
-  img.onload=()=>{
-    const c=document.createElement('canvas');
-    c.width=img.width*2;c.height=img.height*2;
-    const ctx=c.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
+  const loaded=await Promise.all(imgPromises);
+  loaded.forEach(({comp,img,p})=>{
+    const cx=comp.x+dx, cy=comp.y+dy;
+    const W2=p?p.w:80, H2=p?p.h:60;
+
+    if(img){
+      // Shadow
+      ctx.shadowColor='rgba(0,0,0,.3)'; ctx.shadowBlur=6; ctx.shadowOffsetY=2;
+      // Draw image
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx,cx,cy,W2,H2,5);
+      ctx.clip();
+      ctx.drawImage(img,cx,cy,W2,H2);
+      ctx.restore();
+      ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+      // Border
+      ctx.strokeStyle='#333'; ctx.lineWidth=1;
+      ctx.beginPath(); roundRect(ctx,cx,cy,W2,H2,5); ctx.stroke();
+    } else {
+      ctx.fillStyle='#444'; ctx.beginPath(); roundRect(ctx,cx,cy,W2||80,H2||60,5); ctx.fill();
+    }
+
+    // Connection dots
+    ctx.fillStyle='#ffd700'; ctx.strokeStyle='#222'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(cx+W2/2,cy,4,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#1a1a8a';
+    ctx.beginPath(); ctx.arc(cx+W2/2,cy+H2,4,0,Math.PI*2); ctx.fill(); ctx.stroke();
+
+    // Label
+    if(comp.label){
+      ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+      const tw2=ctx.measureText(comp.label).width;
+      ctx.fillStyle='rgba(0,0,0,.8)';
+      roundRect(ctx,cx+W2/2-tw2/2-4,cy+H2+2,tw2+8,13,3); ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.fillText(comp.label,cx+W2/2,cy+H2+12);
+    }
+
+    // State badge
+    if(comp.etat && comp.etat!=='ok'){
+      const bc={alarme:'#ff8800',defaut:'#ff2200',hs:'#888'}[comp.etat]||'#888';
+      ctx.fillStyle=bc;
+      ctx.beginPath(); ctx.arc(cx+W2-6,cy+6,7,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 8px sans-serif'; ctx.textAlign='center';
+      ctx.fillText({alarme:'⚠',defaut:'●',hs:'✕'}[comp.etat]||'?',cx+W2-6,cy+10);
+    }
+  });
+
+  // Text labels
+  textLabels.forEach(t=>{
+    ctx.font=(t.bold?'600 ':'')+(t.size||12)+'px sans-serif';
+    ctx.fillStyle=t.color||'#333'; ctx.textAlign='left';
+    ctx.fillText(t.text,t.x+dx,t.y+dy);
+  });
+
+  // Download
+  canvas.toBlob(blob=>{
     const a=document.createElement('a');
-    a.href=c.toDataURL('image/png');
-    a.download='roselec_schema_'+Date.now()+'.png'; a.click();
+    a.href=URL.createObjectURL(blob);
+    a.download=`ROSELEC_${site||'schema'}_${Date.now()}.png`;
+    a.click();
     setStatus('PNG exporté','ok');
-  };
-  img.src=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+  },'image/png');
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function exportSVGFile(){
+  // For SVG export, use the canvas SVG innerHTML
+  const svgEl=document.getElementById('cvs');
+  const clone=svgEl.cloneNode(true);
+  // Add header
+  const data=new XMLSerializer().serializeToString(clone);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([data],{type:'image/svg+xml'}));
+  a.download='roselec_'+Date.now()+'.svg'; a.click();
   document.getElementById('mo-export').style.display='none';
+  setStatus('SVG exporté','ok');
 }
 
 function exportJSON(){
-  const d={meta:{tool:'ROSELEC v1.1',mode:schemaMode,date:new Date().toISOString()},
+  const d={meta:{tool:'ROSELEC v2.0',mode:schemaMode,date:new Date().toISOString()},
     coffret:{composants:components,fils:wires,annotations:textLabels}};
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
   a.download='roselec_'+Date.now()+'.json'; a.click();
-  setStatus('JSON exporté','ok');
   document.getElementById('mo-export').style.display='none';
+  setStatus('JSON exporté','ok');
 }
 
-// ══ RAPPORT WHATSAPP ═════════════════════════════════════════════════════
-function showRapport(){
-  const svSite=document.getElementById('sv-site')?.value||'';
-  const svTech=document.getElementById('ex-tech')?.value||'';
-  if(svSite) document.getElementById('rp-site').value=svSite;
-  if(svTech) document.getElementById('rp-tech').value=svTech;
-  document.getElementById('rp-travail').value=
-    schemaMode==='dc'?'Schématisation armoire DC 48V':'Schématisation coffret électrique';
+// ══ RAPPORT WHATSAPP ══════════════════════════════════════════════════
+function openRapport(){
+  document.getElementById('rp-travail').value=schemaMode==='dc'?'Schématisation armoire DC 48V':'Schématisation coffret électrique';
   previewMsg();
   document.getElementById('mo-rapport').style.display='flex';
 }
 
-function buildRapportMsg(){
+function buildMsg(){
   const tech=document.getElementById('rp-tech').value||'Technicien';
   const site=document.getElementById('rp-site').value||'Site';
   const travail=document.getElementById('rp-travail').value;
@@ -1494,48 +1295,31 @@ function buildRapportMsg(){
   const date=now.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
   const heure=now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   const mode=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';
-  const allDefs=[...AC_COMPS,...DC_COMPS];
   const counts={};
   components.forEach(c=>{
-    const def=allDefs.find(d=>d.t===c.type);
-    const key=def?def.l:c.type;
-    counts[key]=(counts[key]||0)+1;
+    const p=photoLib[c.type];
+    const k=p?p.label:c.type;
+    counts[k]=(counts[k]||0)+1;
   });
-  const listComps=Object.entries(counts).map(([k,v])=>`  • ${k}${v>1?' (×'+v+')':''}`).join('\n');
-  let msg=`⚡ *ROSELEC — Rapport de site*\n━━━━━━━━━━━━━━━━━━━━\n👷 Technicien : *${tech}*\n📍 Site : *${site}*\n📅 Date : ${date} à ${heure}\n🔧 Travail : ${travail}\n⚙️ Mode schéma : ${mode}\n━━━━━━━━━━━━━━━━━━━━\n📊 *Composants schématisés : ${components.length}*\n${listComps||'  (aucun composant)'}\n\n🔌 Fils câblés : ${wires.length}\n━━━━━━━━━━━━━━━━━━━━`;
-  if(obs.trim())msg+=`\n📝 *Observations :*\n${obs.trim()}\n━━━━━━━━━━━━━━━━━━━━`;
-  msg+=`\n_Schéma généré avec ROSELEC · MTN Congo Zone Sud_`;
+  const list=Object.entries(counts).map(([k,v])=>`  • ${k}${v>1?' (×'+v+')':''}`).join('\n');
+  let msg=`⚡ *ROSELEC — Rapport de site*\n━━━━━━━━━━━━━━━━━━━━\n👷 Technicien : *${tech}*\n📍 Site : *${site}*\n📅 Date : ${date} à ${heure}\n🔧 Travail : ${travail}\n⚙️ Mode : ${mode}\n━━━━━━━━━━━━━━━━━━━━\n📊 *Composants schématisés : ${components.length}*\n${list||'  (aucun)'}\n\n🔌 Fils : ${wires.length}\n━━━━━━━━━━━━━━━━━━━━`;
+  if(obs.trim()) msg+=`\n📝 *Observations :*\n${obs.trim()}\n━━━━━━━━━━━━━━━━━━━━`;
+  msg+=`\n_Schéma généré avec ROSELEC v2.0 · MTN Congo Zone Sud_`;
   return msg;
 }
 
-function previewMsg(){document.getElementById('msg-preview').textContent=buildRapportMsg();}
-
-function openWhatsAppOnly(){
-  window.open('https://wa.me/?text='+encodeURIComponent(buildRapportMsg()),'_blank');
-}
-
-function exportPNGandWhatsApp(){
-  const svg=buildSVG();
-  const img=new Image();
-  img.onload=()=>{
-    const c=document.createElement('canvas');
-    c.width=img.width*2;c.height=img.height*2;
-    const ctx=c.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
-    const tech=document.getElementById('rp-tech').value||'tech';
-    const site=document.getElementById('rp-site').value||'site';
-    const a=document.createElement('a');
-    a.href=c.toDataURL('image/png');
-    a.download=`ROSELEC_${site}_${tech}_${Date.now()}.png`;
-    a.click();
-    setStatus('Image exportée — joindre dans WhatsApp','ok');
-    setTimeout(()=>{window.open('https://wa.me/?text='+encodeURIComponent(buildRapportMsg()),'_blank');},1200);
-  };
-  img.src=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+function previewMsg(){ document.getElementById('msg-preview').textContent=buildMsg(); }
+function openWAonly(){ window.open('https://wa.me/?text='+encodeURIComponent(buildMsg()),'_blank'); }
+async function exportPNGandWA(){
+  await exportPNG();
+  setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(buildMsg()),'_blank'),1200);
   document.getElementById('mo-rapport').style.display='none';
 }
 
-// ══ INIT ══════════════════════════════════════════════════════════════════
-buildPalette(); buildWirePal(); setMode('add'); setStatus('Prêt — v1.2 · 45+ composants MTN Congo');
+// ══ INIT ══════════════════════════════════════════════════════════════
+buildWirePal();
+setMode('add');
+setStatus('Prêt v2.0 — cliquer 📷 Charger photos pour commencer');
 </script>
 </body>
 </html>

@@ -420,7 +420,7 @@ function addToLib(key, dataUrl, label, meta={}) {
   const img = new Image();
   img.onload = () => {
     const c = document.createElement('canvas');
-    const TW=120, TH=80;
+    const TW=160, TH=100;
     c.width=TW; c.height=TH;
     const ctx = c.getContext('2d');
     // Fill background
@@ -547,13 +547,13 @@ function renderComp(comp) {
     bg.setAttribute('rx',4);bg.setAttribute('fill','#1a1a1a');
     bg.setAttribute('stroke','#444');bg.setAttribute('stroke-width','1');
     g.appendChild(bg);
-    // SVG image element (works in all browsers unlike foreignObject)
+    // SVG image element
     const si=document.createElementNS('http://www.w3.org/2000/svg','image');
     si.setAttribute('href',p.dataUrl);
-    si.setAttribute('x',0);si.setAttribute('y',0);
-    si.setAttribute('width',W);si.setAttribute('height',H);
+    si.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href',p.dataUrl);
+    si.setAttribute('x',1);si.setAttribute('y',1);
+    si.setAttribute('width',W-2);si.setAttribute('height',H-2);
     si.setAttribute('preserveAspectRatio','xMidYMid meet');
-    si.style.borderRadius='4px';
     g.appendChild(si);
   } else {
     // Fallback placeholder
@@ -1133,10 +1133,13 @@ async function exportPNG(){
   });
   if(!isFinite(minX)){minX=0;minY=0;maxX=600;maxY=400;}
 
-  const PAD=50, HDR=60, SCALE=2;
-  const CW=Math.max(500,Math.ceil(maxX-minX+PAD*2));
-  const CH=Math.max(300,Math.ceil(maxY-minY+PAD*2+HDR));
+  // Add generous padding to ensure nothing is cut
+  const PAD=80, HDR=64, SCALE=2;
+  const CW=Math.max(600,Math.ceil(maxX-minX+PAD*2));
+  const CH=Math.max(400,Math.ceil(maxY-minY+PAD*2+HDR));
+  // dx/dy = offset to shift all coordinates into canvas space
   const dx=PAD-minX, dy=PAD-minY+HDR;
+  console.log('[ROSELEC Export] Canvas:',CW,'x',CH,'| bounds:',minX,minY,'→',maxX,maxY,'| offset:',dx,dy,'| comps:',components.length);
 
   // ── 2. Pre-load ALL component images ─────────────────────────────────
   const imgCache={};
@@ -1158,10 +1161,10 @@ async function exportPNG(){
 
   // ── 4. Background + grid ──────────────────────────────────────────────
   ctx.fillStyle='#f8f9fa'; ctx.fillRect(0,0,CW,CH);
-  ctx.fillStyle='rgba(180,188,200,.5)';
+  ctx.fillStyle='rgba(180,188,200,.4)';
   for(let gx=20;gx<CW;gx+=20)
-    for(let gy=HDR+20;gy<CH;gy+=20){
-      ctx.beginPath();ctx.arc(gx,gy,.8,0,Math.PI*2);ctx.fill();
+    for(let gy=HDR+10;gy<CH;gy+=20){
+      ctx.beginPath();ctx.arc(gx,gy,.7,0,Math.PI*2);ctx.fill();
     }
 
   // ── 5. Header ─────────────────────────────────────────────────────────
@@ -1197,20 +1200,21 @@ async function exportPNG(){
     const CX=p.w, CY=p.h;
     const img=imgCache[comp.type];
 
-    ctx.save();
-    // Card shadow
-    ctx.shadowColor='rgba(0,0,0,.25)';
-    ctx.shadowBlur=8; ctx.shadowOffsetY=3;
-
-    if(img){
-      // Clip to rounded rect and draw photo
+    if(img && img.complete && img.naturalWidth>0){
+      // Dark background
+      ctx.fillStyle='#1a1a1a';
+      ctx.beginPath(); pxRoundRect(ctx,cx,cy,CX,CY,5); ctx.fill();
+      // Clip and draw photo
+      ctx.save();
       ctx.beginPath(); pxRoundRect(ctx,cx,cy,CX,CY,5); ctx.clip();
-      ctx.fillStyle='#1a1a1a'; ctx.fillRect(cx,cy,CX,CY);
-      // Fit image preserving aspect ratio
-      const scale=Math.min(CX/img.width, CY/img.height);
-      const sw=img.width*scale, sh=img.height*scale;
+      // Fit image preserving aspect ratio (object-fit: contain)
+      const iw=img.naturalWidth||img.width||CX;
+      const ih=img.naturalHeight||img.height||CY;
+      const sc=Math.min(CX/iw, CY/ih);
+      const sw=iw*sc, sh=ih*sc;
       const ox=cx+(CX-sw)/2, oy=cy+(CY-sh)/2;
       ctx.drawImage(img, ox, oy, sw, sh);
+      ctx.restore();
     } else {
       // Fallback: dark rect with label
       ctx.fillStyle='#2a2a2a';
@@ -1218,10 +1222,9 @@ async function exportPNG(){
       ctx.fillStyle='#888'; ctx.font='9px sans-serif'; ctx.textAlign='center';
       ctx.fillText(comp.type, cx+CX/2, cy+CY/2+4);
     }
-    ctx.restore();
-
     // Border
     ctx.strokeStyle='rgba(50,50,50,.6)'; ctx.lineWidth=1;
+    ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetY=0;
     ctx.beginPath(); pxRoundRect(ctx,cx,cy,CX,CY,5); ctx.stroke();
 
     // Connection dots

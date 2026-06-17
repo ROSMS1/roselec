@@ -17,10 +17,7 @@
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:var(--bg2);color:var(--text);font-size:13px;height:100vh;overflow:hidden}
-
 .app{display:flex;flex-direction:column;height:100vh}
-
-/* TOPBAR */
 .topbar{display:flex;align-items:center;gap:6px;padding:6px 10px;
   background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;flex-shrink:0;min-height:44px}
 .logo{font-size:15px;font-weight:700;color:var(--blue);white-space:nowrap;letter-spacing:-.3px}
@@ -35,28 +32,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .btn-g{background:#3B6D11;color:#fff;border-color:#3B6D11}
 .btn-g:hover{background:var(--green)}
 .btn-r{background:#A32D2D;color:#fff;border-color:#A32D2D}
+.btn-photo{background:#7B1FA2;color:#fff;border-color:#6A1B9A;font-size:11px}
+.btn-photo:hover{background:#6A1B9A}
 .badge{padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500}
 .b-blue{background:var(--blue-bg);color:var(--blue2)}
 .b-green{background:var(--green-bg);color:var(--green)}
 .b-amber{background:var(--amber-bg);color:var(--amber)}
 .b-orange{background:var(--orange-bg);color:var(--orange)}
-
-/* MODE TABS */
 .mode-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
 .mtab{padding:4px 12px;font-size:11px;font-weight:500;cursor:pointer;
   background:var(--bg2);color:var(--text2);border:none;transition:all .12s}
 .mtab.sel{background:var(--blue);color:#fff}
-
-/* BODY */
 .body{display:flex;flex:1;overflow:hidden}
-
-/* SIDEBAR */
 .sidebar{width:200px;background:var(--bg);border-right:1px solid var(--border);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
 .ss{padding:8px 10px;border-bottom:1px solid var(--border)}
 .st{font-size:10px;font-weight:600;color:var(--text3);
   text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
-
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 .ci{display:flex;flex-direction:column;align-items:center;gap:2px;
   padding:6px 3px;border:1px solid var(--border);border-radius:5px;
@@ -64,41 +56,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   transition:all .1s;user-select:none}
 .ci:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
 .ci.sel{border-color:var(--blue);background:var(--blue-bg);color:var(--blue);font-weight:600}
-
 .wr{display:flex;gap:4px;flex-wrap:wrap}
 .wc{width:24px;height:24px;border-radius:50%;border:2px solid transparent;
   cursor:pointer;transition:transform .1s}
 .wc:hover,.wc.sel{transform:scale(1.25);border-color:#222}
-
 .pr{margin-bottom:6px}
 .pr label{display:block;font-size:10px;color:var(--text3);margin-bottom:2px;
   text-transform:uppercase;letter-spacing:.04em}
 .pr input,.pr select{width:100%;padding:3px 6px;border:1px solid var(--border);
   border-radius:4px;background:var(--bg2);color:var(--text);font-size:12px}
-
-/* CANVAS */
 .cw{flex:1;position:relative;overflow:hidden;background:#f0f2f5;
   background-image:radial-gradient(#c0c8d0 0.7px,transparent 0.7px);
   background-size:20px 20px}
 #cvs{width:100%;height:100%}
-
-/* STATUSBAR */
 .sb{padding:3px 10px;background:var(--bg);border-top:1px solid var(--border);
   display:flex;gap:12px;align-items:center;flex-shrink:0;font-size:11px;flex-wrap:wrap}
 .sd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
 .ok{background:#639922}.idle{background:#aaa}
 .busy{background:#EF9F27;animation:pulse .7s infinite alternate}
 @keyframes pulse{to{opacity:.3}}
-
-/* MODAL */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.45);
   display:flex;align-items:center;justify-content:center;z-index:200}
 .md{background:var(--bg);border-radius:10px;padding:20px;
   width:360px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2)}
 .md h3{font-size:14px;font-weight:600;margin-bottom:12px}
 .mf{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
-
-/* AI chips */
 .ac{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;
   border-radius:10px;font-size:11px;background:var(--blue-bg);
   color:var(--blue2);border:1px solid #B5D4F4;cursor:pointer;
@@ -110,6 +92,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .chips-wrap{display:flex;flex-wrap:wrap;max-height:130px;overflow-y:auto;margin-top:4px}
 .sys-info{background:var(--bg3);border:1px solid var(--border);border-radius:5px;
   padding:7px;font-size:11px;color:var(--text2);line-height:1.5;margin-top:5px}
+/* Photo analysis modal */
+.md-wide{width:480px;max-width:96vw}
+.photo-drop{border:2px dashed var(--border2);border-radius:8px;padding:18px;
+  text-align:center;cursor:pointer;background:var(--bg2);transition:all .15s;font-size:12px;color:var(--text3)}
+.photo-drop:hover{border-color:var(--blue);background:var(--blue-bg)}
+.photo-drop.dragging{border-color:var(--blue);background:var(--blue-bg)}
+.thumb-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.thumb-row img{width:72px;height:72px;object-fit:cover;border-radius:5px;border:1px solid var(--border)}
+.ai-log{background:var(--bg3);border:1px solid var(--border);border-radius:5px;
+  padding:8px;font-size:11px;max-height:160px;overflow-y:auto;line-height:1.6;
+  font-family:monospace;color:var(--text2);margin-top:8px}
+.ai-tag{display:inline-block;background:#7B1FA2;color:#fff;font-size:10px;
+  padding:1px 6px;border-radius:8px;margin-right:4px}
 </style>
 </head>
 <body>
@@ -132,6 +127,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <button class="btn" onclick="undo()">↩</button>
   <button class="btn" onclick="clearAll()">🗑</button>
   <div class="sep"></div>
+  <button class="btn btn-photo" onclick="openPhotoModal()">📷 Photo→Schéma</button>
+  <div class="sep"></div>
   <button class="btn btn-g" onclick="saveToSupabase()">💾 Sauvegarder</button>
   <button class="btn btn-p" onclick="showExport()">⬇ Exporter</button>
   <button class="btn" style="background:#25D366;color:#fff;border-color:#1ebe5d" onclick="showRapport()">📲 Rapport WhatsApp</button>
@@ -141,31 +138,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 <div class="body">
 <!-- SIDEBAR -->
 <div class="sidebar">
-
   <div class="ss" id="comps-section">
     <div class="st" id="comps-title">Composants AC</div>
     <div class="cg" id="comp-palette"></div>
   </div>
-
   <div class="ss">
     <div class="st">Couleur du fil</div>
     <div class="wr" id="wire-pal"></div>
     <div style="font-size:10px;color:var(--text3);margin-top:4px" id="wire-lbl">Phase L1</div>
   </div>
-
   <div class="ss" id="ai-section">
     <div class="st">Composants détectés</div>
-    <div id="ai-empty" style="font-size:11px;color:var(--text3)">Analyser des photos depuis le panneau principal.</div>
+    <div id="ai-empty" style="font-size:11px;color:var(--text3)">Analyser des photos via 📷 Photo→Schéma ou le panneau principal.</div>
     <div class="chips-wrap" id="ai-chips" style="display:none"></div>
     <div id="sys-info-box" style="display:none"></div>
   </div>
-
   <div class="ss" id="props-sec" style="display:none">
     <div class="st">Propriétés</div>
     <div id="props-body"></div>
     <button class="btn btn-r" style="width:100%;margin-top:6px;font-size:11px" onclick="deleteSelected()">🗑 Supprimer</button>
   </div>
-
 </div>
 
 <!-- CANVAS -->
@@ -186,6 +178,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <span class="badge b-blue" id="cnt-c">0 composant</span>
   <span class="badge b-amber" id="cnt-w">0 fil</span>
   <span style="margin-left:auto;color:var(--text3)">S=sélect · A=ajout · W=fil · T=texte · Suppr=effacer · Ctrl+Z=annuler · Clic droit=annuler fil</span>
+</div>
+</div>
+
+<!-- MODAL PHOTO → SCHEMA -->
+<div class="mo" id="mo-photo" style="display:none">
+<div class="md md-wide">
+  <h3>📷 Analyser photo → Générer schéma</h3>
+  <div style="display:flex;gap:8px;margin-bottom:10px">
+    <label style="font-size:11px;color:var(--text2)">Type :</label>
+    <select id="ph-mode" style="font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg2)">
+      <option value="auto">🔍 Auto-détection</option>
+      <option value="ac">⚡ AC — Coffret BT</option>
+      <option value="dc">🔋 DC — Rectifier 48V</option>
+    </select>
+  </div>
+  <div class="photo-drop" id="photo-drop"
+    ondragover="ev.preventDefault();this.classList.add('dragging')"
+    ondragleave="this.classList.remove('dragging')"
+    ondrop="handleDrop(event)"
+    onclick="document.getElementById('ph-file').click()">
+    📷 Glisser des photos ici ou cliquer pour choisir<br>
+    <span style="font-size:10px">(JPG/PNG/WEBP · max 4 photos)</span>
+  </div>
+  <input type="file" id="ph-file" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
+  <div class="thumb-row" id="ph-thumbs"></div>
+  <div class="ai-log" id="ph-log" style="display:none"></div>
+  <div class="mf">
+    <button class="btn" onclick="document.getElementById('mo-photo').style.display='none'">Annuler</button>
+    <button class="btn btn-photo" id="ph-btn-analyze" onclick="analyzePhotos()" disabled>🤖 Analyser avec Claude Vision</button>
+  </div>
 </div>
 </div>
 
@@ -245,7 +267,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       <option value="Intervention corrective">Intervention corrective</option>
     </select></div>
   <div class="pr"><label>Observations / Remarques</label>
-    <textarea id="rp-obs" rows="2" placeholder="Ex: Disjoncteur principal à remplacer, câblage à reprendre…"
+    <textarea id="rp-obs" rows="2" placeholder="Ex: Disjoncteur principal à remplacer…"
       style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:4px;
         font-size:12px;background:var(--bg2);color:var(--text);resize:vertical"
       oninput="previewMsg()"></textarea></div>
@@ -253,17 +275,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     padding:10px;margin-bottom:12px;font-size:12px;line-height:1.6;color:var(--text2)">
     <div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;
       letter-spacing:.05em;margin-bottom:5px">Aperçu du message WhatsApp</div>
-    <div id="msg-preview" style="white-space:pre-wrap;font-family:monospace;font-size:11px;
-      color:var(--text)"></div>
+    <div id="msg-preview" style="white-space:pre-wrap;font-family:monospace;font-size:11px;color:var(--text)"></div>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
     <button class="btn" style="flex:1;background:#25D366;color:#fff;border-color:#1ebe5d;font-size:12px"
       onclick="exportPNGandWhatsApp()">🖼 Exporter image + ouvrir WhatsApp</button>
     <button class="btn btn-p" style="flex:1;font-size:12px"
       onclick="openWhatsAppOnly()">📨 Envoyer message seul</button>
-  </div>
-  <div style="font-size:10px;color:var(--text3);margin-bottom:8px">
-    💡 Exporter l'image d'abord, puis joindre manuellement dans WhatsApp.
   </div>
   <div class="mf">
     <button class="btn" onclick="document.getElementById('mo-rapport').style.display='none'">Fermer</button>
@@ -274,6 +292,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 <script>
 // ══ COMPOSANTS AC ══════════════════════════════════════════════════════════
 const AC_COMPS = [
+  // ── Originaux ──────────────────────────────────────────────────────────
   {t:'disj1p', l:'Disj. 1P', w:22,h:44,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
@@ -300,6 +319,19 @@ const AC_COMPS = [
     <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
     <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
     <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>`}},
+  {t:'disj4p', l:'Disj. 4P', w:64,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+9}" y1="${y}" x2="${x+9}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+18}" y1="${y}" x2="${x+9+18}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+36}" y1="${y}" x2="${x+9+36}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+54}" y1="${y}" x2="${x+9+54}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9}" y1="${y+h-10}" x2="${x+9}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+18}" y1="${y+h-10}" x2="${x+9+18}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+36}" y1="${y+h-10}" x2="${x+9+36}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+54}" y1="${y+h-10}" x2="${x+9+54}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+5}" y="${y+8}" width="${w-10}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
+    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif">4P</text>`}},
   {t:'diff2p', l:'Diff. 2P', w:44,h:50,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
@@ -309,6 +341,19 @@ const AC_COMPS = [
     <line x1="${x+w-12}" y1="${y+h-10}" x2="${x+w-12}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
     <rect x="${x+6}" y="${y+8}" width="${w-12}" height="${h-16}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
     <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" font-family="sans-serif">Δ</text>`}},
+  {t:'diff4p', l:'Diff. 4P', w:52,h:54,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+9}" y1="${y}" x2="${x+9}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+11}" y1="${y}" x2="${x+9+11}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+22}" y1="${y}" x2="${x+9+22}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+33}" y1="${y}" x2="${x+9+33}" y2="${y+10}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9}" y1="${y+h-10}" x2="${x+9}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+11}" y1="${y+h-10}" x2="${x+9+11}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+22}" y1="${y+h-10}" x2="${x+9+22}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+9+33}" y1="${y+h-10}" x2="${x+9+33}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+4}" y="${y+12}" width="${w-8}" height="${h-24}" rx="2" fill="none" stroke="#fff" stroke-width=".6" opacity=".4"/>
+    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" font-family="sans-serif">Δ4P</text>`}},
   {t:'fusible', l:'Fusible', w:14,h:38,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
@@ -353,33 +398,191 @@ const AC_COMPS = [
     <rect x="${x+3}" y="${y+4}" width="${w-6}" height="${h-8}" rx="1" fill="none" stroke="#fff" stroke-width=".8" opacity=".6"/>
     <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
     <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>`}},
+  // ── Nouveaux composants AC ─────────────────────────────────────────────
+  {t:'tgbt', l:'TGBT', w:64,h:56,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="${c}" stroke="#222" stroke-width="1.5"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#0d2c50" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="sans-serif" font-weight="700">TGBT</text>
+    <line x1="${x+10}" y1="${y+22}" x2="${x+10}" y2="${y+h-8}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+22}" x2="${x+w/2}" y2="${y+h-8}" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y+22}" x2="${x+w-10}" y2="${y+h-8}" stroke="#003580" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+4}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+4}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'transfo', l:'Transfo.', w:52,h:56,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <ellipse cx="${x+w/2-6}" cy="${y+h/2}" rx="12" ry="16" fill="none" stroke="#ffd700" stroke-width="1.5" opacity=".8"/>
+    <ellipse cx="${x+w/2+6}" cy="${y+h/2}" rx="12" ry="16" fill="none" stroke="#4fc3f7" stroke-width="1.5" opacity=".8"/>
+    <line x1="${x+w/2-6}" y1="${y}" x2="${x+w/2-6}" y2="${y+10}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2+6}" y1="${y}" x2="${x+w/2+6}" y2="${y+10}" stroke="#4fc3f7" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2-6}" y1="${y+h-10}" x2="${x+w/2-6}" y2="${y+h}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2+6}" y1="${y+h-10}" x2="${x+w/2+6}" y2="${y+h}" stroke="#4fc3f7" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'compteur', l:'Compteur', w:48,h:52,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+6}" y="${y+8}" width="${w-12}" height="16" rx="2" fill="#111" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+20}" text-anchor="middle" font-size="9" fill="#00ff88" font-family="monospace">kWh</text>
+    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#8B0000" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+8}" stroke="#003580" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#8B0000" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="${x+w/2}" cy="${y+h-12}" r="5" fill="none" stroke="#fff" stroke-width="1" opacity=".5"/>
+    <text x="${x+w/2}" y="${y+h-9}" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif">⟳</text>`}},
+  {t:'sect3p', l:'Sect. 3P', w:52,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+10}" y1="${y+h-16}" x2="${x+14}" y2="${y+14}" stroke="#8B0000" stroke-width="1.5" opacity=".7"/>
+    <line x1="${x+w/2}" y1="${y+h-16}" x2="${x+w/2+4}" y2="${y+14}" stroke="#333" stroke-width="1.5" opacity=".7"/>
+    <line x1="${x+w-10}" y1="${y+h-16}" x2="${x+w-6}" y2="${y+14}" stroke="#003580" stroke-width="1.5" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif" opacity=".5">SECT</text>`}},
+  {t:'prise32a', l:'Prise 32A', w:32,h:32,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-5}" fill="none" stroke="#ffd700" stroke-width="1" opacity=".6"/>
+    <circle cx="${x+w/2-5}" cy="${y+h/2-3}" r="2.5" fill="#fff" opacity=".7"/>
+    <circle cx="${x+w/2+5}" cy="${y+h/2-3}" r="2.5" fill="#fff" opacity=".7"/>
+    <circle cx="${x+w/2}" cy="${y+h/2+5}" r="2.5" fill="#1a7a1a" opacity=".8"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+5}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-5}" x2="${x+w/2}" y2="${y+h}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'bp_arret', l:'BP Arrêt', w:28,h:28,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#cc0000" opacity=".9"/>
+    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">STOP</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'alarme', l:'Alarme', w:28,h:36,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
+    <polygon points="${x+w/2},${y+8} ${x+w-4},${y+h-8} ${x+4},${y+h-8}" fill="#ff4444" opacity=".85"/>
+    <text x="${x+w/2}" y="${y+h-10}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif" font-weight="700">!</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ff4444" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-0}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'inter_sect', l:'Inter. Sect.', w:36,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+10}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+10}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+10}" y1="${y+h-10}" x2="${x+10}" y2="${y+h}" stroke="#8B0000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y+h-10}" x2="${x+w-10}" y2="${y+h}" stroke="#003580" stroke-width="2" stroke-linecap="round"/>
+    <rect x="${x+6}" y="${y+12}" width="${w-12}" height="${h-24}" rx="2" fill="none" stroke="#fff" stroke-width=".8" opacity=".5"/>
+    <path d="M${x+10},${y+h-16} L${x+13},${y+16}" fill="none" stroke="#8B0000" stroke-width="1.2" opacity=".7"/>
+    <path d="M${x+w-10},${y+h-16} L${x+w-13},${y+16}" fill="none" stroke="#003580" stroke-width="1.2" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+h/2+3}" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif">IS</text>`}},
 ];
 
-// ══ COMPOSANTS DC ══════════════════════════════════════════════════════════
+// ══ COMPOSANTS DC — Vrais équipements MTN Congo ════════════════════════════
 const DC_COMPS = [
-  {t:'rectifier', l:'Rectifier', w:56,h:36,
+  // ── Rectifiers Huawei ──────────────────────────────────────────────────
+  {t:'r4850g5', l:'R4850G5', w:68,h:32,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-12}" rx="2" fill="none" stroke="#ff9800" stroke-width="1" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff9800" font-family="sans-serif" font-weight="600">48V DC</text>
-    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'battery_string', l:'Batterie', w:44,h:56,
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a1a0a" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">HUAWEI</text>
+    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">R4850G5 · 48V</text>
+    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'r48200g', l:'R48-200G', w:68,h:32,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+8}" y1="${y}" x2="${x+8}" y2="${y+8}" stroke="#ffd700" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y}" x2="${x+w-8}" y2="${y+8}" stroke="#1a1a8a" stroke-width="2.5" stroke-linecap="round"/>
-    <rect x="${x+6}" y="${y+10}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".7"/>
-    <rect x="${x+6}" y="${y+20}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".6"/>
-    <rect x="${x+6}" y="${y+30}" width="${w-12}" height="8" rx="1" fill="#ff9800" opacity=".5"/>
-    <text x="${x+w/2}" y="${y+h-6}" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif">VRLA</text>`}},
-  {t:'controller', l:'Contrôleur', w:50,h:38,
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a1a0a" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">HUAWEI</text>
+    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">R48-200G</text>
+    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  // ── Rectifiers ZTE ────────────────────────────────────────────────────
+  {t:'zxd3000', l:'ZXD3000', w:68,h:32,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-16}" rx="1" fill="none" stroke="#4fc3f7" stroke-width="1" opacity=".7"/>
-    <text x="${x+w/2}" y="${y+h/2+2}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="sans-serif">SMU</text>
-    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#44ff44" opacity=".8"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#001a2a" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE</text>
+    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#80d8ff" font-family="monospace">ZXD3000 · 48V</text>
+    <circle cx="${x+w-8}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  // ── SMU / Contrôleurs ──────────────────────────────────────────────────
+  {t:'smu01c', l:'SMU01C', w:64,h:36,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a0a1a" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">SMU01C</text>
+    <text x="${x+w/2}" y="${y+24}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">EMS Controller</text>
+    <circle cx="${x+10}" cy="${y+8}" r="3" fill="#00ff88" opacity=".8"/>
+    <circle cx="${x+18}" cy="${y+8}" r="3" fill="#ffd700" opacity=".8"/>
     <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'bmu', l:'BMU', w:56,h:32,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#1a1a00" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="monospace" font-weight="700">BMU</text>
+    <text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="7" fill="#fff" font-family="monospace" opacity=".7">Bat. Mgt Unit</text>
+    <line x1="${x+10}" y1="${y}" x2="${x+10}" y2="${y+4}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y}" x2="${x+w-10}" y2="${y+4}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  // ── Batteries ─────────────────────────────────────────────────────────
+  {t:'vrla_200', l:'VRLA 200Ah', w:52,h:64,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+w/2-6}" y="${y-5}" width="12" height="7" rx="2" fill="#ff9800" opacity=".8"/>
+    <rect x="${x+4}" y="${y+8}" width="${w-8}" height="${h-16}" rx="2" fill="#1a1a2a" opacity=".8"/>
+    <rect x="${x+8}" y="${y+12}" width="${w-16}" height="8" rx="1" fill="#333" opacity=".9"/>
+    <rect x="${x+8}" y="${y+22}" width="${w-16}" height="8" rx="1" fill="#333" opacity=".8"/>
+    <rect x="${x+8}" y="${y+32}" width="${w-16}" height="8" rx="1" fill="#333" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+h-10}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="monospace" font-weight="700">VRLA</text>
+    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="7" fill="#fff" font-family="monospace" opacity=".7">200Ah·12V</text>
+    <line x1="${x+8}" y1="${y+h-4}" x2="${x+8}" y2="${y+h}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${x+w-8}" y1="${y+h-4}" x2="${x+w-8}" y2="${y+h}" stroke="#0000cc" stroke-width="2.5" stroke-linecap="round"/>`}},
+  {t:'vrla_100', l:'VRLA 100Ah', w:44,h:56,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+w/2-5}" y="${y-4}" width="10" height="6" rx="2" fill="#ff9800" opacity=".8"/>
+    <rect x="${x+4}" y="${y+6}" width="${w-8}" height="${h-14}" rx="2" fill="#1a1a2a" opacity=".8"/>
+    <rect x="${x+7}" y="${y+10}" width="${w-14}" height="7" rx="1" fill="#333" opacity=".9"/>
+    <rect x="${x+7}" y="${y+19}" width="${w-14}" height="7" rx="1" fill="#333" opacity=".8"/>
+    <rect x="${x+7}" y="${y+28}" width="${w-14}" height="7" rx="1" fill="#333" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+h-8}" text-anchor="middle" font-size="7" fill="#ff9800" font-family="monospace" font-weight="700">VRLA 100Ah</text>
+    <line x1="${x+6}" y1="${y+h-4}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h-4}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  // ── BBU / RAN ──────────────────────────────────────────────────────────
+  {t:'bbu5900', l:'BBU5900', w:64,h:40,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="${h-8}" rx="2" fill="#0a1520" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#00d4aa" font-family="monospace" font-weight="700">HUAWEI BBU</text>
+    <text x="${x+w/2}" y="${y+24}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace">5900 · LTE/NR</text>
+    <circle cx="${x+10}" cy="${y+8}" r="2.5" fill="#00ff88" opacity=".8"/>
+    <circle cx="${x+17}" cy="${y+8}" r="2.5" fill="#00ff88" opacity=".6"/>
+    <circle cx="${x+24}" cy="${y+8}" r="2.5" fill="#ffd700" opacity=".8"/>
+    <line x1="${x+6}" y1="${y+h-4}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h-4}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  // ── PDU / Distribution ─────────────────────────────────────────────────
+  {t:'pdu48v', l:'PDU 48V', w:56,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#1a1a00" opacity=".7"/>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="sans-serif" font-weight="700">PDU 48V</text>
+    <line x1="${x+10}" y1="${y+22}" x2="${x+10}" y2="${y+h-6}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+22}" x2="${x+w/2}" y2="${y+h-6}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w-10}" y1="${y+22}" x2="${x+w-10}" y2="${y+h-6}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>`}},
+  // ── Protection ─────────────────────────────────────────────────────────
+  {t:'mcb_dc', l:'MCB DC', w:24,h:44,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#ff9800" stroke-width="1.2" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="7" fill="#ff9800" font-family="sans-serif">DC</text>`}},
   {t:'fuse_dc', l:'Fusible DC', w:16,h:40,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
@@ -387,53 +590,221 @@ const DC_COMPS = [
     <line x1="${x+w/2}" y1="${y+h-6}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
     <rect x="${x+3}" y="${y+6}" width="${w-6}" height="${h-12}" rx="1" fill="none" stroke="#ff9800" stroke-width=".8" opacity=".7"/>
     <line x1="${x+5}" y1="${y+h/2-6}" x2="${x+w-5}" y2="${y+h/2+6}" stroke="#ff9800" stroke-width="1.2"/>`}},
-  {t:'mcb_dc', l:'MCB DC', w:24,h:44,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+10}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+h-10}" x2="${x+w/2}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="${x+w/2}" cy="${y+h/2}" r="6" fill="none" stroke="#ff9800" stroke-width="1.2" opacity=".8"/>
-    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="sans-serif">DC</text>`}},
-  {t:'barre_dc', l:'Barre DC', w:80,h:16,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round" opacity=".7"/>`}},
-  {t:'shunt', l:'Shunt', w:30,h:20,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
-    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <path d="M${x+8},${y+h/2} L${x+12},${y+4} L${x+18},${y+h-4} L${x+22},${y+4} L${x+w-8},${y+h/2}" fill="none" stroke="#ff9800" stroke-width="1.5"/>
-    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'lvc', l:'LVC', w:32,h:32,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
-    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff4444" font-family="sans-serif" font-weight="700">LVC</text>
-    <line x1="${x}" y1="${y+h/2}" x2="${x+6}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
-    <line x1="${x+w-6}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
-  {t:'pdu_dc', l:'PDU DC', w:44,h:48,
-   d:(g,x,y,w,h,c)=>{g.innerHTML=`
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
-    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#ff9800" font-family="sans-serif" font-weight="600">PDU</text>
-    <line x1="${x+8}" y1="${y+20}" x2="${x+8}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w/2}" y1="${y+20}" x2="${x+w/2}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="${x+w-8}" y1="${y+20}" x2="${x+w-8}" y2="${y+h-8}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>`}},
   {t:'surge_dc', l:'Paraf. DC', w:20,h:40,
    d:(g,x,y,w,h,c)=>{g.innerHTML=`
     <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
     <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+8}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
     <line x1="${x+w/2}" y1="${y+h-8}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
     <path d="M${x+w/2},${y+10} L${x+w-3},${y+h/2} L${x+w/2},${y+h/2} L${x+3},${y+h-12} Z" fill="#ff9800" opacity=".8"/>`}},
+  {t:'lvc', l:'LVC', w:32,h:32,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1"/>
+    <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="9" fill="#ff4444" font-family="sans-serif" font-weight="700">LVC</text>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+6}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'shunt', l:'Shunt', w:30,h:20,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x}" y1="${y+h/2}" x2="${x+8}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <path d="M${x+8},${y+h/2} L${x+12},${y+4} L${x+18},${y+h-4} L${x+22},${y+4} L${x+w-8},${y+h/2}" fill="none" stroke="#ff9800" stroke-width="1.5"/>
+    <line x1="${x+w-8}" y1="${y+h/2}" x2="${x+w}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'barre_dc', l:'Barre DC', w:80,h:16,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c}" stroke="#222" stroke-width="1"/>
+    <line x1="${x+10}" y1="${y+h/2}" x2="${x+w-10}" y2="${y+h/2}" stroke="#ff9800" stroke-width="2" stroke-linecap="round" opacity=".7"/>`}},
+  {t:'terre_dc', l:'Terre GND', w:26,h:26,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <line x1="${x+w/2}" y1="${y+2}" x2="${x+w/2}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+3}" y1="${y+h-10}" x2="${x+w-3}" y2="${y+h-10}" stroke="#1a7a1a" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="${x+6}" y1="${y+h-6}" x2="${x+w-6}" y2="${y+h-6}" stroke="#1a7a1a" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="${x+9}" y1="${y+h-2}" x2="${x+w-9}" y2="${y+h-2}" stroke="#1a7a1a" stroke-width="1.2" stroke-linecap="round"/>`}},
+
+  // ── Composants réels terrain MTN Congo ─────────────────────────────────
+  {t:'chnt_cb125', l:'CHNT CB-125', w:28,h:52,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.3"/>
+    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="16" rx="2" fill="#e8e8e8" opacity=".9"/>
+    <text x="${x+w/2}" y="${y+12}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">CHNT</text>
+    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="5.5" fill="#555" font-family="sans-serif">CB-125</text>
+    <rect x="${x+4}" y="${y+22}" width="${w-8}" height="16" rx="2" fill="#2060c8"/>
+    <text x="${x+w/2}" y="${y+32}" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+3}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-3}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <text x="${x+w/2}" y="${y+h-3}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">100A</text>`}},
+  {t:'chnt_cb60', l:'CHNT CB-60', w:24,h:48,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
+    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#e8e8e8" opacity=".9"/>
+    <text x="${x+w/2}" y="${y+9}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">CHNT</text>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="5" fill="#555" font-family="sans-serif">CB-60</text>
+    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="14" rx="2" fill="#2060c8"/>
+    <text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C50</text>`}},
+  {t:'tengen_tgb1z', l:'TENGEN TGB1Z', w:24,h:48,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
+    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#e0f0e0" opacity=".9"/>
+    <text x="${x+w/2}" y="${y+8}" text-anchor="middle" font-size="5" fill="#1a5a1a" font-family="sans-serif" font-weight="700">TENGEN</text>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">TGB1Z-63</text>
+    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="14" rx="2" fill="#2060c8"/>
+    <text x="${x+w/2}" y="${y+28}" text-anchor="middle" font-size="6.5" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C40</text>`}},
+  {t:'huajia_hgm45', l:'HUA JIA HGM45', w:22,h:46,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
+    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#f0f0f0" opacity=".9"/>
+    <text x="${x+w/2}" y="${y+8}" text-anchor="middle" font-size="5" fill="#333" font-family="sans-serif" font-weight="700">HUA JIA</text>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">HGM45-63</text>
+    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="13" rx="2" fill="#2060c8"/>
+    <text x="${x+w/2}" y="${y+27}" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">O·OFF</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C16</text>`}},
+  {t:'nader_125', l:'Nader NDM1A-125', w:28,h:54,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.3"/>
+    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="16" rx="2" fill="#e0e0e0" opacity=".95"/>
+    <text x="${x+w/2}" y="${y+10}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">Nader</text>
+    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">NDM1A-125</text>
+    <rect x="${x+4}" y="${y+22}" width="${w-8}" height="18" rx="3" fill="#777"/>
+    <rect x="${x+6}" y="${y+24}" width="${w-12}" height="14" rx="2" fill="#999"/>
+    <text x="${x+w/2}" y="${y+33}" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">↑ ON</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+3}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-3}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <text x="${x+w/2}" y="${y+h-3}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">100A</text>`}},
+  {t:'nader_63', l:'Nader NDM1A-63', w:24,h:50,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
+    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="14" rx="2" fill="#e0e0e0" opacity=".95"/>
+    <text x="${x+w/2}" y="${y+9}" text-anchor="middle" font-size="6" fill="#111" font-family="sans-serif" font-weight="700">Nader</text>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="4.5" fill="#555" font-family="sans-serif">NDM1A-63</text>
+    <rect x="${x+3}" y="${y+18}" width="${w-6}" height="16" rx="3" fill="#777"/>
+    <rect x="${x+5}" y="${y+20}" width="${w-10}" height="12" rx="2" fill="#999"/>
+    <text x="${x+w/2}" y="${y+29}" text-anchor="middle" font-size="5.5" fill="#fff" font-family="sans-serif" font-weight="700">↑ ON</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a1a8a" stroke-width="2" stroke-linecap="round"/>
+    <text x="${x+w/2}" y="${y+h-2}" text-anchor="middle" font-size="5" fill="#aaa" font-family="sans-serif">C63</text>`}},
+  {t:'xw2_para', l:'Paraf. XW2', w:22,h:50,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
+    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="16" rx="2" fill="#cc2222" opacity=".85"/>
+    <text x="${x+w/2}" y="${y+10}" text-anchor="middle" font-size="6" fill="#fff" font-family="sans-serif" font-weight="700">XW²</text>
+    <text x="${x+w/2}" y="${y+17}" text-anchor="middle" font-size="5" fill="#ffd700" font-family="sans-serif">SPD</text>
+    <path d="M${x+w/2},${y+20} L${x+w-3},${y+34} L${x+w/2},${y+34} L${x+3},${y+44} Z" fill="#ffd700" opacity=".9"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'phoenix_valms', l:'Phoenix VAL-MS', w:24,h:50,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#1a1a1a" stroke-width="1.2"/>
+    <rect x="${x+2}" y="${y+2}" width="${w-4}" height="18" rx="2" fill="#c0210a" opacity=".9"/>
+    <text x="${x+w/2}" y="${y+9}" text-anchor="middle" font-size="5.5" fill="#fff" font-family="sans-serif" font-weight="700">PHOENIX</text>
+    <text x="${x+w/2}" y="${y+15}" text-anchor="middle" font-size="5" fill="#ffd700" font-family="sans-serif">VAL-MS</text>
+    <text x="${x+w/2}" y="${y+21}" text-anchor="middle" font-size="4.5" fill="#ffaaaa" font-family="sans-serif">75/40 ST GY</text>
+    <path d="M${x+w/2},${y+23} L${x+w-3},${y+37} L${x+w/2},${y+37} L${x+3},${y+47} Z" fill="#ffd700" opacity=".85"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+2}" stroke="#ffd700" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-2}" x2="${x+w/2}" y2="${y+h}" stroke="#1a7a1a" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'voyant_vert', l:'Voyant Vert', w:22,h:22,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2}" fill="${c}" stroke="#222" stroke-width="1"/>
+    <circle cx="${x+w/2}" cy="${y+h/2}" r="${w/2-4}" fill="#00dd44" opacity=".9"/>
+    <circle cx="${x+w/2-3}" cy="${y+h/2-3}" r="3" fill="#88ffaa" opacity=".7"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>`}},
+
+  // ── Équipements ZTE terrain MTN Congo ──────────────────────────────────
+  {t:'zxdu58', l:'ZXDU58 B121', w:80,h:48,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="${c}" stroke="#222" stroke-width="1.5"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="18" rx="2" fill="#001a2a" opacity=".85"/>
+    <text x="${x+w/2}" y="${y+13}" text-anchor="middle" font-size="8" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE 中兴</text>
+    <text x="${x+w/2}" y="${y+21}" text-anchor="middle" font-size="7" fill="#80d8ff" font-family="monospace">ZXDU58 B121</text>
+    <rect x="${x+6}" y="${y+26}" width="10" height="8" rx="1" fill="#ff4444" opacity=".8"/>
+    <rect x="${x+18}" y="${y+26}" width="10" height="8" rx="1" fill="#ff4444" opacity=".7"/>
+    <rect x="${x+30}" y="${y+26}" width="10" height="8" rx="1" fill="#333" opacity=".7"/>
+    <rect x="${x+42}" y="${y+26}" width="10" height="8" rx="1" fill="#333" opacity=".7"/>
+    <text x="${x+w-10}" y="${y+32}" text-anchor="middle" font-size="6" fill="#00ff88" font-family="monospace">PWR</text>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y+h-4}" x2="${x+w/2}" y2="${y+h}" stroke="#0000cc" stroke-width="2.5" stroke-linecap="round"/>`}},
+  {t:'zxdr_b8200', l:'ZXDR B8200', w:72,h:40,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="16" rx="2" fill="#001530" opacity=".85"/>
+    <text x="${x+w/2}" y="${y+12}" text-anchor="middle" font-size="7.5" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE 中兴</text>
+    <text x="${x+w/2}" y="${y+20}" text-anchor="middle" font-size="6.5" fill="#80d8ff" font-family="monospace">ZXDR B8200</text>
+    <circle cx="${x+10}" cy="${y+30}" r="3" fill="#00ff88" opacity=".8"/>
+    <circle cx="${x+18}" cy="${y+30}" r="3" fill="#ffd700" opacity=".8"/>
+    <circle cx="${x+26}" cy="${y+30}" r="3" fill="#00ff88" opacity=".6"/>
+    <line x1="${x+6}" y1="${y+h-4}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h-4}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'zxm10_eisu', l:'ZXM10 EISU', w:72,h:36,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#001a0a" opacity=".85"/>
+    <text x="${x+w/2}" y="${y+11}" text-anchor="middle" font-size="7" fill="#00d4aa" font-family="monospace" font-weight="700">ZNV</text>
+    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="6" fill="#4fc3f7" font-family="monospace">ZXM10 EISU</text>
+    <rect x="${x+6}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
+    <rect x="${x+13}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
+    <rect x="${x+20}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
+    <rect x="${x+27}" y="${y+22}" width="5" height="5" rx="1" fill="#1a3a5a"/>
+    <circle cx="${x+w-10}" cy="${y+28}" r="3" fill="#00ff88" opacity=".8"/>
+    <line x1="${x+6}" y1="${y+h-3}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h-3}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'nr8250', l:'ZXMW NR8250', w:68,h:36,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="14" rx="2" fill="#001530" opacity=".85"/>
+    <text x="${x+w/2}" y="${y+11}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE 中兴</text>
+    <text x="${x+w/2}" y="${y+18}" text-anchor="middle" font-size="6" fill="#80d8ff" font-family="monospace">ZXMW NR8250</text>
+    <path d="M${x+10},${y+28} Q${x+w/2},${y+20} ${x+w-10},${y+28}" fill="none" stroke="#4fc3f7" stroke-width="1.5" opacity=".7"/>
+    <circle cx="${x+w/2}" cy="${y+30}" r="3" fill="#ffd700" opacity=".8"/>
+    <line x1="${x+6}" y1="${y+h-3}" x2="${x+6}" y2="${y+h}" stroke="#ff9800" stroke-width="2" stroke-linecap="round"/>
+    <line x1="${x+w-6}" y1="${y+h-3}" x2="${x+w-6}" y2="${y+h}" stroke="#0000cc" stroke-width="2" stroke-linecap="round"/>`}},
+  {t:'zte_eguard', l:'ZTE E-Guard', w:60,h:32,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.2"/>
+    <rect x="${x+3}" y="${y+3}" width="${w-6}" height="14" rx="2" fill="#001a2a" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+11}" text-anchor="middle" font-size="7" fill="#4fc3f7" font-family="monospace" font-weight="700">ZTE E-Guard</text>
+    <text x="${x+w/2}" y="${y+17}" text-anchor="middle" font-size="5.5" fill="#80d8ff" font-family="monospace">Supervision 48V</text>
+    <circle cx="${x+10}" cy="${y+25}" r="3" fill="#00ff88" opacity=".8"/>
+    <circle cx="${x+18}" cy="${y+25}" r="3" fill="#00ff88" opacity=".6"/>
+    <circle cx="${x+26}" cy="${y+25}" r="3" fill="#ffd700" opacity=".7"/>
+    <line x1="${x+w/2}" y1="${y+h-3}" x2="${x+w/2}" y2="${y+h}" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round"/>`}},
+  {t:'dcpd', l:'DCPD', w:64,h:36,
+   d:(g,x,y,w,h,c)=>{g.innerHTML=`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="#222" stroke-width="1.3"/>
+    <rect x="${x+4}" y="${y+4}" width="${w-8}" height="12" rx="2" fill="#1a1a00" opacity=".8"/>
+    <text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-size="8" fill="#ffd700" font-family="monospace" font-weight="700">DCPD</text>
+    <line x1="${x+10}" y1="${y+20}" x2="${x+10}" y2="${y+h-4}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+18}" y1="${y+20}" x2="${x+18}" y2="${y+h-4}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+26}" y1="${y+20}" x2="${x+26}" y2="${y+h-4}" stroke="#ff9800" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+34}" y1="${y+20}" x2="${x+34}" y2="${y+h-4}" stroke="#0000cc" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+42}" y1="${y+20}" x2="${x+42}" y2="${y+h-4}" stroke="#0000cc" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+4}" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round"/>`}},
 ];
 
 const AC_COLORS = {
-  disj1p:'#2563a8',disj2p:'#1a3f6b',disj3p:'#0d2c50',diff2p:'#5a2e8a',
-  fusible:'#8a3d10',contacteur:'#2a2a2a',parafoudre:'#8a6a00',
-  terre:'#1a4a1a',voyant:'#443355',bornier:'#5a4a3a',
+  disj1p:'#2563a8',disj2p:'#1a3f6b',disj3p:'#0d2c50',disj4p:'#0a2040',
+  diff2p:'#5a2e8a',diff4p:'#4a1a7a',fusible:'#8a3d10',contacteur:'#2a2a2a',
+  parafoudre:'#8a6a00',terre:'#1a4a1a',voyant:'#443355',bornier:'#5a4a3a',
+  tgbt:'#0d2c50',transfo:'#2a3a2a',compteur:'#1a3a2a',sect3p:'#2a2040',
+  prise32a:'#2a4a1a',bp_arret:'#3a1a1a',alarme:'#3a1010',inter_sect:'#1a2a3a',
+  chnt_cb125:'#1a3060',chnt_cb60:'#1a3060',tengen_tgb1z:'#1a4a1a',
+  huajia_hgm45:'#1a3060',nader_125:'#3a3a3a',nader_63:'#3a3a3a',
+  xw2_para:'#5a0a0a',phoenix_valms:'#5a0a0a',voyant_vert:'#1a3a1a'
 };
 const DC_COLORS = {
-  rectifier:'#1a2a1a',battery_string:'#1a1a3a',controller:'#0a2a3a',
-  fuse_dc:'#3a1a00',mcb_dc:'#2a1a00',barre_dc:'#3a2a00',
-  shunt:'#2a2a2a',lvc:'#3a0a0a',pdu_dc:'#1a2a3a',surge_dc:'#2a1a00',
+  r4850g5:'#0a1a0a',r48200g:'#0a1a0a',zxd3000:'#001a2a',
+  smu01c:'#0a0a1a',bmu:'#1a1a00',
+  vrla_200:'#1a1a2a',vrla_100:'#1a1a2a',bbu5900:'#0a1520',
+  pdu48v:'#1a1a00',mcb_dc:'#2a1a00',fuse_dc:'#3a1a00',
+  surge_dc:'#2a1a00',lvc:'#3a0a0a',shunt:'#2a2a2a',
+  barre_dc:'#3a2a00',terre_dc:'#1a4a1a',
+  zxdu58:'#001a2a',zxdr_b8200:'#001530',zxm10_eisu:'#001a0a',
+  nr8250:'#001530',zte_eguard:'#001a2a',dcpd:'#1a1a00'
 };
 
 // ══ FILS ════════════════════════════════════════════════════════════════════
@@ -453,7 +824,6 @@ let schemaMode = 'ac';
 let COMPS = AC_COMPS;
 let COLORS = AC_COLORS;
 let WIRES = AC_WIRES;
-
 let mode = 'add', selType = 'disj1p';
 let wireColor = '#8B0000', wireColorLabel = 'Phase L1';
 let wireStart = null;
@@ -463,11 +833,11 @@ let history = [];
 let currentSchemaId = null;
 
 const cvs = document.getElementById('cvs');
-const wl = document.getElementById('wl');
-const cl = document.getElementById('cl');
-const ll = document.getElementById('ll');
-const wp = document.getElementById('wp');
-const cw = document.getElementById('cw');
+const wl  = document.getElementById('wl');
+const cl  = document.getElementById('cl');
+const ll  = document.getElementById('ll');
+const wp  = document.getElementById('wp');
+const cw  = document.getElementById('cw');
 
 const snap = v => Math.round(v/20)*20;
 const uid  = () => 'e'+Date.now()+Math.floor(Math.random()*9999);
@@ -479,7 +849,7 @@ const getPos = e => {
 const clone = o => JSON.parse(JSON.stringify(o));
 const saveHist = () => { history.push(clone({components,wires,textLabels})); if(history.length>40)history.shift(); };
 
-// ══ SCHEMA MODE (AC / DC) ════════════════════════════════════════════════
+// ══ SCHEMA MODE ══════════════════════════════════════════════════════════
 function switchSchemaMode(m) {
   schemaMode = m;
   COMPS  = m==='ac' ? AC_COMPS  : DC_COMPS;
@@ -488,7 +858,7 @@ function switchSchemaMode(m) {
   selType = COMPS[0].t;
   document.getElementById('tab-ac').classList.toggle('sel', m==='ac');
   document.getElementById('tab-dc').classList.toggle('sel', m==='dc');
-  document.getElementById('comps-title').textContent = m==='ac' ? 'Composants AC' : 'Composants DC / 48V';
+  document.getElementById('comps-title').textContent = m==='ac' ? 'Composants AC' : 'Composants DC — MTN';
   buildPalette(); buildWirePal();
   wireColor = WIRES[0].c; wireColorLabel = WIRES[0].l;
   document.getElementById('wire-lbl').textContent = wireColorLabel;
@@ -532,7 +902,7 @@ function buildWirePal() {
   });
 }
 
-// ══ MODE ══════════════════════════════════════════════════════════════════
+// ══ MODE ════════════════════════════════════════════════════════════════
 function setMode(m) {
   mode=m; wireStart=null; wp.setAttribute('opacity','0');
   ['sel','add','wire','label'].forEach(x=>document.getElementById('btn-'+x)?.classList.remove('on'));
@@ -560,7 +930,7 @@ function renderComp(comp) {
     g.appendChild(r);
   }
   const inner=document.createElementNS('http://www.w3.org/2000/svg','g');
-  const col = (DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444');
+  const col = DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444';
   def.d(inner,0,0,def.w,def.h,col);
   g.appendChild(inner);
   if(comp.label){
@@ -665,7 +1035,6 @@ cvs.addEventListener('mousemove',e=>{
 });
 cvs.addEventListener('mouseup',()=>{dragComp=null;});
 cvs.addEventListener('contextmenu',e=>{e.preventDefault();wireStart=null;wp.setAttribute('opacity','0');});
-
 document.addEventListener('keydown',e=>{
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   if(e.key==='s'||e.key==='S')setMode('select');
@@ -694,8 +1063,8 @@ function updateUI(){
         <input value="${comp.valeur||''}" oninput="upP('${comp.id}','valeur',this.value)" placeholder="48V / 50A"></div>`
       :`<div class="pr"><label>Ampérage</label>
         <input value="${comp.amperage||''}" oninput="upP('${comp.id}','amperage',this.value)" placeholder="16A"></div>`}
-      <div class="pr"><label>Marque</label>
-        <input value="${comp.marque||''}" oninput="upP('${comp.id}','marque',this.value)" placeholder="Huawei / Schneider"></div>
+      <div class="pr"><label>Marque / Modèle</label>
+        <input value="${comp.marque||''}" oninput="upP('${comp.id}','marque',this.value)" placeholder="Huawei / ZTE / CHNT"></div>
       <div class="pr"><label>Référence</label>
         <input value="${comp.ref||''}" oninput="upP('${comp.id}','ref',this.value)"></div>
       <div class="pr"><label>État</label>
@@ -760,6 +1129,168 @@ function setStatus(msg,t='idle'){
   document.getElementById('sdot').className='sd '+(t==='ok'?'ok':t==='busy'?'busy':'idle');
 }
 
+// ══ PHOTO → SCHEMA (Claude Vision intégré) ═══════════════════════════════
+let photoFiles = [];
+
+function openPhotoModal(){
+  photoFiles = [];
+  document.getElementById('ph-thumbs').innerHTML = '';
+  document.getElementById('ph-log').style.display = 'none';
+  document.getElementById('ph-log').innerHTML = '';
+  document.getElementById('ph-btn-analyze').disabled = true;
+  document.getElementById('mo-photo').style.display = 'flex';
+}
+
+function handleDrop(ev){
+  ev.preventDefault();
+  document.getElementById('photo-drop').classList.remove('dragging');
+  const files = [...ev.dataTransfer.files].filter(f=>f.type.startsWith('image/')).slice(0,4);
+  addPhotoFiles(files);
+}
+
+function handleFileSelect(ev){
+  const files = [...ev.target.files].slice(0,4);
+  addPhotoFiles(files);
+}
+
+function addPhotoFiles(files){
+  photoFiles = files;
+  const row = document.getElementById('ph-thumbs');
+  row.innerHTML = '';
+  files.forEach(f=>{
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(f);
+    row.appendChild(img);
+  });
+  document.getElementById('ph-btn-analyze').disabled = files.length === 0;
+}
+
+function logPhoto(msg, type='info'){
+  const log = document.getElementById('ph-log');
+  log.style.display = 'block';
+  const colors = {info:'#4fc3f7', ok:'#00d4aa', err:'#ff4444', warn:'#ffd700'};
+  log.innerHTML += `<span style="color:${colors[type]||'#ccc'}">${msg}</span>\n`;
+  log.scrollTop = log.scrollHeight;
+}
+
+async function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const r = new FileReader();
+    r.onload = ()=>resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+async function analyzePhotos(){
+  if(!photoFiles.length) return;
+  document.getElementById('ph-btn-analyze').disabled = true;
+  document.getElementById('ph-log').innerHTML = '';
+  logPhoto('📷 Chargement des photos…');
+
+  const modeVal = document.getElementById('ph-mode').value;
+  const modeLabel = modeVal==='ac'?'AC — Coffret BT':modeVal==='dc'?'DC — Rectifier 48V':'Auto-détection';
+
+  // Build image blocks for Claude API
+  const imageBlocks = [];
+  for(const f of photoFiles){
+    const b64 = await fileToBase64(f);
+    const mt = f.type || 'image/jpeg';
+    imageBlocks.push({
+      type:'image',
+      source:{type:'base64',media_type:mt,data:b64}
+    });
+  }
+
+  const systemPrompt = `Tu es ROSELEC Vision, expert en équipements électriques et télécommunications MTN Congo.
+Analyse les photos et retourne UNIQUEMENT un objet JSON valide (pas de markdown, pas de texte autour).
+
+Structure JSON obligatoire :
+{
+  "mode": "ac" ou "dc",
+  "coffret": {
+    "type": "string",
+    "tension_nominale": "string",
+    "observations": "string"
+  },
+  "composants": [
+    {
+      "type": "string (voir liste)",
+      "label": "string",
+      "valeur": "string",
+      "amperage": "string",
+      "marque": "string",
+      "ref": "string",
+      "etat": "ok|alarme|defaut|hs"
+    }
+  ]
+}
+
+Types AC disponibles: disj1p, disj2p, disj3p, disj4p, diff2p, diff4p, fusible, contacteur, parafoudre, terre, voyant, bornier, tgbt, transfo, compteur, sect3p, prise32a, bp_arret, alarme, inter_sect, chnt_cb125, chnt_cb60, tengen_tgb1z, huajia_hgm45, nader_125, nader_63, xw2_para, phoenix_valms, voyant_vert
+Types DC disponibles: r4850g5, r48200g, zxd3000, smu01c, bmu, vrla_200, vrla_100, bbu5900, pdu48v, mcb_dc, fuse_dc, surge_dc, lvc, shunt, barre_dc, terre_dc, zxdu58, zxdr_b8200, zxm10_eisu, nr8250, zte_eguard, dcpd
+
+Mode demandé : ${modeLabel}
+Si auto-détection : détermine toi-même si c'est AC ou DC selon le contenu des photos.
+Retourne UNIQUEMENT le JSON, sans aucun texte avant ou après.`;
+
+  const userContent = [
+    ...imageBlocks,
+    {type:'text',text:`Analyse ${photoFiles.length} photo(s) de coffret électrique MTN Congo. Mode: ${modeLabel}. Retourne le JSON de schématisation.`}
+  ];
+
+  logPhoto(`🤖 Envoi à Claude Vision (${photoFiles.length} photo(s), mode: ${modeLabel})…`);
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        system: systemPrompt,
+        messages:[{role:'user', content:userContent}]
+      })
+    });
+
+    if(!resp.ok){
+      const err = await resp.text();
+      logPhoto(`❌ Erreur API: ${resp.status} — ${err.slice(0,200)}`, 'err');
+      document.getElementById('ph-btn-analyze').disabled = false;
+      return;
+    }
+
+    const data = await resp.json();
+    const rawText = data.content?.map(b=>b.text||'').join('') || '';
+
+    logPhoto(`✅ Réponse reçue (${rawText.length} chars)`, 'ok');
+
+    // Parse JSON
+    let result;
+    try {
+      const clean = rawText.replace(/```json|```/g,'').trim();
+      result = JSON.parse(clean);
+    } catch(pe){
+      logPhoto(`⚠️ Erreur parsing JSON: ${pe.message}`, 'warn');
+      logPhoto(`Réponse brute: ${rawText.slice(0,300)}`, 'warn');
+      document.getElementById('ph-btn-analyze').disabled = false;
+      return;
+    }
+
+    const n = result.composants?.length || 0;
+    logPhoto(`✅ ${n} composant(s) détecté(s) — fermeture et chargement dans l'éditeur…`, 'ok');
+
+    // Close modal after short delay & load into editor
+    setTimeout(()=>{
+      document.getElementById('mo-photo').style.display = 'none';
+      loadAI(result);
+    }, 800);
+
+  } catch(err){
+    logPhoto(`❌ Erreur réseau: ${err.message}`, 'err');
+    document.getElementById('ph-btn-analyze').disabled = false;
+  }
+}
+
 // ══ AI INJECT ════════════════════════════════════════════════════════════
 window.addEventListener('message',e=>{
   if(e.data?.type==='ai_result') loadAI(e.data.payload);
@@ -768,37 +1299,30 @@ window.addEventListener('message',e=>{
 
 function loadAI(payload){
   if(!payload||payload.error){setStatus('Erreur IA : '+(payload?.error||'inconnue'));return;}
-
   const detected = payload.composants||[];
   const isdc = payload.mode==='dc';
-
   if(isdc && schemaMode==='ac') switchSchemaMode('dc');
   else if(!isdc && schemaMode==='dc') switchSchemaMode('ac');
-
   const chips = document.getElementById('ai-chips');
   const empty = document.getElementById('ai-empty');
   chips.innerHTML='';
-
   detected.forEach((c,i)=>{
     const chip=document.createElement('div');
     chip.className='ac'+(isdc?' dc-chip':'');
     chip.id='chip-'+i;
     chip.innerHTML=`<b>${c.label||c.type}</b> <span style="opacity:.6">${c.valeur||c.amperage||''}</span>`;
-    chip.title='Cliquer pour placer';
+    chip.title='Cliquer pour placer sur le canvas';
     chip.onclick=()=>placeAI(c,i,isdc);
     chips.appendChild(chip);
   });
-
   const sysInfo = payload.coffret||payload.systeme;
   if(sysInfo){
     const box=document.getElementById('sys-info-box');
     box.style.display='';
     box.innerHTML=`<div class="sys-info"><b>${(sysInfo.type||'').replace(/_/g,' ')}</b>
       · ${sysInfo.tension_nominale||sysInfo.tension||''}<br>
-      ${sysInfo.capacite_totale?'Capacité : '+sysInfo.capacite_totale+'<br>':''}
       <span style="color:#666">${sysInfo.observations||''}</span></div>`;
   }
-
   chips.style.display='flex';empty.style.display='none';
   setStatus(detected.length+' composant(s) détecté(s) — cliquer pour placer','ok');
 }
@@ -851,7 +1375,7 @@ function confirmSave(){
   setStatus('Sauvegarde en cours…','busy');
 }
 
-// ══ EXPORT ═══════════════════════════════════════════════════════════════
+// ══ EXPORT ════════════════════════════════════════════════════════════════
 function showExport(){document.getElementById('mo-export').style.display='flex';}
 
 function buildSVG(){
@@ -878,7 +1402,6 @@ function buildSVG(){
   const pad=40,W=Math.round(maxX-minX+pad*2),H=Math.round(maxY-minY+pad*2+60);
   const dx=pad-minX,dy=pad-minY+56;
   const modeLabel=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';
-  // Rebuild SVG from data — avoids viewport truncation from innerHTML capture
   let wireSVG='';
   wires.forEach(w=>{
     let lbl=w.colorLabel||'';if(w.section)lbl+=' · '+w.section;if(w.distance)lbl+=' · '+w.distance;
@@ -892,7 +1415,8 @@ function buildSVG(){
   components.forEach(comp=>{
     const def=allDefs.find(c=>c.t===comp.type);if(!def)return;
     const tmpG=document.createElementNS('http://www.w3.org/2000/svg','g');
-    def.d(tmpG,0,0,def.w,def.h,COLORS[comp.type]||'#444');
+    const col=DC_COLORS[comp.type]||AC_COLORS[comp.type]||'#444';
+    def.d(tmpG,0,0,def.w,def.h,col);
     const cx=Math.round(comp.x+dx),cy=Math.round(comp.y+dy);
     const lbl=(comp.label||def.l)+(comp.amperage?' · '+comp.amperage:'');
     compSVG+=`<g transform="translate(${cx},${cy})">${tmpG.innerHTML}</g>`;
@@ -940,7 +1464,7 @@ function exportPNG(){
 }
 
 function exportJSON(){
-  const d={meta:{tool:'ROSELEC v1.0',mode:schemaMode,date:new Date().toISOString()},
+  const d={meta:{tool:'ROSELEC v1.1',mode:schemaMode,date:new Date().toISOString()},
     coffret:{composants:components,fils:wires,annotations:textLabels}};
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));
@@ -949,107 +1473,69 @@ function exportJSON(){
   document.getElementById('mo-export').style.display='none';
 }
 
-// ══ RAPPORT WHATSAPP ══════════════════════════════════════════════════════
-
+// ══ RAPPORT WHATSAPP ═════════════════════════════════════════════════════
 function showRapport(){
-  // Pré-remplir avec les infos du schéma en cours
-  const svSite = document.getElementById('sv-site')?.value||'';
-  const svTech = document.getElementById('ex-tech')?.value||'';
-  if(svSite) document.getElementById('rp-site').value = svSite;
-  if(svTech) document.getElementById('rp-tech').value = svTech;
-  // Détecter mode DC/AC
-  document.getElementById('rp-travail').value =
-    schemaMode==='dc' ? 'Schématisation armoire DC 48V' : 'Schématisation coffret électrique';
+  const svSite=document.getElementById('sv-site')?.value||'';
+  const svTech=document.getElementById('ex-tech')?.value||'';
+  if(svSite) document.getElementById('rp-site').value=svSite;
+  if(svTech) document.getElementById('rp-tech').value=svTech;
+  document.getElementById('rp-travail').value=
+    schemaMode==='dc'?'Schématisation armoire DC 48V':'Schématisation coffret électrique';
   previewMsg();
   document.getElementById('mo-rapport').style.display='flex';
 }
 
 function buildRapportMsg(){
-  const tech    = document.getElementById('rp-tech').value  || 'Technicien';
-  const site    = document.getElementById('rp-site').value  || 'Site';
-  const travail = document.getElementById('rp-travail').value;
-  const obs     = document.getElementById('rp-obs').value;
-  const now     = new Date();
-  const date    = now.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
-  const heure   = now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-  const mode    = schemaMode==='dc' ? 'DC / Rectifier 48V' : 'AC / BT';
-  const nComps  = components.length;
-  const nFils   = wires.length;
-
-  // Liste des composants uniques
-  const allDefs = [...AC_COMPS,...DC_COMPS];
-  const counts  = {};
+  const tech=document.getElementById('rp-tech').value||'Technicien';
+  const site=document.getElementById('rp-site').value||'Site';
+  const travail=document.getElementById('rp-travail').value;
+  const obs=document.getElementById('rp-obs').value;
+  const now=new Date();
+  const date=now.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const heure=now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const mode=schemaMode==='dc'?'DC / Rectifier 48V':'AC / BT';
+  const allDefs=[...AC_COMPS,...DC_COMPS];
+  const counts={};
   components.forEach(c=>{
-    const def = allDefs.find(d=>d.t===c.type);
-    const key = def ? def.l : c.type;
-    counts[key] = (counts[key]||0)+1;
+    const def=allDefs.find(d=>d.t===c.type);
+    const key=def?def.l:c.type;
+    counts[key]=(counts[key]||0)+1;
   });
-  const listComps = Object.entries(counts)
-    .map(([k,v])=>`  • ${k}${v>1?' (×'+v+')':''}`)
-    .join('\n');
-
-  let msg =
-`⚡ *ROSELEC — Rapport de site*
-━━━━━━━━━━━━━━━━━━━━
-👷 Technicien : *${tech}*
-📍 Site : *${site}*
-📅 Date : ${date} à ${heure}
-🔧 Travail : ${travail}
-⚙️ Mode schéma : ${mode}
-━━━━━━━━━━━━━━━━━━━━
-📊 *Composants schématisés : ${nComps}*
-${listComps||'  (aucun composant)'}
-
-🔌 Fils câblés : ${nFils}
-━━━━━━━━━━━━━━━━━━━━`;
-
-  if(obs.trim()){
-    msg += `\n📝 *Observations :*\n${obs.trim()}\n━━━━━━━━━━━━━━━━━━━━`;
-  }
-  msg += `\n_Schéma généré avec ROSELEC · MTN Congo Zone Sud_`;
+  const listComps=Object.entries(counts).map(([k,v])=>`  • ${k}${v>1?' (×'+v+')':''}`).join('\n');
+  let msg=`⚡ *ROSELEC — Rapport de site*\n━━━━━━━━━━━━━━━━━━━━\n👷 Technicien : *${tech}*\n📍 Site : *${site}*\n📅 Date : ${date} à ${heure}\n🔧 Travail : ${travail}\n⚙️ Mode schéma : ${mode}\n━━━━━━━━━━━━━━━━━━━━\n📊 *Composants schématisés : ${components.length}*\n${listComps||'  (aucun composant)'}\n\n🔌 Fils câblés : ${wires.length}\n━━━━━━━━━━━━━━━━━━━━`;
+  if(obs.trim())msg+=`\n📝 *Observations :*\n${obs.trim()}\n━━━━━━━━━━━━━━━━━━━━`;
+  msg+=`\n_Schéma généré avec ROSELEC · MTN Congo Zone Sud_`;
   return msg;
 }
 
-function previewMsg(){
-  document.getElementById('msg-preview').textContent = buildRapportMsg();
-}
+function previewMsg(){document.getElementById('msg-preview').textContent=buildRapportMsg();}
 
 function openWhatsAppOnly(){
-  const msg = buildRapportMsg();
-  // Numéro groupe WhatsApp vide = ouvre sélecteur de contact
-  const url = 'https://wa.me/?text='+encodeURIComponent(msg);
-  window.open(url,'_blank');
+  window.open('https://wa.me/?text='+encodeURIComponent(buildRapportMsg()),'_blank');
 }
 
 function exportPNGandWhatsApp(){
-  // 1. Exporter le PNG du schéma
-  const svg = buildSVG();
-  const img = new Image();
-  img.onload = ()=>{
-    const c = document.createElement('canvas');
-    c.width  = img.width*2; c.height = img.height*2;
-    const ctx = c.getContext('2d');
-    ctx.scale(2,2); ctx.drawImage(img,0,0);
-    // Télécharger l'image
-    const tech = document.getElementById('rp-tech').value||'tech';
-    const site = document.getElementById('rp-site').value||'site';
-    const a = document.createElement('a');
-    a.href     = c.toDataURL('image/png');
-    a.download = `ROSELEC_${site}_${tech}_${Date.now()}.png`;
+  const svg=buildSVG();
+  const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas');
+    c.width=img.width*2;c.height=img.height*2;
+    const ctx=c.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
+    const tech=document.getElementById('rp-tech').value||'tech';
+    const site=document.getElementById('rp-site').value||'site';
+    const a=document.createElement('a');
+    a.href=c.toDataURL('image/png');
+    a.download=`ROSELEC_${site}_${tech}_${Date.now()}.png`;
     a.click();
     setStatus('Image exportée — joindre dans WhatsApp','ok');
-    // 2. Ouvrir WhatsApp 1 seconde après
-    setTimeout(()=>{
-      const msg = buildRapportMsg();
-      window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-    }, 1200);
+    setTimeout(()=>{window.open('https://wa.me/?text='+encodeURIComponent(buildRapportMsg()),'_blank');},1200);
   };
-  img.src = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+  img.src=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
   document.getElementById('mo-rapport').style.display='none';
 }
 
 // ══ INIT ══════════════════════════════════════════════════════════════════
-buildPalette(); buildWirePal(); setMode('add'); setStatus('Prêt');
+buildPalette(); buildWirePal(); setMode('add'); setStatus('Prêt — v1.2 · 45+ composants MTN Congo');
 </script>
 </body>
 </html>

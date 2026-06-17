@@ -540,16 +540,21 @@ function renderComp(comp) {
   }
 
   if(p){
-    // Photo image
-    const fo = document.createElementNS('http://www.w3.org/2000/svg','foreignObject');
-    fo.setAttribute('x',0); fo.setAttribute('y',0);
-    fo.setAttribute('width',W); fo.setAttribute('height',H);
-    const div = document.createElement('div');
-    div.style.cssText = `width:${W}px;height:${H}px;overflow:hidden;border-radius:4px;border:1px solid #444`;
-    const img = document.createElement('img');
-    img.src = p.dataUrl;
-    img.style.cssText = `width:100%;height:100%;object-fit:contain;background:#1a1a1a;display:block`;
-    div.appendChild(img); fo.appendChild(div); g.appendChild(fo);
+    // Background rect
+    const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    bg.setAttribute('x',0);bg.setAttribute('y',0);
+    bg.setAttribute('width',W);bg.setAttribute('height',H);
+    bg.setAttribute('rx',4);bg.setAttribute('fill','#1a1a1a');
+    bg.setAttribute('stroke','#444');bg.setAttribute('stroke-width','1');
+    g.appendChild(bg);
+    // SVG image element (works in all browsers unlike foreignObject)
+    const si=document.createElementNS('http://www.w3.org/2000/svg','image');
+    si.setAttribute('href',p.dataUrl);
+    si.setAttribute('x',0);si.setAttribute('y',0);
+    si.setAttribute('width',W);si.setAttribute('height',H);
+    si.setAttribute('preserveAspectRatio','xMidYMid meet');
+    si.style.borderRadius='4px';
+    g.appendChild(si);
   } else {
     // Fallback placeholder
     const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
@@ -1111,143 +1116,180 @@ async function exportPNG(){
   const tech=document.getElementById('ex-tech').value||'';
   const now=new Date().toLocaleDateString('fr');
 
-  // Calculate bounds
+  // ── 1. Calculate full bounding box ──────────────────────────────────
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
   components.forEach(c=>{
     const p=photoLib[c.type]||{w:80,h:60};
     minX=Math.min(minX,c.x); minY=Math.min(minY,c.y);
-    maxX=Math.max(maxX,c.x+p.w); maxY=Math.max(maxY,c.y+p.h+20);
+    maxX=Math.max(maxX,c.x+p.w); maxY=Math.max(maxY,c.y+p.h+24);
   });
   wires.forEach(w=>{
     minX=Math.min(minX,w.x1,w.x2); minY=Math.min(minY,w.y1,w.y2);
     maxX=Math.max(maxX,w.x1,w.x2); maxY=Math.max(maxY,w.y1,w.y2);
   });
-  textLabels.forEach(t=>{ minX=Math.min(minX,t.x); minY=Math.min(minY,t.y-20); maxX=Math.max(maxX,t.x+200); maxY=Math.max(maxY,t.y+10); });
+  textLabels.forEach(t=>{
+    minX=Math.min(minX,t.x-4); minY=Math.min(minY,t.y-20);
+    maxX=Math.max(maxX,t.x+200); maxY=Math.max(maxY,t.y+10);
+  });
+  if(!isFinite(minX)){minX=0;minY=0;maxX=600;maxY=400;}
 
-  if(!isFinite(minX)){ minX=0;minY=0;maxX=600;maxY=400; }
-  const PAD=40, HDR=60;
-  const W=Math.max(400,maxX-minX+PAD*2);
-  const H=Math.max(300,maxY-minY+PAD*2+HDR);
+  const PAD=50, HDR=60, SCALE=2;
+  const CW=Math.max(500,Math.ceil(maxX-minX+PAD*2));
+  const CH=Math.max(300,Math.ceil(maxY-minY+PAD*2+HDR));
   const dx=PAD-minX, dy=PAD-minY+HDR;
 
-  const SCALE=2;
+  // ── 2. Pre-load ALL component images ─────────────────────────────────
+  const imgCache={};
+  const uniqueTypes=[...new Set(components.map(c=>c.type))];
+  await Promise.all(uniqueTypes.map(type=>new Promise(resolve=>{
+    const p=photoLib[type];
+    if(!p){resolve();return;}
+    const img=new Image();
+    img.onload=()=>{imgCache[type]=img;resolve();};
+    img.onerror=()=>{resolve();};
+    img.src=p.dataUrl;
+  })));
+
+  // ── 3. Create canvas ──────────────────────────────────────────────────
   const canvas=document.createElement('canvas');
-  canvas.width=W*SCALE; canvas.height=H*SCALE;
+  canvas.width=CW*SCALE; canvas.height=CH*SCALE;
   const ctx=canvas.getContext('2d');
   ctx.scale(SCALE,SCALE);
 
-  // Background
-  ctx.fillStyle='#f8f9fa'; ctx.fillRect(0,0,W,H);
+  // ── 4. Background + grid ──────────────────────────────────────────────
+  ctx.fillStyle='#f8f9fa'; ctx.fillRect(0,0,CW,CH);
+  ctx.fillStyle='rgba(180,188,200,.5)';
+  for(let gx=20;gx<CW;gx+=20)
+    for(let gy=HDR+20;gy<CH;gy+=20){
+      ctx.beginPath();ctx.arc(gx,gy,.8,0,Math.PI*2);ctx.fill();
+    }
 
-  // Dot grid
-  ctx.fillStyle='#c8cdd5';
-  for(let gx=20;gx<W;gx+=20) for(let gy=HDR+20;gy<H;gy+=20){
-    ctx.beginPath(); ctx.arc(gx,gy,.8,0,Math.PI*2); ctx.fill();
-  }
+  // ── 5. Header ─────────────────────────────────────────────────────────
+  ctx.fillStyle='#185FA5'; ctx.fillRect(0,0,CW,HDR);
+  ctx.fillStyle='#fff'; ctx.font='bold 15px sans-serif'; ctx.textAlign='left';
+  ctx.fillText('ROSELEC — '+title, 16, 24);
+  ctx.font='11px sans-serif'; ctx.fillStyle='rgba(255,255,255,.8)';
+  const sub=[(site||''), (tech?'Tech: '+tech:''), now, 'Mode: '+(schemaMode==='dc'?'DC/48V':'AC/BT')].filter(Boolean).join(' · ');
+  ctx.fillText(sub, 16, 46);
 
-  // Header bar
-  ctx.fillStyle='#185FA5'; ctx.fillRect(0,0,W,HDR);
-  ctx.fillStyle='#fff'; ctx.font='bold 15px sans-serif';
-  ctx.fillText('ROSELEC — '+title, 16, 22);
-  ctx.font='11px sans-serif'; ctx.fillStyle='rgba(255,255,255,.75)';
-  ctx.fillText((site?site+' · ':'')+( tech?'Tech: '+tech+' · ':'')+now+' · Mode: '+(schemaMode==='dc'?'DC/48V':'AC/BT'), 16, 44);
-
-  // Wires
+  // ── 6. Wires ──────────────────────────────────────────────────────────
   wires.forEach(w=>{
     ctx.strokeStyle=w.color; ctx.lineWidth=2.5; ctx.lineCap='round';
     ctx.beginPath();
-    ctx.moveTo(w.x1+dx,w.y1+dy); ctx.lineTo(w.x2+dx,w.y2+dy);
+    ctx.moveTo(w.x1+dx, w.y1+dy); ctx.lineTo(w.x2+dx, w.y2+dy);
     ctx.stroke();
-    // Wire label
+    // Label tag on wire
     const lbl=w.colorLabel||'';
     if(lbl){
       const mx=(w.x1+w.x2)/2+dx, my=(w.y1+w.y2)/2+dy;
+      ctx.font='bold 8px sans-serif'; ctx.textAlign='center';
       const tw=ctx.measureText(lbl).width;
       ctx.fillStyle=w.color;
-      roundRect(ctx,mx-tw/2-4,my-8,tw+8,14,3);
-      ctx.fill();
-      ctx.fillStyle='#fff'; ctx.font='bold 8px sans-serif';
-      ctx.textAlign='center'; ctx.fillText(lbl,mx,my+3);
+      pxRoundRect(ctx, mx-tw/2-5, my-9, tw+10, 14, 3); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.fillText(lbl, mx, my+3);
     }
   });
 
-  // Components (draw photos)
-  const imgPromises=components.map(comp=>new Promise(resolve=>{
-    const p=photoLib[comp.type];
-    if(!p){ resolve({comp,img:null}); return; }
-    const img=new Image();
-    img.onload=()=>resolve({comp,img,p});
-    img.onerror=()=>resolve({comp,img:null,p});
-    img.src=p.dataUrl;
-  }));
-
-  const loaded=await Promise.all(imgPromises);
-  loaded.forEach(({comp,img,p})=>{
+  // ── 7. Components ─────────────────────────────────────────────────────
+  components.forEach(comp=>{
+    const p=photoLib[comp.type]||{w:80,h:60};
     const cx=comp.x+dx, cy=comp.y+dy;
-    const W2=p?p.w:80, H2=p?p.h:60;
+    const CX=p.w, CY=p.h;
+    const img=imgCache[comp.type];
+
+    ctx.save();
+    // Card shadow
+    ctx.shadowColor='rgba(0,0,0,.25)';
+    ctx.shadowBlur=8; ctx.shadowOffsetY=3;
 
     if(img){
-      // Shadow
-      ctx.shadowColor='rgba(0,0,0,.3)'; ctx.shadowBlur=6; ctx.shadowOffsetY=2;
-      // Draw image
-      ctx.save();
-      ctx.beginPath();
-      roundRect(ctx,cx,cy,W2,H2,5);
-      ctx.clip();
-      ctx.drawImage(img,cx,cy,W2,H2);
-      ctx.restore();
-      ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetY=0;
-      // Border
-      ctx.strokeStyle='#333'; ctx.lineWidth=1;
-      ctx.beginPath(); roundRect(ctx,cx,cy,W2,H2,5); ctx.stroke();
+      // Clip to rounded rect and draw photo
+      ctx.beginPath(); pxRoundRect(ctx,cx,cy,CX,CY,5); ctx.clip();
+      ctx.fillStyle='#1a1a1a'; ctx.fillRect(cx,cy,CX,CY);
+      // Fit image preserving aspect ratio
+      const scale=Math.min(CX/img.width, CY/img.height);
+      const sw=img.width*scale, sh=img.height*scale;
+      const ox=cx+(CX-sw)/2, oy=cy+(CY-sh)/2;
+      ctx.drawImage(img, ox, oy, sw, sh);
     } else {
-      ctx.fillStyle='#444'; ctx.beginPath(); roundRect(ctx,cx,cy,W2||80,H2||60,5); ctx.fill();
+      // Fallback: dark rect with label
+      ctx.fillStyle='#2a2a2a';
+      ctx.beginPath(); pxRoundRect(ctx,cx,cy,CX,CY,5); ctx.fill();
+      ctx.fillStyle='#888'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(comp.type, cx+CX/2, cy+CY/2+4);
     }
+    ctx.restore();
+
+    // Border
+    ctx.strokeStyle='rgba(50,50,50,.6)'; ctx.lineWidth=1;
+    ctx.beginPath(); pxRoundRect(ctx,cx,cy,CX,CY,5); ctx.stroke();
 
     // Connection dots
     ctx.fillStyle='#ffd700'; ctx.strokeStyle='#222'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.arc(cx+W2/2,cy,4,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.shadowColor='transparent';
+    ctx.beginPath(); ctx.arc(cx+CX/2, cy, 4, 0, Math.PI*2); ctx.fill(); ctx.stroke();
     ctx.fillStyle='#1a1a8a';
-    ctx.beginPath(); ctx.arc(cx+W2/2,cy+H2,4,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx+CX/2, cy+CY, 4, 0, Math.PI*2); ctx.fill(); ctx.stroke();
 
-    // Label
+    // Label tag
     if(comp.label){
       ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
       const tw2=ctx.measureText(comp.label).width;
-      ctx.fillStyle='rgba(0,0,0,.8)';
-      roundRect(ctx,cx+W2/2-tw2/2-4,cy+H2+2,tw2+8,13,3); ctx.fill();
-      ctx.fillStyle='#fff';
-      ctx.fillText(comp.label,cx+W2/2,cy+H2+12);
+      const lx=cx+CX/2-tw2/2-5, ly=cy+CY+3;
+      ctx.fillStyle='rgba(15,15,15,.85)';
+      pxRoundRect(ctx,lx,ly,tw2+10,14,3); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.fillText(comp.label, cx+CX/2, ly+11);
     }
 
-    // State badge
+    // Amperage badge
+    if(comp.amperage||comp.valeur){
+      const val=comp.amperage||comp.valeur;
+      ctx.font='8px sans-serif'; ctx.textAlign='center';
+      const tw3=ctx.measureText(val).width;
+      ctx.fillStyle='rgba(255,152,0,.9)';
+      pxRoundRect(ctx,cx+CX/2-tw3/2-4,cy+CY+19,tw3+8,12,2); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.fillText(val, cx+CX/2, cy+CY+29);
+    }
+
+    // State badge (top-right corner)
     if(comp.etat && comp.etat!=='ok'){
-      const bc={alarme:'#ff8800',defaut:'#ff2200',hs:'#888'}[comp.etat]||'#888';
+      const bc={alarme:'#ff8800',defaut:'#ee1100',hs:'#777'}[comp.etat]||'#888';
+      const bt={alarme:'⚠',defaut:'✗',hs:'✕'}[comp.etat]||'?';
       ctx.fillStyle=bc;
-      ctx.beginPath(); ctx.arc(cx+W2-6,cy+6,7,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle='#fff'; ctx.font='bold 8px sans-serif'; ctx.textAlign='center';
-      ctx.fillText({alarme:'⚠',defaut:'●',hs:'✕'}[comp.etat]||'?',cx+W2-6,cy+10);
+      ctx.beginPath(); ctx.arc(cx+CX-7,cy+7,8,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(bt, cx+CX-7, cy+11);
     }
   });
 
-  // Text labels
+  // ── 8. Text labels ────────────────────────────────────────────────────
   textLabels.forEach(t=>{
     ctx.font=(t.bold?'600 ':'')+(t.size||12)+'px sans-serif';
     ctx.fillStyle=t.color||'#333'; ctx.textAlign='left';
-    ctx.fillText(t.text,t.x+dx,t.y+dy);
+    ctx.shadowColor='transparent';
+    ctx.fillText(t.text, t.x+dx, t.y+dy);
   });
 
-  // Download
+  // ── 9. Footer watermark ───────────────────────────────────────────────
+  ctx.fillStyle='rgba(100,100,100,.35)';
+  ctx.font='9px sans-serif'; ctx.textAlign='right';
+  ctx.fillText('ROSELEC v2.0 · MTN Congo Zone Sud', CW-10, CH-6);
+
+  // ── 10. Download ──────────────────────────────────────────────────────
   canvas.toBlob(blob=>{
+    if(!blob){setStatus('Erreur export PNG','idle');return;}
     const a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
-    a.download=`ROSELEC_${site||'schema'}_${Date.now()}.png`;
+    a.download=`ROSELEC_${(site||'schema').replace(/\s+/g,'_')}_${Date.now()}.png`;
     a.click();
-    setStatus('PNG exporté','ok');
+    setStatus(`✅ PNG exporté — ${components.length} composant(s)`, 'ok');
   },'image/png');
 }
 
-function roundRect(ctx,x,y,w,h,r){
+
+function pxRoundRect(ctx,x,y,w,h,r){
+  r=Math.min(r,w/2,h/2);
+  ctx.beginPath();
   ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y);
   ctx.quadraticCurveTo(x+w,y,x+w,y+r);
   ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
